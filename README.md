@@ -13,3 +13,4 @@
 ## Documentation
 
 *	[MultiSafepay](https://multisafepay.com/)
+*	[MultiSafepay API](https://multisafepay.com/nl/Artikelen-Support-Zakelijk/asp-en-php-download-zakelijk.html)
