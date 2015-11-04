@@ -27,8 +27,9 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_GatewaySettings extends Pronamic_WP_
 	}
 
 	public function fields( array $fields ) {
-		// Partner ID
+		// Account ID
 		$fields[] = array(
+			'filter'      => FILTER_SANITIZE_STRING,
 			'section'     => 'multisafepay',
 			'meta_key'    => '_pronamic_gateway_multisafepay_account_id',
 			'title'       => __( 'Account ID', 'pronamic_ideal' ),
@@ -37,7 +38,9 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_GatewaySettings extends Pronamic_WP_
 			'methods'     => array( 'multisafepay_connect' ),
 		);
 
+		// Site ID
 		$fields[] = array(
+			'filter'      => FILTER_SANITIZE_STRING,
 			'section'     => 'multisafepay',
 			'meta_key'    => '_pronamic_gateway_multisafepay_site_id',
 			'title'       => __( 'Site ID', 'pronamic_ideal' ),
@@ -46,7 +49,9 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_GatewaySettings extends Pronamic_WP_
 			'methods'     => array( 'multisafepay_connect' ),
 		);
 
+		// Site Security Code
 		$fields[] = array(
+			'filter'      => FILTER_SANITIZE_STRING,
 			'section'     => 'multisafepay',
 			'meta_key'    => '_pronamic_gateway_multisafepay_site_code',
 			'title'       => __( 'Site Security Code', 'pronamic_ideal' ),
