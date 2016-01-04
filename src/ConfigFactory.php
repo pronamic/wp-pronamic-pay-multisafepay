@@ -17,7 +17,7 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_ConfigFactory extends Pronamic_WP_Pa
 		$config->site_id    = get_post_meta( $post_id, '_pronamic_gateway_multisafepay_site_id', true );
 		$config->site_code  = get_post_meta( $post_id, '_pronamic_gateway_multisafepay_site_code', true );
 
-		if ( $config->mode == Pronamic_IDeal_IDeal::MODE_TEST ) {
+		if ( Pronamic_IDeal_IDeal::MODE_TEST === $config->mode ) {
 			$config->api_url = Pronamic_WP_Pay_Gateways_MultiSafepay_MultiSafepay::API_TEST_URL;
 		} else {
 			$config->api_url = Pronamic_WP_Pay_Gateways_MultiSafepay_MultiSafepay::API_PRODUCTION_URL;
