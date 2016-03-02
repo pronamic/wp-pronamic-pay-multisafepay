@@ -7,6 +7,10 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [1.1.3] - 2016-03-02
+- Added get settings function.
+- Moving some code the connect library.
+
 ## [1.1.2] - 2016-02-01
 - Added an gateway settings class.
 
