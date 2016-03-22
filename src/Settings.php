@@ -7,8 +7,8 @@
  * Company: Pronamic
  *
  * @author Remco Tolsma
- * @version 1.2.0
- * @since 1.2.0
+ * @version 1.1.4
+ * @since 1.0.0
  */
 class Pronamic_WP_Pay_Gateways_MultiSafepay_Settings extends Pronamic_WP_Pay_GatewaySettings {
 	public function __construct() {
@@ -19,11 +19,15 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Settings extends Pronamic_WP_Pay_Gat
 	public function sections( array $sections ) {
 		// iDEAL
 		$sections['multisafepay'] = array(
-			'title'   => __( 'MultiSafepay', 'pronamic_ideal' ),
-			'methods' => array( 'multisafepay_connect' ),
+			'title'       => __( 'MultiSafepay', 'pronamic_ideal' ),
+			'methods'     => array( 'multisafepay' ),
+			'description' => sprintf(
+				__( 'Account details are provided by %s after registration. These settings need to match with the %1$s dashboard.', 'pronamic_ideal' ),
+				__( 'MultiSafepay', 'pronamic_ideal' )
+			),
 		);
 
-		// Return
+		// Return sections
 		return $sections;
 	}
 
@@ -37,6 +41,11 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Settings extends Pronamic_WP_Pay_Gat
 			'type'        => 'text',
 			'classes'     => array( 'code' ),
 			'methods'     => array( 'multisafepay_connect' ),
+			'tooltip'     => sprintf(
+				'%s %s.',
+				__( 'Account ID', 'pronamic_ideal' ),
+				sprintf( __( 'as mentioned in the %s dashboard', 'pronamic_ideal' ), __( 'MultiSafepay', 'pronamic_ideal' ) )
+			),
 		);
 
 		// Site ID
@@ -48,6 +57,11 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Settings extends Pronamic_WP_Pay_Gat
 			'type'        => 'text',
 			'classes'     => array( 'code' ),
 			'methods'     => array( 'multisafepay_connect' ),
+			'tooltip'     => sprintf(
+				'%s %s.',
+				__( 'Site ID', 'pronamic_ideal' ),
+				sprintf( __( 'as mentioned in the %s dashboard', 'pronamic_ideal' ), __( 'MultiSafepay', 'pronamic_ideal' ) )
+			),
 		);
 
 		// Site Security Code
@@ -59,9 +73,25 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Settings extends Pronamic_WP_Pay_Gat
 			'type'        => 'text',
 			'classes'     => array( 'code' ),
 			'methods'     => array( 'multisafepay_connect' ),
+			'tooltip'     => sprintf(
+				'%s %s.',
+				__( 'Site Security Code', 'pronamic_ideal' ),
+				sprintf( __( 'as mentioned in the %s dashboard', 'pronamic_ideal' ), __( 'MultiSafepay', 'pronamic_ideal' ) )
+			),
 		);
 
-		// Return
+		// Transaction feedback
+		$fields[] = array(
+			'section'     => 'multisafepay',
+			'title'       => __( 'Transaction feedback', 'pronamic_ideal' ),
+			'type'        => 'description',
+			'html'        => sprintf(
+				'<span class="dashicons dashicons-yes"></span> %s',
+				__( 'Payment status updates will be processed without any additional configuration.', 'pronamic_ideal' )
+			),
+		);
+
+		// Return fields
 		return $fields;
 	}
 }
