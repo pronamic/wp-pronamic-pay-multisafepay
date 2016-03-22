@@ -7,8 +7,8 @@
  * Company: Pronamic
  *
  * @author Remco Tolsma
- * @version 1.2.0
- * @since 1.2.0
+ * @version 1.1.4
+ * @since 1.0.0
  */
 class Pronamic_WP_Pay_Gateways_MultiSafepay_Settings extends Pronamic_WP_Pay_GatewaySettings {
 	public function __construct() {
