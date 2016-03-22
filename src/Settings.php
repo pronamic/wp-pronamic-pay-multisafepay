@@ -27,7 +27,7 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Settings extends Pronamic_WP_Pay_Gat
 			),
 		);
 
-		// Return
+		// Return sections
 		return $sections;
 	}
 
@@ -91,7 +91,7 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Settings extends Pronamic_WP_Pay_Gat
 			),
 		);
 
-		// Return
+		// Return fields
 		return $fields;
 	}
 }
