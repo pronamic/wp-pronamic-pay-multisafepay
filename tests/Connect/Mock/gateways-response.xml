@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<gateways result="ok">
+	<gateways>
+		<gateway>
+			<id>IDEAL</id>
+			<description>iDEAL</description>
+		</gateway>
+		<gateway>
+			<id> MASTERCARD</id>
+			<description>Visa via Multipay</description>
+		</gateway>
+		<gateway>
+			<id> BANKTRANS</id>
+			<description> Bank Transfer</description>
+		</gateway>
+		<gateway>
+			<id> VISA</id>
+			<description> Visa CreditCards</description>
+		</gateway>
+	</gateways>
+</gateways>

@@ -1,0 +1,10 @@
+HTTP/1.1 200 OK
+Date: Thu, 30 Apr 2015 10:25:39 GMT
+Server: Apache
+Accept-Ranges: bytes
+Content-Length: 589
+Connection: close
+Content-Type: text/xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<directtransaction result="ok"><transaction><id>554202bb33498</id></transaction><ewallet><id>9943038943576689</id></ewallet><gatewayinfo><redirecturl>http://testpay.multisafepay.com/simulator/ideal?trxid=10447735643871196&amp;ideal=prob&amp;issuerid=3151&amp;merchantReturnURL=https%3A%2F%2Ftestpay%2Emultisafepay%2Ecom%2Fdirect%2Fcomplete%2F%3Fid%3D9943038943576689</redirecturl><extvar index="15" name="">https://testpay.multisafepay.com/direct/complete/</extvar><issuerid>3151</issuerid></gatewayinfo></directtransaction>
