@@ -12,4 +12,18 @@
 	<rule ref="WordPress.VIP.SlowDBQuery.slow_db_query">
 		<exclude-pattern>src/Settings.php</exclude-pattern>
 	</rule>
+
+	<rule ref="WordPress.VIP.RestrictedFunctions.file_get_contents">
+		<exclude-pattern>tests/**/*</exclude-pattern>
+	</rule>
+
+	<rule ref="Squiz.PHP.CommentedOutCode.Found">
+		<exclude-pattern>tests/**/*</exclude-pattern>
+	</rule>
+
+	<rule ref="WordPress.NamingConventions.ValidVariableName">
+		<properties>
+			<property name="customVariablesWhitelist" type="array" value="documentElement,preserveWhiteSpace,formatOutput" />
+		</properties>
+	</rule>
 </ruleset>

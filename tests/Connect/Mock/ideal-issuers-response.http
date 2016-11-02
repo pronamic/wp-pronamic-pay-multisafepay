@@ -1,0 +1,11 @@
+HTTP/1.1 200 OK
+Date: Wed, 29 Apr 2015 18:38:08 GMT
+Server: Apache
+Accept-Ranges: bytes
+Content-Length: 196
+Connection: close
+Content-Type: text/xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<idealissuers result="ok"><issuers><issuer><code>3151</code><description>Test bank</description></issuer></issuers></idealissuers>
+<!--msp-kvm-tst-pay-01-->
