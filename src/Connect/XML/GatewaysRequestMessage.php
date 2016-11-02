@@ -62,7 +62,6 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_GatewaysRequestMessage e
 			'locale'  => $customer->locale,
 		) );
 
-		// Return
 		return $document;
 	}
 }

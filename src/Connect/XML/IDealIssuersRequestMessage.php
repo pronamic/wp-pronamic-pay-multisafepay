@@ -52,7 +52,6 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_IDealIssuersRequestMessa
 			'site_secure_code' => $merchant->site_secure_code,
 		) );
 
-		// Return
 		return $document;
 	}
 }

@@ -110,7 +110,6 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_DirectTransactionRequest
 		// Signature
 		$element = Pronamic_WP_Pay_XML_Util::add_element( $document, $document->documentElement, 'signature', $this->signature );
 
-		// Return
 		return $document;
 	}
 }

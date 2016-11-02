@@ -35,7 +35,6 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_DirectTransactionRespons
 			$message->gateway_info->issuer_id    = Pronamic_WP_Pay_XML_Security::filter( $xml->gatewayinfo->issuerid );
 		}
 
-		// Return
 		return $message;
 	}
 }

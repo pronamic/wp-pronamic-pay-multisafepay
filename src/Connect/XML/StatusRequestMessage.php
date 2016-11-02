@@ -59,7 +59,6 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_StatusRequestMessage ext
 			'id' => $this->transaction_id,
 		) );
 
-		// Return
 		return $document;
 	}
 }
