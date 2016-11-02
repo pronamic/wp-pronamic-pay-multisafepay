@@ -7,6 +7,9 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [2.0.0] - 2016-11-02
+- Merged in https://github.com/wp-pay-gateways/multisafepay-connect.
+
 ## [1.1.4] - 2016-03-22
 - Updated gateway settings.
 
@@ -25,3 +28,11 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 
 ## 1.0.0 - 2015-01-19
 - First release.
+
+[unreleased]: https://github.com/wp-pay-gateways/multisafepay/compare/2.0.0...HEAD
+[2.0.0]: https://github.com/wp-pay-gateways/multisafepay/compare/1.1.4...2.0.0
+[1.1.4]: https://github.com/wp-pay-gateways/multisafepay/compare/1.1.3...1.1.4
+[1.1.3]: https://github.com/wp-pay-gateways/multisafepay/compare/1.1.2...1.1.3
+[1.1.2]: https://github.com/wp-pay-gateways/multisafepay/compare/1.1.1...1.1.2
+[1.1.1]: https://github.com/wp-pay-gateways/multisafepay/compare/1.1.0...1.1.1
+[1.1.0]: https://github.com/wp-pay-gateways/multisafepay/compare/1.0.0...1.1.0
