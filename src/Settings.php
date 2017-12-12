@@ -22,7 +22,7 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Settings extends Pronamic_WP_Pay_Gat
 			'title'       => __( 'MultiSafepay', 'pronamic_ideal' ),
 			'methods'     => array( 'multisafepay' ),
 			'description' => sprintf(
-				__( 'Account details are provided by %s after registration. These settings need to match with the %1$s dashboard.', 'pronamic_ideal' ),
+				__( 'Account details are provided by %1$s after registration. These settings need to match with the %1$s dashboard.', 'pronamic_ideal' ),
 				__( 'MultiSafepay', 'pronamic_ideal' )
 			),
 		);
