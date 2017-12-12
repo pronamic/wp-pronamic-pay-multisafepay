@@ -13,6 +13,7 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_GatewaysTest extends WP_UnitTes
 		$processed_response = WP_Http::processResponse( $response );
 
 		$processed_headers = WP_Http::processHeaders( $processed_response['headers'], $url );
+
 		$processed_headers['body'] = $processed_response['body'];
 
 		return $processed_headers;
@@ -22,7 +23,7 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_GatewaysTest extends WP_UnitTes
 
 	}
 
-	function test_init() {
+	public function test_init() {
 		// Mock HTTP request
 		//add_action( 'http_api_debug', array( $this, 'http_api_debug' ), 10, 5 );
 		add_filter( 'pre_http_request', array( $this, 'pre_http_request' ), 10, 3 );
@@ -43,16 +44,19 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_GatewaysTest extends WP_UnitTes
 
 		// Client
 		$client = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Client();
+
 		$client->api_url = $config->api_url;
 
 		// Merchant
 		$merchant = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Merchant();
-		$merchant->account = $config->account_id;
-		$merchant->site_id = $config->site_id;
+
+		$merchant->account          = $config->account_id;
+		$merchant->site_id          = $config->site_id;
 		$merchant->site_secure_code = $config->site_code;
 
 		// Customer
 		$customer = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Customer();
+
 		$customer->locale = get_locale();
 
 		// Gateways

@@ -1,19 +1,36 @@
 <?xml version="1.0"?>
 
 <ruleset name="WordPress Pay MultiSafepay rules">
-	<rule ref="WordPress">
-		<exclude name="Generic.Files.LowercasedFilename.NotFound" />
+	<config name="installed_paths" value="vendor/wp-coding-standards/wpcs,vendor/wimg/php-compatibility" />
 
+	<config name="minimum_supported_wp_version" value="4.7" />
+
+	<config name="testVersion" value="5.3-99.0" />
+
+	<rule ref="PHPCompatibility" />
+
+	<rule ref="WordPress">
 		<exclude name="Squiz.Commenting" />
 
-		<exclude name="WordPress.VIP.RestrictedFunctions.wp_remote_get" />		
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
+
+		<exclude name="WordPress.VIP.RestrictedFunctions.wp_remote_get" />
 	</rule>
 
-	<rule ref="WordPress.VIP.SlowDBQuery.slow_db_query">
+	<rule ref="WordPress.VIP.SlowDBQuery.slow_db_query_meta_key">
 		<exclude-pattern>src/Settings.php</exclude-pattern>
 	</rule>
 
-	<rule ref="WordPress.VIP.RestrictedFunctions.file_get_contents">
+	<rule ref="WordPress.VIP.RestrictedFunctions.file_get_contents_file_get_contents">
+		<exclude-pattern>tests/**/*</exclude-pattern>
+	</rule>
+
+	<rule ref="WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents">
+		<exclude-pattern>tests/**/*</exclude-pattern>
+	</rule>
+
+	<rule ref="WordPress.WP.AlternativeFunctions.file_system_read_file_get_contents">
 		<exclude-pattern>tests/**/*</exclude-pattern>
 	</rule>
 
@@ -23,7 +40,7 @@
 
 	<rule ref="WordPress.NamingConventions.ValidVariableName">
 		<properties>
-			<property name="customVariablesWhitelist" type="array" value="documentElement,preserveWhiteSpace,formatOutput" />
+			<property name="customPropertiesWhitelist" type="array" value="documentElement,preserveWhiteSpace,formatOutput" />
 		</properties>
 	</rule>
 </ruleset>

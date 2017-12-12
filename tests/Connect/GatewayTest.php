@@ -13,12 +13,13 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_GatewayTest extends WP_UnitTest
 		$processed_response = WP_Http::processResponse( $response );
 
 		$processed_headers = WP_Http::processHeaders( $processed_response['headers'], $url );
+
 		$processed_headers['body'] = $processed_response['body'];
 
 		return $processed_headers;
 	}
 
-	function test_init() {
+	public function test_init() {
 		// Mock HTTP request
 		//add_action( 'http_api_debug', array( $this, 'http_api_debug' ), 10, 5 );
 		add_filter( 'pre_http_request', array( $this, 'pre_http_request' ), 10, 3 );

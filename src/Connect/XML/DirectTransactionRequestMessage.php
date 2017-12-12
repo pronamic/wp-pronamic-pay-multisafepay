@@ -49,6 +49,7 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_DirectTransactionRequest
 		$merchant = $this->merchant;
 
 		$element = Pronamic_WP_Pay_XML_Util::add_element( $document, $document->documentElement, 'merchant' );
+
 		Pronamic_WP_Pay_XML_Util::add_elements( $document, $element, array(
 			'account'          => $merchant->account,
 			'site_id'          => $merchant->site_id,
@@ -63,6 +64,7 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_DirectTransactionRequest
 		$customer = $this->customer;
 
 		$element = Pronamic_WP_Pay_XML_Util::add_element( $document, $document->documentElement, 'customer' );
+
 		Pronamic_WP_Pay_XML_Util::add_elements( $document, $element, array(
 			'locale'      => $customer->locale,
 			'ipaddress'   => $customer->ip_address,
@@ -83,6 +85,7 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_DirectTransactionRequest
 		$transaction = $this->transaction;
 
 		$element = Pronamic_WP_Pay_XML_Util::add_element( $document, $document->documentElement, 'transaction' );
+
 		Pronamic_WP_Pay_XML_Util::add_elements( $document, $element, array(
 			'id'          => $transaction->id,
 			'currency'    => $transaction->currency,
@@ -102,6 +105,7 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_DirectTransactionRequest
 			$gateway_info = $this->gateway_info;
 
 			$element = Pronamic_WP_Pay_XML_Util::add_element( $document, $document->documentElement, 'gatewayinfo' );
+
 			Pronamic_WP_Pay_XML_Util::add_elements( $document, $element, array(
 				'issuerid' => $gateway_info->issuer_id,
 			) );

@@ -27,12 +27,10 @@ module.exports = function( grunt ) {
 
 		// PHPLint
 		phplint: {
-			options: {
-				phpArgs: {
-					'-lf': null
-				}
-			},
-			all: [ 'src/**/*.php', 'tests/**/*.php' ]
+			all: [
+				'src/**/*.php',
+				'tests/**/*.php'
+			]
 		},
 
 		// PHP Mess Detector
