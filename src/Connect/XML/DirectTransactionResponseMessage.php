@@ -30,6 +30,7 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_DirectTransactionRespons
 		// Gateway info
 		if ( $xml->gatewayinfo ) {
 			$message->gateway_info = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_GatewayInfo();
+
 			$message->gateway_info->redirect_url = Pronamic_WP_Pay_XML_Security::filter( $xml->gatewayinfo->redirecturl );
 			$message->gateway_info->ext_var      = Pronamic_WP_Pay_XML_Security::filter( $xml->gatewayinfo->extvar );
 			$message->gateway_info->issuer_id    = Pronamic_WP_Pay_XML_Security::filter( $xml->gatewayinfo->issuerid );

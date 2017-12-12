@@ -18,13 +18,15 @@ abstract class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_RequestMessage 
 	 */
 	protected function get_document() {
 		$document = new DOMDocument( parent::XML_VERSION, parent::XML_ENCODING );
+
 		// We can't disable preservere white space and format the output
 		// this is causing 'Invalid electronic signature' errors
 		$document->preserveWhiteSpace = true;
-		$document->formatOutput = true;
+		$document->formatOutput       = true;
 
 		// Root
 		$root = $document->createElement( $this->get_name() );
+
 		$root->setAttribute( 'ua', $this->get_user_agent() );
 
 		$document->appendChild( $root );

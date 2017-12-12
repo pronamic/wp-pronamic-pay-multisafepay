@@ -7,7 +7,7 @@
  * @author remco
  */
 class Pronamic_Pay_Gateways_MultiSafepay_Connect_TestSignature extends WP_UnitTestCase {
-	function test_signature() {
+	public function test_signature() {
 		$amount         = 50;
 		$currency       = 'EUR';
 		$account        = 'Test';

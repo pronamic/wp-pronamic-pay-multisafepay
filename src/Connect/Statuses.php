@@ -68,21 +68,21 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Statuses {
 	 */
 	public static function transform( $status ) {
 		switch ( $status ) {
-			case self::COMPLETED :
+			case self::COMPLETED:
 				return Pronamic_WP_Pay_Statuses::SUCCESS;
-			case self::INITIALIZED :
+			case self::INITIALIZED:
 				return Pronamic_WP_Pay_Statuses::OPEN;
-			case self::UNCLEARED :
+			case self::UNCLEARED:
 				return Pronamic_WP_Pay_Statuses::OPEN;
-			case self::VOID :
+			case self::VOID:
 				return Pronamic_WP_Pay_Statuses::CANCELLED;
-			case self::DECLINED :
+			case self::DECLINED:
 				return Pronamic_WP_Pay_Statuses::FAILURE;
-			case self::REFUNDED :
+			case self::REFUNDED:
 				return Pronamic_WP_Pay_Statuses::CANCELLED;
-			case self::EXPIRED :
+			case self::EXPIRED:
 				return Pronamic_WP_Pay_Statuses::EXPIRED;
-			default :
+			default:
 				return null;
 		}
 	}

@@ -51,15 +51,15 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Client {
 
 	private function parse_xml( $xml ) {
 		switch ( $xml->getName() ) {
-			case Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_IDealIssuersRequestMessage::NAME :
+			case Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_IDealIssuersRequestMessage::NAME:
 				return Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_IDealIssuersResponseMessage::parse( $xml );
-			case Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_GatewaysRequestMessage::NAME :
+			case Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_GatewaysRequestMessage::NAME:
 				return Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_GatewaysResponseMessage::parse( $xml );
-			case Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_DirectTransactionRequestMessage::NAME :
+			case Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_DirectTransactionRequestMessage::NAME:
 				return Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_DirectTransactionResponseMessage::parse( $xml );
-			case Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_RedirectTransactionRequestMessage::NAME :
+			case Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_RedirectTransactionRequestMessage::NAME:
 				return Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_RedirectTransactionResponseMessage::parse( $xml );
-			case Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_StatusRequestMessage::NAME :
+			case Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_StatusRequestMessage::NAME:
 				return Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_StatusResponseMessage::parse( $xml );
 		}
 

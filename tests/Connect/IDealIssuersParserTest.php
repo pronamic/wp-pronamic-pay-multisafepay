@@ -4,7 +4,7 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_IDealIssuersParserTest extends 
 	/**
 	 * Test init
 	 */
-	function test_init() {
+	public function test_init() {
 		$filename = dirname( __FILE__ ) . '/Mock/ideal-issuers-response.xml';
 
 		$simplexml = simplexml_load_file( $filename );
@@ -19,7 +19,7 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_IDealIssuersParserTest extends 
 	 *
 	 * @depends test_init
 	 */
-	function test_parser( $simplexml ) {
+	public function test_parser( $simplexml ) {
 		$message = Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_IDealIssuersResponseMessage::parse( $simplexml );
 
 		$this->assertInstanceOf( 'Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_IDealIssuersResponseMessage', $message );
@@ -32,8 +32,9 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_IDealIssuersParserTest extends 
 	 *
 	 * @depends test_parser
 	 */
-	function test_values( $message ) {
+	public function test_values( $message ) {
 		$expected = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_IDealIssuersResponseMessage();
+
 		$expected->issuers = array(
 			'0031' => 'ABN AMRO',
 			'0751' => 'SNS Bank',
