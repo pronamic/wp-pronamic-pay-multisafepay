@@ -188,11 +188,11 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Gateway extends Pronamic_WP_
 
 			$payment->set_transaction_id( $transaction->id );
 
-			if ( $transaction->payment_url ) {
+			if ( isset( $transaction->payment_url ) ) {
 				$payment->set_action_url( $transaction->payment_url );
 			}
 
-			if ( $response->gateway_info && $response->gateway_info->redirect_url ) {
+			if ( isset( $response->gateway_info, $response->gateway_info->redirect_url ) ) {
 				$payment->set_action_url( $response->gateway_info->redirect_url );
 			}
 		} else {
