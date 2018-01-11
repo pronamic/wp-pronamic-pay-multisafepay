@@ -106,11 +106,17 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Client {
 	 * @since 1.2.0
 	 */
 	public function get_ideal_issuers( $merchant ) {
+		$return = false;
+
 		$request = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_IDealIssuersRequestMessage( $merchant );
 
 		$response = $this->request( $request );
 
-		return $response->issuers;
+		if ( $response ) {
+			$return = $response->issuers;
+		}
+
+		return $return;
 	}
 
 	/////////////////////////////////////////////////
@@ -121,11 +127,17 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Client {
 	 * @since 1.2.0
 	 */
 	public function get_gateways( $merchant, $customer ) {
+		$return = false;
+
 		$request = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_GatewaysRequestMessage( $merchant, $customer );
 
 		$response = $this->request( $request );
 
-		return $response->gateways;
+		if ( $response ) {
+			$return = $response->gateways;
+		}
+
+		return $return;
 	}
 
 	/////////////////////////////////////////////////
@@ -133,7 +145,7 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Client {
 	/**
 	 * Start transaction
 	 *
-	 * @param array $data
+	 * @param array $message
 	 */
 	public function start_transaction( $message ) {
 		$return = false;
@@ -152,7 +164,7 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Client {
 	/**
 	 * Get status
 	 *
-	 * @param array $data
+	 * @param array $message
 	 */
 	public function get_status( $message ) {
 		$return = false;
