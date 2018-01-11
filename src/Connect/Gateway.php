@@ -67,8 +67,6 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Gateway extends Pronamic_WP_
 		return $groups;
 	}
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Get issuer field
 	 *
@@ -92,15 +90,35 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Gateway extends Pronamic_WP_
 	/**
 	 * Get payment methods
 	 *
-	 * @return mixed an array or null
+	 * @see Pronamic_WP_Pay_Gateway::get_payment_methods()
 	 */
 	public function get_payment_methods() {
-		$payment_methods = new ReflectionClass( 'Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways' );
+		$groups = array();
 
-		return array( array( 'options' => $payment_methods->getConstants() ) );
+		// Merchant
+		$merchant = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Merchant();
+
+		$merchant->account          = $this->config->account_id;
+		$merchant->site_id          = $this->config->site_id;
+		$merchant->site_secure_code = $this->config->site_code;
+
+		// Customer
+		$customer = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Customer();
+
+		$result = $this->client->get_gateways( $merchant, $customer );
+
+		if ( ! $result ) {
+			$this->error = $this->client->get_error();
+
+			return $groups;
+		}
+
+		$groups[] = array(
+			'options' => $result,
+		);
+
+		return $groups;
 	}
-
-	/////////////////////////////////////////////////
 
 	/**
 	 * Get supported payment methods
@@ -109,8 +127,16 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Gateway extends Pronamic_WP_
 	 */
 	public function get_supported_payment_methods() {
 		return array(
-			Pronamic_WP_Pay_PaymentMethods::IDEAL,
+			Pronamic_WP_Pay_PaymentMethods::BANCONTACT,
 			Pronamic_WP_Pay_PaymentMethods::BANK_TRANSFER,
+			Pronamic_WP_Pay_PaymentMethods::BELFIUS,
+			Pronamic_WP_Pay_PaymentMethods::DIRECT_DEBIT,
+			Pronamic_WP_Pay_PaymentMethods::IDEAL,
+			Pronamic_WP_Pay_PaymentMethods::IDEALQR,
+			Pronamic_WP_Pay_PaymentMethods::GIROPAY,
+			Pronamic_WP_Pay_PaymentMethods::KBC,
+			Pronamic_WP_Pay_PaymentMethods::PAYPAL,
+			Pronamic_WP_Pay_PaymentMethods::SOFORT,
 		);
 	}
 
@@ -171,13 +197,13 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Gateway extends Pronamic_WP_
 				}
 
 				break;
-			case Pronamic_WP_Pay_PaymentMethods::BANK_TRANSFER:
-				$transaction->gateway = Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::BANK_TRANSFER;
-
-				$message = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_RedirectTransactionRequestMessage( $merchant, $customer, $transaction );
-
-				break;
 			default:
+				$gateway = Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::transform( $payment->get_method() );
+
+				if ( $gateway ) {
+					$transaction->gateway = $gateway;
+				}
+
 				$message = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_RedirectTransactionRequestMessage( $merchant, $customer, $transaction );
 		}
 
