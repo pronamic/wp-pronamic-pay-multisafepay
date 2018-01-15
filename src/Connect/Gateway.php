@@ -28,6 +28,10 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Gateway extends Pronamic_WP_
 	public function __construct( Pronamic_WP_Pay_Gateways_MultiSafepay_Config $config ) {
 		parent::__construct( $config );
 
+		$this->supports = array(
+			'payment_status_request',
+		);
+
 		$this->set_method( Pronamic_WP_Pay_Gateway::METHOD_HTTP_REDIRECT );
 		$this->set_has_feedback( true );
 		$this->set_amount_minimum( 0 );
