@@ -143,6 +143,7 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways {
 	 * @var array
 	 */
 	private static $map = array(
+		Pronamic_WP_Pay_PaymentMethods::ALIPAY        => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::ALIPAY,
 		Pronamic_WP_Pay_PaymentMethods::BANCONTACT    => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::BANCONTACT,
 		Pronamic_WP_Pay_PaymentMethods::BANK_TRANSFER => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::BANK_TRANSFER,
 		Pronamic_WP_Pay_PaymentMethods::BELFIUS       => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::BELFIUS,
