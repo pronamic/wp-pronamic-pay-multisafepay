@@ -131,6 +131,7 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Gateway extends Pronamic_WP_
 	 */
 	public function get_supported_payment_methods() {
 		return array(
+			Pronamic_WP_Pay_PaymentMethods::ALIPAY,
 			Pronamic_WP_Pay_PaymentMethods::BANCONTACT,
 			Pronamic_WP_Pay_PaymentMethods::BANK_TRANSFER,
 			Pronamic_WP_Pay_PaymentMethods::BELFIUS,
