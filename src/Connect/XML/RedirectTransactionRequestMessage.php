@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Pay\Util;
 
 /**
  * Title: MultiSafepay Connect XML redirect transaction request message
@@ -85,7 +86,7 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_RedirectTransactionReque
 		Pronamic_WP_Pay_XML_Util::add_elements( $document, $element, array(
 			'id'          => $transaction->id,
 			'currency'    => $transaction->currency,
-			'amount'      => Pronamic_WP_Util::amount_to_cents( $transaction->amount ),
+			'amount'      => Util::amount_to_cents( $transaction->amount ),
 			'description' => $transaction->description,
 			'var1'        => $transaction->var1,
 			'var2'        => $transaction->var2,
