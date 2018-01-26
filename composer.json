@@ -3,7 +3,7 @@
 	"description": "MultiSafepay driver for the WordPress payment processing library.",
 	"keywords": ["wordpress", "wp", "pay", "multisafepay", "ideal", "gateway", "pronamic"],
 	"homepage": "http://www.wp-pay.org/gateways/multisafepay/",
-	"license": "GPL",
+	"license": "GPL-3.0-or-later",
 	"authors": [
 		{
 			"name": "Pronamic",
