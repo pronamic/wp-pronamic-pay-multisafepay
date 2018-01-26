@@ -24,9 +24,7 @@
 		"source": "https://github.com/wp-pay-gateways/multisafepay"
 	},
 	"autoload": {
-		"psr-4": {
-			"Pronamic\\WordPress\\Pay\\Gateways\\MultiSafepay\\": "src/"
-		}
+		"classmap": ["src/"]
 	},
 	"config": {
 		"platform": {
