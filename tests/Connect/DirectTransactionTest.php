@@ -1,5 +1,7 @@
 <?php
 
+use Pronamic\WordPress\Pay\Core\Server;
+
 class Pronamic_Pay_Gateways_MultiSafepay_Connect_DirectTransactionTest extends WP_UnitTestCase {
 	/**
 	 * Pre HTTP request
@@ -61,8 +63,8 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_DirectTransactionTest extends W
 		$customer = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Customer();
 
 		$customer->locale       = get_locale();
-		$customer->ip_address   = Pronamic_WP_Pay_Server::get( 'REMOTE_ADDR', FILTER_VALIDATE_IP );
-		$customer->forwarded_ip = Pronamic_WP_Pay_Server::get( 'HTTP_X_FORWARDED_FOR', FILTER_VALIDATE_IP );
+		$customer->ip_address   = Server::get( 'REMOTE_ADDR', FILTER_VALIDATE_IP );
+		$customer->forwarded_ip = Server::get( 'HTTP_X_FORWARDED_FOR', FILTER_VALIDATE_IP );
 		$customer->first_name   = '';
 		$customer->last_name    = '';
 		$customer->address_1    = 'Test';

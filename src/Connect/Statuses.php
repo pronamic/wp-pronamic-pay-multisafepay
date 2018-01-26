@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Pay\Core\Statuses;
 
 /**
  * Title: MultiSafepay statuses constants
@@ -69,19 +70,19 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Statuses {
 	public static function transform( $status ) {
 		switch ( $status ) {
 			case self::COMPLETED:
-				return Pronamic_WP_Pay_Statuses::SUCCESS;
+				return Statuses::SUCCESS;
 			case self::INITIALIZED:
-				return Pronamic_WP_Pay_Statuses::OPEN;
+				return Statuses::OPEN;
 			case self::UNCLEARED:
-				return Pronamic_WP_Pay_Statuses::OPEN;
+				return Statuses::OPEN;
 			case self::VOID:
-				return Pronamic_WP_Pay_Statuses::CANCELLED;
+				return Statuses::CANCELLED;
 			case self::DECLINED:
-				return Pronamic_WP_Pay_Statuses::FAILURE;
+				return Statuses::FAILURE;
 			case self::REFUNDED:
-				return Pronamic_WP_Pay_Statuses::CANCELLED;
+				return Statuses::CANCELLED;
 			case self::EXPIRED:
-				return Pronamic_WP_Pay_Statuses::EXPIRED;
+				return Statuses::EXPIRED;
 			default:
 				return null;
 		}

@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Pay\Core\Util;
 
 /**
  * Title: MultiSafepay Connect client
@@ -71,7 +72,7 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Client {
 	private function request( $message ) {
 		$return = false;
 
-		$result = Pronamic_WP_Pay_Util::remote_get_body( $this->api_url, 200, array(
+		$result = Util::remote_get_body( $this->api_url, 200, array(
 			'method' => 'POST',
 			'body'   => (string) $message,
 		) );
@@ -82,7 +83,7 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Client {
 			return false;
 		}
 
-		$xml = Pronamic_WP_Pay_Util::simplexml_load_string( $result );
+		$xml = Util::simplexml_load_string( $result );
 
 		if ( is_wp_error( $xml ) ) {
 			$this->error = $xml;

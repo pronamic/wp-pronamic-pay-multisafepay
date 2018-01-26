@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Pay\Gateways\Common\AbstractIntegration;
 
 /**
  * Title: MultiSafepay integration
@@ -10,7 +11,7 @@
  * @version 1.1.3
  * @since 1.0.0
  */
-abstract class Pronamic_WP_Pay_Gateways_MultiSafepay_AbstractIntegration extends Pronamic_WP_Pay_Gateways_AbstractIntegration {
+abstract class Pronamic_WP_Pay_Gateways_MultiSafepay_AbstractIntegration extends AbstractIntegration {
 	public function get_settings_class() {
 		return 'Pronamic_WP_Pay_Gateways_MultiSafepay_Settings';
 	}

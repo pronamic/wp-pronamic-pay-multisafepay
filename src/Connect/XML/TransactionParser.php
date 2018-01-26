@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Pay\Core\XML\Security;
 
 /**
  * Title: MultiSafepay Connect XML transaction parser
@@ -20,8 +21,8 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_TransactionParser {
 	public static function parse( SimpleXMLElement $xml ) {
 		$transaction = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Transaction();
 
-		$transaction->id          = Pronamic_WP_Pay_XML_Security::filter( $xml->id );
-		$transaction->payment_url = Pronamic_WP_Pay_XML_Security::filter( $xml->payment_url );
+		$transaction->id          = Security::filter( $xml->id );
+		$transaction->payment_url = Security::filter( $xml->payment_url );
 
 		return $transaction;
 	}

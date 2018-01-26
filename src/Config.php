@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Pay\Core\GatewayConfig;
 
 /**
  * Title: MultiSafepay config
@@ -9,7 +10,7 @@
  * @author Remco Tolsma
  * @version 1.0.0
  */
-class Pronamic_WP_Pay_Gateways_MultiSafepay_Config extends Pronamic_WP_Pay_GatewayConfig {
+class Pronamic_WP_Pay_Gateways_MultiSafepay_Config extends GatewayConfig {
 	public $account_id;
 
 	public $site_id;

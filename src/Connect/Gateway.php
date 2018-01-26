@@ -1,4 +1,7 @@
 <?php
+use Pronamic\WordPress\Pay\Core\Gateway;
+use Pronamic\WordPress\Pay\Core\PaymentMethods;
+use Pronamic\WordPress\Pay\Core\Server;
 
 /**
  * Title: MultiSafepay Connect gateay
@@ -10,7 +13,7 @@
  * @version 1.2.9
  * @since 1.0.1
  */
-class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Gateway extends Pronamic_WP_Pay_Gateway {
+class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Gateway extends Gateway {
 	/**
 	 * Slug of this gateway
 	 *
@@ -32,7 +35,7 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Gateway extends Pronamic_WP_
 			'payment_status_request',
 		);
 
-		$this->set_method( Pronamic_WP_Pay_Gateway::METHOD_HTTP_REDIRECT );
+		$this->set_method( Gateway::METHOD_HTTP_REDIRECT );
 		$this->set_has_feedback( true );
 		$this->set_amount_minimum( 0 );
 		$this->set_slug( self::SLUG );
@@ -77,7 +80,7 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Gateway extends Pronamic_WP_
 	 * @since 1.2.0
 	 */
 	public function get_issuer_field() {
-		if ( Pronamic_WP_Pay_PaymentMethods::IDEAL === $this->get_payment_method() ) {
+		if ( PaymentMethods::IDEAL === $this->get_payment_method() ) {
 			return array(
 				'id'       => 'pronamic_ideal_issuer_id',
 				'name'     => 'pronamic_ideal_issuer_id',
@@ -131,17 +134,17 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Gateway extends Pronamic_WP_
 	 */
 	public function get_supported_payment_methods() {
 		return array(
-			Pronamic_WP_Pay_PaymentMethods::ALIPAY,
-			Pronamic_WP_Pay_PaymentMethods::BANCONTACT,
-			Pronamic_WP_Pay_PaymentMethods::BANK_TRANSFER,
-			Pronamic_WP_Pay_PaymentMethods::BELFIUS,
-			Pronamic_WP_Pay_PaymentMethods::DIRECT_DEBIT,
-			Pronamic_WP_Pay_PaymentMethods::IDEAL,
-			Pronamic_WP_Pay_PaymentMethods::IDEALQR,
-			Pronamic_WP_Pay_PaymentMethods::GIROPAY,
-			Pronamic_WP_Pay_PaymentMethods::KBC,
-			Pronamic_WP_Pay_PaymentMethods::PAYPAL,
-			Pronamic_WP_Pay_PaymentMethods::SOFORT,
+			PaymentMethods::ALIPAY,
+			PaymentMethods::BANCONTACT,
+			PaymentMethods::BANK_TRANSFER,
+			PaymentMethods::BELFIUS,
+			PaymentMethods::DIRECT_DEBIT,
+			PaymentMethods::IDEAL,
+			PaymentMethods::IDEALQR,
+			PaymentMethods::GIROPAY,
+			PaymentMethods::KBC,
+			PaymentMethods::PAYPAL,
+			PaymentMethods::SOFORT,
 		);
 	}
 
@@ -172,8 +175,8 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Gateway extends Pronamic_WP_
 		$customer = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Customer();
 
 		$customer->locale       = $payment->get_locale();
-		$customer->ip_address   = Pronamic_WP_Pay_Server::get( 'REMOTE_ADDR', FILTER_VALIDATE_IP );
-		$customer->forwarded_ip = Pronamic_WP_Pay_Server::get( 'HTTP_X_FORWARDED_FOR', FILTER_VALIDATE_IP );
+		$customer->ip_address   = Server::get( 'REMOTE_ADDR', FILTER_VALIDATE_IP );
+		$customer->forwarded_ip = Server::get( 'HTTP_X_FORWARDED_FOR', FILTER_VALIDATE_IP );
 		$customer->first_name   = $payment->get_first_name();
 		$customer->last_name    = $payment->get_last_name();
 		$customer->email        = $payment->get_email();
@@ -186,7 +189,7 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Gateway extends Pronamic_WP_
 		$transaction->description = $transaction_description;
 
 		switch ( $payment->get_method() ) {
-			case Pronamic_WP_Pay_PaymentMethods::IDEAL:
+			case PaymentMethods::IDEAL:
 				$transaction->gateway = Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::IDEAL;
 
 				$issuer = $payment->get_issuer();

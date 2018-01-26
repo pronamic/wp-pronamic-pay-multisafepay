@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Pay\Core\XML\Security;
 
 /**
  * Title: MultiSafepay Connect XML redirect transaction response message
@@ -20,7 +21,7 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_RedirectTransactionRespo
 	public static function parse( SimpleXMLElement $xml ) {
 		$message = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_RedirectTransactionResponseMessage();
 
-		$message->result      = Pronamic_WP_Pay_XML_Security::filter( $xml['result'] );
+		$message->result      = Security::filter( $xml['result'] );
 		$message->transaction = Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_TransactionParser::parse( $xml->transaction );
 
 		return $message;

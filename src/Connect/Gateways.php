@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Pay\Core\PaymentMethods;
 
 /**
  * Title: MultiSafepay connect gateways
@@ -143,17 +144,17 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways {
 	 * @var array
 	 */
 	private static $map = array(
-		Pronamic_WP_Pay_PaymentMethods::ALIPAY        => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::ALIPAY,
-		Pronamic_WP_Pay_PaymentMethods::BANCONTACT    => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::BANCONTACT,
-		Pronamic_WP_Pay_PaymentMethods::BANK_TRANSFER => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::BANK_TRANSFER,
-		Pronamic_WP_Pay_PaymentMethods::BELFIUS       => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::BELFIUS,
-		Pronamic_WP_Pay_PaymentMethods::DIRECT_DEBIT  => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::DIRECT_DEBIT,
-		Pronamic_WP_Pay_PaymentMethods::GIROPAY       => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::GIROPAY,
-		Pronamic_WP_Pay_PaymentMethods::IDEAL         => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::IDEAL,
-		Pronamic_WP_Pay_PaymentMethods::IDEALQR       => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::IDEALQR,
-		Pronamic_WP_Pay_PaymentMethods::KBC           => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::KBC,
-		Pronamic_WP_Pay_PaymentMethods::PAYPAL        => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::PAYPAL,
-		Pronamic_WP_Pay_PaymentMethods::SOFORT        => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::SOFORT,
+		PaymentMethods::ALIPAY        => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::ALIPAY,
+		PaymentMethods::BANCONTACT    => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::BANCONTACT,
+		PaymentMethods::BANK_TRANSFER => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::BANK_TRANSFER,
+		PaymentMethods::BELFIUS       => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::BELFIUS,
+		PaymentMethods::DIRECT_DEBIT  => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::DIRECT_DEBIT,
+		PaymentMethods::GIROPAY       => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::GIROPAY,
+		PaymentMethods::IDEAL         => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::IDEAL,
+		PaymentMethods::IDEALQR       => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::IDEALQR,
+		PaymentMethods::KBC           => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::KBC,
+		PaymentMethods::PAYPAL        => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::PAYPAL,
+		PaymentMethods::SOFORT        => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::SOFORT,
 	);
 
 	/**

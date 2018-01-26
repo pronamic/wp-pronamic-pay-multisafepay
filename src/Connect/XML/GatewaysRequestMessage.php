@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Pay\Core\XML\Util;
 
 /**
  * Title: MultiSafepay Connect XML gateways request message
@@ -46,8 +47,8 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_GatewaysRequestMessage e
 		// Merchant
 		$merchant = $this->merchant;
 
-		$element = Pronamic_WP_Pay_XML_Util::add_element( $document, $document->documentElement, 'merchant' );
-		Pronamic_WP_Pay_XML_Util::add_elements( $document, $element, array(
+		$element = Util::add_element( $document, $document->documentElement, 'merchant' );
+		Util::add_elements( $document, $element, array(
 			'account'          => $merchant->account,
 			'site_id'          => $merchant->site_id,
 			'site_secure_code' => $merchant->site_secure_code,
@@ -56,8 +57,8 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_GatewaysRequestMessage e
 		// Customer
 		$customer = $this->customer;
 
-		$element = Pronamic_WP_Pay_XML_Util::add_element( $document, $document->documentElement, 'customer' );
-		Pronamic_WP_Pay_XML_Util::add_elements( $document, $element, array(
+		$element = Util::add_element( $document, $document->documentElement, 'customer' );
+		Util::add_elements( $document, $element, array(
 			'country' => $customer->country,
 			'locale'  => $customer->locale,
 		) );

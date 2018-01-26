@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Pay\Core\XML\Security;
 
 /**
  * Title: MultiSafepay Connect XML status response message
@@ -20,18 +21,18 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_StatusResponseMessage {
 	public static function parse( SimpleXMLElement $xml ) {
 		$message = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_StatusResponseMessage();
 
-		$message->result = Pronamic_WP_Pay_XML_Security::filter( $xml['result'] );
+		$message->result = Security::filter( $xml['result'] );
 
 		// E-wallet
 		if ( $xml->ewallet ) {
 			$ewallet = new stdClass();
 
-			$ewallet->id          = Pronamic_WP_Pay_XML_Security::filter( $xml->ewallet->id );
-			$ewallet->status      = Pronamic_WP_Pay_XML_Security::filter( $xml->ewallet->status );
-			$ewallet->created     = Pronamic_WP_Pay_XML_Security::filter( $xml->ewallet->created );
-			$ewallet->modified    = Pronamic_WP_Pay_XML_Security::filter( $xml->ewallet->modified );
-			$ewallet->reason_code = Pronamic_WP_Pay_XML_Security::filter( $xml->ewallet->reasoncode );
-			$ewallet->reason      = Pronamic_WP_Pay_XML_Security::filter( $xml->ewallet->reason );
+			$ewallet->id          = Security::filter( $xml->ewallet->id );
+			$ewallet->status      = Security::filter( $xml->ewallet->status );
+			$ewallet->created     = Security::filter( $xml->ewallet->created );
+			$ewallet->modified    = Security::filter( $xml->ewallet->modified );
+			$ewallet->reason_code = Security::filter( $xml->ewallet->reasoncode );
+			$ewallet->reason      = Security::filter( $xml->ewallet->reason );
 
 			$message->ewallet = $ewallet;
 		}
@@ -40,15 +41,15 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_StatusResponseMessage {
 		if ( $xml->customer ) {
 			$customer = new stdClass();
 
-			$customer->currency      = Pronamic_WP_Pay_XML_Security::filter( $xml->customer->currency );
-			$customer->amount        = Pronamic_WP_Pay_XML_Security::filter( $xml->customer->amount );
-			$customer->exchange_rate = Pronamic_WP_Pay_XML_Security::filter( $xml->customer->exchange_rate );
-			$customer->first_name    = Pronamic_WP_Pay_XML_Security::filter( $xml->customer->firstname );
-			$customer->last_name     = Pronamic_WP_Pay_XML_Security::filter( $xml->customer->lastname );
-			$customer->last_name     = Pronamic_WP_Pay_XML_Security::filter( $xml->customer->lastname );
-			$customer->city          = Pronamic_WP_Pay_XML_Security::filter( $xml->customer->city );
-			$customer->state         = Pronamic_WP_Pay_XML_Security::filter( $xml->customer->state );
-			$customer->country       = Pronamic_WP_Pay_XML_Security::filter( $xml->customer->country );
+			$customer->currency      = Security::filter( $xml->customer->currency );
+			$customer->amount        = Security::filter( $xml->customer->amount );
+			$customer->exchange_rate = Security::filter( $xml->customer->exchange_rate );
+			$customer->first_name    = Security::filter( $xml->customer->firstname );
+			$customer->last_name     = Security::filter( $xml->customer->lastname );
+			$customer->last_name     = Security::filter( $xml->customer->lastname );
+			$customer->city          = Security::filter( $xml->customer->city );
+			$customer->state         = Security::filter( $xml->customer->state );
+			$customer->country       = Security::filter( $xml->customer->country );
 
 			$message->customer = $customer;
 		}
@@ -57,14 +58,14 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_StatusResponseMessage {
 		if ( $xml->transaction ) {
 			$transaction = new stdClass();
 
-			$transaction->id          = Pronamic_WP_Pay_XML_Security::filter( $xml->transaction->id );
-			$transaction->currency    = Pronamic_WP_Pay_XML_Security::filter( $xml->transaction->currency );
-			$transaction->amount      = Pronamic_WP_Pay_XML_Security::filter( $xml->transaction->amount );
-			$transaction->description = Pronamic_WP_Pay_XML_Security::filter( $xml->transaction->description );
-			$transaction->var1        = Pronamic_WP_Pay_XML_Security::filter( $xml->transaction->var1 );
-			$transaction->var2        = Pronamic_WP_Pay_XML_Security::filter( $xml->transaction->var2 );
-			$transaction->var3        = Pronamic_WP_Pay_XML_Security::filter( $xml->transaction->var3 );
-			$transaction->items       = Pronamic_WP_Pay_XML_Security::filter( $xml->transaction->items );
+			$transaction->id          = Security::filter( $xml->transaction->id );
+			$transaction->currency    = Security::filter( $xml->transaction->currency );
+			$transaction->amount      = Security::filter( $xml->transaction->amount );
+			$transaction->description = Security::filter( $xml->transaction->description );
+			$transaction->var1        = Security::filter( $xml->transaction->var1 );
+			$transaction->var2        = Security::filter( $xml->transaction->var2 );
+			$transaction->var3        = Security::filter( $xml->transaction->var3 );
+			$transaction->items       = Security::filter( $xml->transaction->items );
 
 			$message->transaction = $transaction;
 		}
@@ -73,12 +74,12 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_StatusResponseMessage {
 		if ( $xml->paymentdetails ) {
 			$payment_details = new stdClass();
 
-			$payment_details->type                    = Pronamic_WP_Pay_XML_Security::filter( $xml->paymentdetails->type );
-			$payment_details->account_iban            = Pronamic_WP_Pay_XML_Security::filter( $xml->paymentdetails->accountiban );
-			$payment_details->account_bic             = Pronamic_WP_Pay_XML_Security::filter( $xml->paymentdetails->accountbic );
-			$payment_details->account_id              = Pronamic_WP_Pay_XML_Security::filter( $xml->paymentdetails->accountid );
-			$payment_details->account_holder_name     = Pronamic_WP_Pay_XML_Security::filter( $xml->paymentdetails->accountholdername );
-			$payment_details->external_transaction_id = Pronamic_WP_Pay_XML_Security::filter( $xml->paymentdetails->externaltransactionid );
+			$payment_details->type                    = Security::filter( $xml->paymentdetails->type );
+			$payment_details->account_iban            = Security::filter( $xml->paymentdetails->accountiban );
+			$payment_details->account_bic             = Security::filter( $xml->paymentdetails->accountbic );
+			$payment_details->account_id              = Security::filter( $xml->paymentdetails->accountid );
+			$payment_details->account_holder_name     = Security::filter( $xml->paymentdetails->accountholdername );
+			$payment_details->external_transaction_id = Security::filter( $xml->paymentdetails->externaltransactionid );
 
 			$message->payment_details = $payment_details;
 		}

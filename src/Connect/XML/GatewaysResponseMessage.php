@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Pay\Core\XML\Security;
 
 /**
  * Title: MultiSafepay Connect XML gateways response message
@@ -24,8 +25,8 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_GatewaysResponseMessage 
 		$message->gateways = array();
 
 		foreach ( $xml->gateways->gateway as $gateway ) {
-			$id          = Pronamic_WP_Pay_XML_Security::filter( $gateway->id );
-			$description = Pronamic_WP_Pay_XML_Security::filter( $gateway->description );
+			$id          = Security::filter( $gateway->id );
+			$description = Security::filter( $gateway->description );
 
 			$message->gateways[ $id ] = $description;
 		}

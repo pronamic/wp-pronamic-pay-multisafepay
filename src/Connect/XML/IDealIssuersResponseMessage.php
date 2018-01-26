@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Pay\Core\XML\Security;
 
 /**
  * Title: MultiSafepay Connect XML iDEAL issuers response message
@@ -23,8 +24,8 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_IDealIssuersResponseMess
 		$message->issuers = array();
 
 		foreach ( $xml->issuers->issuer as $issuer ) {
-			$code        = Pronamic_WP_Pay_XML_Security::filter( $issuer->code );
-			$description = Pronamic_WP_Pay_XML_Security::filter( $issuer->description );
+			$code        = Security::filter( $issuer->code );
+			$description = Security::filter( $issuer->description );
 
 			$message->issuers[ $code ] = $description;
 		}

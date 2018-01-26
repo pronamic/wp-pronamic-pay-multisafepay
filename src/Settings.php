@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Pay\Core\GatewaySettings;
 
 /**
  * Title: MultiSafepay gateway settings
@@ -10,7 +11,7 @@
  * @version 1.1.4
  * @since 1.0.0
  */
-class Pronamic_WP_Pay_Gateways_MultiSafepay_Settings extends Pronamic_WP_Pay_GatewaySettings {
+class Pronamic_WP_Pay_Gateways_MultiSafepay_Settings extends GatewaySettings {
 	public function __construct() {
 		add_filter( 'pronamic_pay_gateway_sections', array( $this, 'sections' ) );
 		add_filter( 'pronamic_pay_gateway_fields', array( $this, 'fields' ) );
