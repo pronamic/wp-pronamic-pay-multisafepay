@@ -88,20 +88,49 @@ class Gateway extends Core_Gateway {
 	}
 
 	/**
+	 * Get credit card issuers
+	 *
+	 * @see Core_Gateway::get_credit_card_issuers()
+	 */
+	public function get_credit_card_issuers() {
+		$groups[] = array(
+			'options' => array(
+				Methods::AMEX       => _x( 'AMEX', 'Payment method name', 'pronamic_ideal' ),
+				Methods::MAESTRO    => _x( 'Maestro', 'Payment method name', 'pronamic_ideal' ),
+				Methods::MASTERCARD => _x( 'MASTER', 'Payment method name', 'pronamic_ideal' ),
+				Methods::VISA       => _x( 'VISA', 'Payment method name', 'pronamic_ideal' ),
+			),
+		);
+
+		return $groups;
+	}
+
+	/**
 	 * Get issuer field
 	 *
 	 * @since 1.2.0
 	 */
 	public function get_issuer_field() {
-		if ( PaymentMethods::IDEAL === $this->get_payment_method() ) {
-			return array(
-				'id'       => 'pronamic_ideal_issuer_id',
-				'name'     => 'pronamic_ideal_issuer_id',
-				'label'    => __( 'Choose your bank', 'pronamic_ideal' ),
-				'required' => true,
-				'type'     => 'select',
-				'choices'  => $this->get_transient_issuers(),
-			);
+		switch ( $this->get_payment_method() ) {
+			case PaymentMethods::IDEAL:
+				return array(
+					'id'       => 'pronamic_ideal_issuer_id',
+					'name'     => 'pronamic_ideal_issuer_id',
+					'label'    => __( 'Choose your bank', 'pronamic_ideal' ),
+					'required' => true,
+					'type'     => 'select',
+					'choices'  => $this->get_transient_issuers(),
+				);
+
+			case PaymentMethods::CREDIT_CARD:
+				return array(
+					'id'       => 'pronamic_credit_card_issuer_id',
+					'name'     => 'pronamic_credit_card_issuer_id',
+					'label'    => __( 'Choose your credit card issuer', 'pronamic_ideal' ),
+					'required' => true,
+					'type'     => 'select',
+					'choices'  => $this->get_transient_credit_card_issuers(),
+				);
 		}
 	}
 
@@ -150,6 +179,7 @@ class Gateway extends Core_Gateway {
 			PaymentMethods::BANCONTACT,
 			PaymentMethods::BANK_TRANSFER,
 			PaymentMethods::BELFIUS,
+			PaymentMethods::CREDIT_CARD,
 			PaymentMethods::DIRECT_DEBIT,
 			PaymentMethods::IDEAL,
 			PaymentMethods::IDEALQR,
@@ -219,7 +249,20 @@ class Gateway extends Core_Gateway {
 				}
 
 				break;
+			case PaymentMethods::CREDIT_CARD:
+				$gateway = Methods::transform( $payment_method );
+
+				$issuer = $payment->get_issuer();
+
+				if ( empty( $issuer ) ) {
+					if ( $gateway ) {
+						$transaction->gateway = $gateway;
+					}
+				} else {
+					$transaction->gateway = $issuer;
 				}
+
+				$message = new RedirectTransactionRequestMessage( $merchant, $customer, $transaction );
 
 				break;
 			default:
