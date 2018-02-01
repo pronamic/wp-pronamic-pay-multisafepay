@@ -1,5 +1,7 @@
 <?php
 
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML\StatusResponseMessage;
+
 class Pronamic_Pay_Gateways_MultiSafepay_Connect_TestStatusParser extends WP_UnitTestCase {
 	public function test_init() {
 		$filename = dirname( __FILE__ ) . '/Mock/status-response.xml';
@@ -17,9 +19,9 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_TestStatusParser extends WP_Uni
 	 * @depends test_init
 	 */
 	public function test_parser( $simplexml ) {
-		$message = Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_StatusResponseMessage::parse( $simplexml );
+		$message = StatusResponseMessage::parse( $simplexml );
 
-		$this->assertInstanceOf( 'Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_StatusResponseMessage', $message );
+		$this->assertInstanceOf( 'Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML\StatusResponseMessage', $message );
 
 		return $message;
 	}
@@ -30,7 +32,7 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_TestStatusParser extends WP_Uni
 	 * @depends test_parser
 	 */
 	public function test_values( $message ) {
-		$expected = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_StatusResponseMessage();
+		$expected = new StatusResponseMessage();
 
 		$expected->result = 'ok';
 

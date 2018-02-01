@@ -1,5 +1,9 @@
 <?php
-use Pronamic\WordPress\Pay\Core\XML\Util;
+
+namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML;
+
+use Pronamic\WordPress\Pay\Core\XML\Util as XML_Util;
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Merchant;
 
 /**
  * Title: MultiSafepay Connect XML iDEAL issuers request message
@@ -7,11 +11,11 @@ use Pronamic\WordPress\Pay\Core\XML\Util;
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
+ * @author  Remco Tolsma
  * @version 1.2.0
- * @since 1.2.0
+ * @since   1.2.0
  */
-class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_IDealIssuersRequestMessage extends Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_RequestMessage {
+class IDealIssuersRequestMessage extends RequestMessage {
 	/**
 	 * The document element name
 	 *
@@ -19,12 +23,21 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_IDealIssuersRequestMessa
 	 */
 	const NAME = 'idealissuers';
 
+	/**
+	 * Merchant.
+	 *
+	 * @var Merchant
+	 */
+	public $merchant;
+
 	//////////////////////////////////////////////////
 
 	/**
 	 * Constructs and initialize an directory response message
+	 *
+	 * @param Merchant $merchant
 	 */
-	public function __construct( $merchant ) {
+	public function __construct( Merchant $merchant ) {
 		parent::__construct( self::NAME );
 
 		$this->merchant = $merchant;
@@ -40,15 +53,10 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_IDealIssuersRequestMessa
 	public function get_document() {
 		$document = parent::get_document();
 
-		// Root
-		$root = $document->documentElement;
-
 		// Merchant
-		$merchant = $this->merchant;
+		$merchant = XML_Util::add_element( $document, $document->documentElement, 'merchant' );
 
-		$element = Util::add_element( $document, $document->documentElement, 'merchant' );
-
-		Util::add_elements( $document, $element, array(
+		XML_Util::add_elements( $document, $merchant, array(
 			'account'          => $merchant->account,
 			'site_id'          => $merchant->site_id,
 			'site_secure_code' => $merchant->site_secure_code,

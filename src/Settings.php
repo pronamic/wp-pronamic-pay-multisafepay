@@ -1,4 +1,7 @@
 <?php
+
+namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay;
+
 use Pronamic\WordPress\Pay\Core\GatewaySettings;
 
 /**
@@ -7,18 +10,17 @@ use Pronamic\WordPress\Pay\Core\GatewaySettings;
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
+ * @author  Remco Tolsma
  * @version 1.1.4
- * @since 1.0.0
+ * @since   1.0.0
  */
-class Pronamic_WP_Pay_Gateways_MultiSafepay_Settings extends GatewaySettings {
+class Settings extends GatewaySettings {
 	public function __construct() {
 		add_filter( 'pronamic_pay_gateway_sections', array( $this, 'sections' ) );
 		add_filter( 'pronamic_pay_gateway_fields', array( $this, 'fields' ) );
 	}
 
 	public function sections( array $sections ) {
-		// iDEAL
 		$sections['multisafepay'] = array(
 			'title'       => __( 'MultiSafepay', 'pronamic_ideal' ),
 			'methods'     => array( 'multisafepay' ),

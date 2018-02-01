@@ -1,7 +1,14 @@
 <?php
-use Pronamic\WordPress\Pay\Core\Gateway;
+
+namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect;
+
+use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Core\Server;
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML\DirectTransactionRequestMessage;
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML\RedirectTransactionRequestMessage;
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML\StatusRequestMessage;
+use Pronamic\WordPress\Pay\Payments\Payment;
 
 /**
  * Title: MultiSafepay Connect gateay
@@ -9,11 +16,11 @@ use Pronamic\WordPress\Pay\Core\Server;
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
+ * @author  Remco Tolsma
  * @version 1.2.9
- * @since 1.0.1
+ * @since   1.0.1
  */
-class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Gateway extends Gateway {
+class Gateway extends Core_Gateway {
 	/**
 	 * Slug of this gateway
 	 *
@@ -21,14 +28,21 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Gateway extends Gateway {
 	 */
 	const SLUG = 'multisafepay-connect';
 
+	/**
+	 * Config
+	 *
+	 * @var Config
+	 */
+	protected $config;
+
 	/////////////////////////////////////////////////
 
 	/**
 	 * Constructs and initializes an MultiSafepay Connect gateway
 	 *
-	 * @param Pronamic_WP_Pay_Gateways_MultiSafepay_Config $config
+	 * @param Config $config
 	 */
-	public function __construct( Pronamic_WP_Pay_Gateways_MultiSafepay_Config $config ) {
+	public function __construct( Config $config ) {
 		parent::__construct( $config );
 
 		$this->supports = array(
@@ -40,7 +54,7 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Gateway extends Gateway {
 		$this->set_amount_minimum( 0 );
 		$this->set_slug( self::SLUG );
 
-		$this->client = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Client();
+		$this->client = new Client();
 
 		$this->client->api_url = $config->api_url;
 	}
@@ -48,17 +62,16 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Gateway extends Gateway {
 	/////////////////////////////////////////////////
 
 	/**
-	 * Get issuers
+	 * Get iDEAL issuers
 	 *
-	 * @see Pronamic_WP_Pay_Gateway::get_issuers()
+	 * @see Core_Gateway::get_issuers()
 	 * @since 1.2.0
 	 */
 	public function get_issuers() {
 		$groups = array();
 
 		// Merchant
-		$merchant = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Merchant();
-
+		$merchant                   = new Merchant();
 		$merchant->account          = $this->config->account_id;
 		$merchant->site_id          = $this->config->site_id;
 		$merchant->site_secure_code = $this->config->site_code;
@@ -103,14 +116,13 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Gateway extends Gateway {
 		$groups = array();
 
 		// Merchant
-		$merchant = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Merchant();
-
+		$merchant                   = new Merchant();
 		$merchant->account          = $this->config->account_id;
 		$merchant->site_id          = $this->config->site_id;
 		$merchant->site_secure_code = $this->config->site_code;
 
 		// Customer
-		$customer = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Customer();
+		$customer = new Customer();
 
 		$result = $this->client->get_gateways( $merchant, $customer );
 
@@ -153,17 +165,19 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Gateway extends Gateway {
 	/**
 	 * Start payment.
 	 *
-	 * @param Pronamic_Pay_Payment $payment payment object
+	 * @param Payment $payment payment object
 	 */
-	public function start( Pronamic_Pay_Payment $payment ) {
+	public function start( Payment $payment ) {
+		$payment_method = $payment->get_method();
+
 		$transaction_description = $payment->get_description();
 
 		if ( empty( $transaction_description ) ) {
 			$transaction_description = $payment->get_id();
 		}
 
-		$merchant = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Merchant();
-
+		// Merchant
+		$merchant                   = new Merchant();
 		$merchant->account          = $this->config->account_id;
 		$merchant->site_id          = $this->config->site_id;
 		$merchant->site_secure_code = $this->config->site_code;
@@ -172,8 +186,8 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Gateway extends Gateway {
 		$merchant->cancel_url       = $payment->get_return_url();
 		$merchant->close_window     = 'false';
 
-		$customer = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Customer();
-
+		// Customer
+		$customer               = new Customer();
 		$customer->locale       = $payment->get_locale();
 		$customer->ip_address   = Server::get( 'REMOTE_ADDR', FILTER_VALIDATE_IP );
 		$customer->forwarded_ip = Server::get( 'HTTP_X_FORWARDED_FOR', FILTER_VALIDATE_IP );
@@ -181,41 +195,44 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Gateway extends Gateway {
 		$customer->last_name    = $payment->get_last_name();
 		$customer->email        = $payment->get_email();
 
-		$transaction = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Transaction();
-
+		// Transaction
+		$transaction              = new Transaction();
 		$transaction->id          = uniqid();
 		$transaction->currency    = $payment->get_currency();
 		$transaction->amount      = $payment->get_amount();
 		$transaction->description = $transaction_description;
 
-		switch ( $payment->get_method() ) {
+		switch ( $payment_method ) {
 			case PaymentMethods::IDEAL:
-				$transaction->gateway = Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::IDEAL;
+				$transaction->gateway = Methods::IDEAL;
 
 				$issuer = $payment->get_issuer();
 
 				if ( empty( $issuer ) ) {
-					$message = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_RedirectTransactionRequestMessage( $merchant, $customer, $transaction );
+					$message = new RedirectTransactionRequestMessage( $merchant, $customer, $transaction );
 				} else {
-					$gateway_info = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_GatewayInfo();
+					$gateway_info = new GatewayInfo();
 
 					$gateway_info->issuer_id = $issuer;
 
-					$message = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_DirectTransactionRequestMessage( $merchant, $customer, $transaction, $gateway_info );
+					$message = new DirectTransactionRequestMessage( $merchant, $customer, $transaction, $gateway_info );
+				}
+
+				break;
 				}
 
 				break;
 			default:
-				$gateway = Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::transform( $payment->get_method() );
+				$gateway = Methods::transform( $payment_method );
 
 				if ( $gateway ) {
 					$transaction->gateway = $gateway;
 				}
 
-				$message = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_RedirectTransactionRequestMessage( $merchant, $customer, $transaction );
+				$message = new RedirectTransactionRequestMessage( $merchant, $customer, $transaction );
 		}
 
-		$signature = Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Signature::generate( $transaction->amount, $transaction->currency, $merchant->account, $merchant->site_id, $transaction->id );
+		$signature = Signature::generate( $transaction->amount, $transaction->currency, $merchant->account, $merchant->site_id, $transaction->id );
 
 		$message->signature = $signature;
 
@@ -238,19 +255,19 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Gateway extends Gateway {
 		}
 	}
 
-	public function update_status( Pronamic_Pay_Payment $payment ) {
-		$merchant = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Merchant();
+	public function update_status( Payment $payment ) {
+		$merchant = new Merchant();
 
 		$merchant->account          = $this->config->account_id;
 		$merchant->site_id          = $this->config->site_id;
 		$merchant->site_secure_code = $this->config->site_code;
 
-		$message = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_StatusRequestMessage( $merchant, $payment->get_transaction_id() );
+		$message = new StatusRequestMessage( $merchant, $payment->get_transaction_id() );
 
 		$result = $this->client->get_status( $message );
 
 		if ( $result ) {
-			$status = Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Statuses::transform( $result->ewallet->status );
+			$status = Statuses::transform( $result->ewallet->status );
 
 			$payment->set_status( $status );
 			$payment->set_consumer_name( $result->payment_details->account_holder_name );

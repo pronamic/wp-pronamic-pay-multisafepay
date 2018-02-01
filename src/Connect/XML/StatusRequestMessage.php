@@ -1,5 +1,9 @@
 <?php
-use Pronamic\WordPress\Pay\Core\XML\Util;
+
+namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML;
+
+use Pronamic\WordPress\Pay\Core\XML\Util as XML_Util;
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Merchant;
 
 /**
  * Title: MultiSafepay Connect XML status request message
@@ -7,11 +11,11 @@ use Pronamic\WordPress\Pay\Core\XML\Util;
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
+ * @author  Remco Tolsma
  * @version 1.0.0
- * @since 1.0.0
+ * @since   1.0.0
  */
-class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_StatusRequestMessage extends Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_RequestMessage {
+class StatusRequestMessage extends RequestMessage {
 	/**
 	 * The document element name
 	 *
@@ -19,12 +23,22 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_StatusRequestMessage ext
 	 */
 	const NAME = 'status';
 
+	/**
+	 * Transaction ID.
+	 *
+	 * @var string
+	 */
+	public $transaction_id;
+
 	//////////////////////////////////////////////////
 
 	/**
 	 * Constructs and initialize an status message
+	 *
+	 * @param Merchant $merchant
+	 * @param          $transaction_id
 	 */
-	public function __construct( $merchant, $transaction_id ) {
+	public function __construct( Merchant $merchant, $transaction_id ) {
 		parent::__construct( self::NAME );
 
 		$this->merchant       = $merchant;
@@ -41,22 +55,19 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_StatusRequestMessage ext
 	public function get_document() {
 		$document = parent::get_document();
 
-		// Root
-		$root = $document->documentElement;
-
 		// Merchant
-		$merchant = $this->merchant;
+		$merchant = XML_Util::add_element( $document, $document->documentElement, 'merchant' );
 
-		$element = Util::add_element( $document, $document->documentElement, 'merchant' );
-		Util::add_elements( $document, $element, array(
-			'account'          => $merchant->account,
-			'site_id'          => $merchant->site_id,
-			'site_secure_code' => $merchant->site_secure_code,
+		XML_Util::add_elements( $document, $merchant, array(
+			'account'          => $this->merchant->account,
+			'site_id'          => $this->merchant->site_id,
+			'site_secure_code' => $this->merchant->site_secure_code,
 		) );
 
 		// Transaction
-		$element = Util::add_element( $document, $document->documentElement, 'transaction' );
-		Util::add_elements( $document, $element, array(
+		$transaction = XML_Util::add_element( $document, $document->documentElement, 'transaction' );
+
+		XML_Util::add_elements( $document, $transaction, array(
 			'id' => $this->transaction_id,
 		) );
 

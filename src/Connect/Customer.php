@@ -1,5 +1,7 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect;
+
 /**
  * Title: MutliSafepay Connect customer
  * Description:
@@ -7,9 +9,9 @@
  * Company: Pronamic
  *
  * @author Remco Tolsma
- * @since 1.0.0
+ * @since  1.0.0
  */
-class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Customer {
+class Customer {
 	public $locale;
 
 	public $ip_address;

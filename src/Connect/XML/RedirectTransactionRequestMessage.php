@@ -1,6 +1,9 @@
 <?php
-use Pronamic\WordPress\Pay\Core\XML\Util;
-use Pronamic\WordPress\Pay\Util;
+
+namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML;
+
+use Pronamic\WordPress\Pay\Core\XML\Util as XML_Util;
+use Pronamic\WordPress\Pay\Util as Pay_Util;
 
 /**
  * Title: MultiSafepay Connect XML redirect transaction request message
@@ -8,11 +11,11 @@ use Pronamic\WordPress\Pay\Util;
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
+ * @author  Remco Tolsma
  * @version 1.0.0
- * @since 1.0.0
+ * @since   1.0.0
  */
-class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_RedirectTransactionRequestMessage extends Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_RequestMessage {
+class RedirectTransactionRequestMessage extends RequestMessage {
 	/**
 	 * The document element name
 	 *
@@ -43,63 +46,57 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_RedirectTransactionReque
 	public function get_document() {
 		$document = parent::get_document();
 
-		// Root
-		$root = $document->documentElement;
-
 		// Merchant
-		$merchant = $this->merchant;
+		$merchant = XML_Util::add_element( $document, $document->documentElement, 'merchant' );
 
-		$element = Util::add_element( $document, $document->documentElement, 'merchant' );
-		Util::add_elements( $document, $element, array(
-			'account'          => $merchant->account,
-			'site_id'          => $merchant->site_id,
-			'site_secure_code' => $merchant->site_secure_code,
-			'notification_url' => $merchant->notification_url,
-			'redirect_url'     => $merchant->redirect_url,
-			'cancel_url'       => $merchant->cancel_url,
-			'close_window'     => $merchant->close_window,
+		XML_Util::add_elements( $document, $merchant, array(
+			'account'          => $this->merchant->account,
+			'site_id'          => $this->merchant->site_id,
+			'site_secure_code' => $this->merchant->site_secure_code,
+			'notification_url' => $this->merchant->notification_url,
+			'redirect_url'     => $this->merchant->redirect_url,
+			'cancel_url'       => $this->merchant->cancel_url,
+			'close_window'     => $this->merchant->close_window,
 		) );
 
 		// Customer
-		$customer = $this->customer;
+		$customer = XML_Util::add_element( $document, $document->documentElement, 'customer' );
 
-		$element = Util::add_element( $document, $document->documentElement, 'customer' );
-		Util::add_elements( $document, $element, array(
-			'locale'      => $customer->locale,
-			'ipaddress'   => $customer->ip_address,
-			'forwardedip' => $customer->forwarded_ip,
-			'firstname'   => $customer->first_name,
-			'lastname'    => $customer->last_name,
-			'address1'    => $customer->address_1,
-			'address2'    => $customer->address_2,
-			'housenumber' => $customer->house_number,
-			'zipcode'     => $customer->zip_code,
-			'city'        => $customer->city,
-			'country'     => $customer->country,
-			'phone'       => $customer->phone,
-			'email'       => $customer->email,
+		XML_Util::add_elements( $document, $customer, array(
+			'locale'      => $this->customer->locale,
+			'ipaddress'   => $this->customer->ip_address,
+			'forwardedip' => $this->customer->forwarded_ip,
+			'firstname'   => $this->customer->first_name,
+			'lastname'    => $this->customer->last_name,
+			'address1'    => $this->customer->address_1,
+			'address2'    => $this->customer->address_2,
+			'housenumber' => $this->customer->house_number,
+			'zipcode'     => $this->customer->zip_code,
+			'city'        => $this->customer->city,
+			'country'     => $this->customer->country,
+			'phone'       => $this->customer->phone,
+			'email'       => $this->customer->email,
 		) );
 
 		// Transaction
-		$transaction = $this->transaction;
+		$transaction = XML_Util::add_element( $document, $document->documentElement, 'transaction' );
 
-		$element = Util::add_element( $document, $document->documentElement, 'transaction' );
-		Util::add_elements( $document, $element, array(
-			'id'          => $transaction->id,
-			'currency'    => $transaction->currency,
-			'amount'      => Util::amount_to_cents( $transaction->amount ),
-			'description' => $transaction->description,
-			'var1'        => $transaction->var1,
-			'var2'        => $transaction->var2,
-			'var3'        => $transaction->var3,
-			'items'       => $transaction->items,
-			'manual'      => $transaction->manual,
-			'gateway'     => $transaction->gateway,
-			'daysactive'  => $transaction->days_active,
+		XML_Util::add_elements( $document, $transaction, array(
+			'id'          => $this->transaction->id,
+			'currency'    => $this->transaction->currency,
+			'amount'      => Pay_Util::amount_to_cents( $this->transaction->amount ),
+			'description' => $this->transaction->description,
+			'var1'        => $this->transaction->var1,
+			'var2'        => $this->transaction->var2,
+			'var3'        => $this->transaction->var3,
+			'items'       => $this->transaction->items,
+			'manual'      => $this->transaction->manual,
+			'gateway'     => $this->transaction->gateway,
+			'daysactive'  => $this->transaction->days_active,
 		) );
 
 		// Signature
-		$element = Util::add_element( $document, $document->documentElement, 'signature', $this->signature );
+		XML_Util::add_element( $document, $document->documentElement, 'signature', $this->signature );
 
 		return $document;
 	}

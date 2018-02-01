@@ -1,6 +1,17 @@
 <?php
 
 use Pronamic\WordPress\Pay\Core\Server;
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Client;
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Customer;
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Merchant;
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\GatewayInfo;
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Methods;
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Signature;
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Transaction;
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML\DirectTransactionRequestMessage;
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML\DirectTransactionResponseMessage;
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\MultiSafepay;
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Config;
 
 class Pronamic_Pay_Gateways_MultiSafepay_Connect_DirectTransactionTest extends WP_UnitTestCase {
 	/**
@@ -31,7 +42,7 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_DirectTransactionTest extends W
 		add_filter( 'pre_http_request', array( $this, 'pre_http_request' ), 10, 3 );
 
 		// Config
-		$config = new Pronamic_WP_Pay_Gateways_MultiSafepay_Config();
+		$config = new Config();
 
 		$config->mode       = getenv( 'MULTISAFEPAY_MODE' );
 		$config->account_id = getenv( 'MULTISAFEPAY_ACCOUNT_ID' );
@@ -39,18 +50,18 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_DirectTransactionTest extends W
 		$config->site_code  = getenv( 'MULTISAFEPAY_SECURE_CODE' );
 
 		if ( 'test' === $config->mode ) {
-			$config->api_url = Pronamic_WP_Pay_Gateways_MultiSafepay_MultiSafepay::API_TEST_URL;
+			$config->api_url = MultiSafepay::API_TEST_URL;
 		} else {
-			$config->api_url = Pronamic_WP_Pay_Gateways_MultiSafepay_MultiSafepay::API_PRODUCTION_URL;
+			$config->api_url = MultiSafepay::API_PRODUCTION_URL;
 		}
 
 		// Client
-		$client = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Client();
+		$client = new Client();
 
 		$client->api_url = $config->api_url;
 
 		// Message
-		$merchant = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Merchant();
+		$merchant = new Merchant();
 
 		$merchant->account          = $config->account_id;
 		$merchant->site_id          = $config->site_id;
@@ -60,7 +71,7 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_DirectTransactionTest extends W
 		$merchant->cancel_url       = home_url();
 		$merchant->close_window     = 'false';
 
-		$customer = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Customer();
+		$customer = new Customer();
 
 		$customer->locale       = get_locale();
 		$customer->ip_address   = Server::get( 'REMOTE_ADDR', FILTER_VALIDATE_IP );
@@ -76,7 +87,7 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_DirectTransactionTest extends W
 		$customer->phone        = '';
 		$customer->email        = get_option( 'admin_email' );
 
-		$transaction = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Transaction();
+		$transaction = new Transaction();
 
 		$transaction->id          = uniqid();
 		$transaction->currency    = 'EUR';
@@ -89,18 +100,18 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_DirectTransactionTest extends W
 		$transaction->manual      = 'false';
 		$transaction->gateway     = '';
 		$transaction->days_active = '';
-		$transaction->gateway     = Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::IDEAL;
-		//$transaction->gateway = Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::MASTERCARD;
-		//$transaction->gateway = Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::BANK_TRANSFER;
+		$transaction->gateway     = Methods::IDEAL;
+		//$transaction->gateway     = Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Gateways::MASTERCARD;
+		//$transaction->gateway     = Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Gateways::BANK_TRANSFER;
 
 		//$gateway_info = null;
 		$gateway_info = new stdClass();
 
 		$gateway_info->issuer_id = '3151';
 
-		$message = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_DirectTransactionRequestMessage( $merchant, $customer, $transaction, $gateway_info );
+		$message = new DirectTransactionRequestMessage( $merchant, $customer, $transaction, $gateway_info );
 
-		$signature = Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Signature::generate( $transaction->amount, $transaction->currency, $merchant->account, $merchant->site_id, $transaction->id );
+		$signature = Signature::generate( $transaction->amount, $transaction->currency, $merchant->account, $merchant->site_id, $transaction->id );
 
 		$message->signature = $signature;
 
@@ -108,15 +119,15 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_DirectTransactionTest extends W
 		$response = $client->start_transaction( $message );
 
 		// Expected
-		$expected = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_DirectTransactionResponseMessage();
+		$expected = new DirectTransactionResponseMessage();
 
 		$expected->result = 'ok';
 
-		$expected->transaction = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Transaction();
+		$expected->transaction = new Transaction();
 
 		$expected->transaction->id = '554202bb33498';
 
-		$expected->gateway_info = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_GatewayInfo();
+		$expected->gateway_info = new GatewayInfo();
 
 		$expected->gateway_info->issuer_id    = '3151';
 		$expected->gateway_info->redirect_url = 'http://testpay.multisafepay.com/simulator/ideal?trxid=10447735643871196&ideal=prob&issuerid=3151&merchantReturnURL=https%3A%2F%2Ftestpay%2Emultisafepay%2Ecom%2Fdirect%2Fcomplete%2F%3Fid%3D9943038943576689';

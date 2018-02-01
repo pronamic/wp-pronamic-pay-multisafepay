@@ -1,5 +1,10 @@
 <?php
+
+namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML;
+
 use Pronamic\WordPress\Pay\Core\XML\Security;
+use SimpleXMLElement;
+use stdClass;
 
 /**
  * Title: MultiSafepay Connect XML status response message
@@ -7,19 +12,55 @@ use Pronamic\WordPress\Pay\Core\XML\Security;
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
+ * @author  Remco Tolsma
  * @version 1.0.0
- * @since 1.0.0
+ * @since   1.0.0
  */
-class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_StatusResponseMessage {
+class StatusResponseMessage {
+	/**
+	 * Result
+	 *
+	 * @var string
+	 */
+	public $result;
+
+	/**
+	 * E-wallet
+	 *
+	 * @var object
+	 */
+	public $ewallet;
+
+	/**
+	 * Customer
+	 *
+	 * @var object
+	 */
+	public $customer;
+
+	/**
+	 * Transaction
+	 *
+	 * @var object
+	 */
+	public $transaction;
+
+	/**
+	 * Payment details.
+	 *
+	 * @var object
+	 */
+	public $payment_details;
+
 	/**
 	 * Parse the specified XML element into an iDEAL transaction object
 	 *
 	 * @param SimpleXMLElement $xml
-	 * @param Pronamic_Gateways_IDealAdvanced_Transaction $transaction
+	 *
+	 * @return StatusResponseMessage
 	 */
 	public static function parse( SimpleXMLElement $xml ) {
-		$message = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_StatusResponseMessage();
+		$message = new StatusResponseMessage();
 
 		$message->result = Security::filter( $xml['result'] );
 

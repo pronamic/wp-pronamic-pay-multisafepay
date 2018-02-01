@@ -1,5 +1,7 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect;
+
 /**
  * Title: MutliSafepay Connect transaction
  * Description:
@@ -7,9 +9,9 @@
  * Company: Pronamic
  *
  * @author Remco Tolsma
- * @since 1.0.0
+ * @since  1.0.0
  */
-class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Transaction {
+class Transaction {
 	public $id;
 
 	public $currency;
@@ -32,16 +34,5 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Transaction {
 
 	public $days_active;
 
-	/////////////////////////////////////////////////
-
 	public $payment_url;
-
-	/////////////////////////////////////////////////
-
-	/**
-	 * Constructs and initialize an MultiSafepay Connect transaction object
-	 */
-	public function __construct() {
-
-	}
 }

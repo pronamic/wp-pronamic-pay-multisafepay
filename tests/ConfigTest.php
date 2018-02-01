@@ -1,5 +1,7 @@
 <?php
 
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Config;
+
 /**
  * Title: MultiSafepay - Config test
  * Description:
@@ -11,6 +13,6 @@
  */
 class Pronamic_WP_Pay_Gateways_MultiSafepay_ConfigTest extends PHPUnit_Framework_TestCase {
 	public function test_config() {
-		$config = new Pronamic_WP_Pay_Gateways_MultiSafepay_Config();
+		$config = new Config();
 	}
 }

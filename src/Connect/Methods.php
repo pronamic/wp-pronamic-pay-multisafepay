@@ -1,17 +1,20 @@
 <?php
+
+namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect;
+
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 
 /**
- * Title: MultiSafepay connect gateways
+ * Title: MultiSafepay connect payment methods
  * Description:
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
- * @since 1.2.0
+ * @author  Remco Tolsma
+ * @since   1.2.0
  * @version 1.2.0
  */
-class Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways {
+class Methods {
 	/**
 	 * Gateway Alipay
 	 *
@@ -144,24 +147,26 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways {
 	 * @var array
 	 */
 	private static $map = array(
-		PaymentMethods::ALIPAY        => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::ALIPAY,
-		PaymentMethods::BANCONTACT    => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::BANCONTACT,
-		PaymentMethods::BANK_TRANSFER => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::BANK_TRANSFER,
-		PaymentMethods::BELFIUS       => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::BELFIUS,
-		PaymentMethods::DIRECT_DEBIT  => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::DIRECT_DEBIT,
-		PaymentMethods::GIROPAY       => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::GIROPAY,
-		PaymentMethods::IDEAL         => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::IDEAL,
-		PaymentMethods::IDEALQR       => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::IDEALQR,
-		PaymentMethods::KBC           => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::KBC,
-		PaymentMethods::PAYPAL        => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::PAYPAL,
-		PaymentMethods::SOFORT        => Pronamic_WP_Pay_Gateways_MultiSafepay_Gateways::SOFORT,
+		PaymentMethods::ALIPAY        => Methods::ALIPAY,
+		PaymentMethods::BANCONTACT    => Methods::BANCONTACT,
+		PaymentMethods::BANK_TRANSFER => Methods::BANK_TRANSFER,
+		PaymentMethods::BELFIUS       => Methods::BELFIUS,
+		PaymentMethods::DIRECT_DEBIT  => Methods::DIRECT_DEBIT,
+		PaymentMethods::GIROPAY       => Methods::GIROPAY,
+		PaymentMethods::IDEAL         => Methods::IDEAL,
+		PaymentMethods::IDEALQR       => Methods::IDEALQR,
+		PaymentMethods::KBC           => Methods::KBC,
+		PaymentMethods::PAYPAL        => Methods::PAYPAL,
+		PaymentMethods::SOFORT        => Methods::SOFORT,
 	);
 
 	/**
 	 * Transform WordPress payment method to MultiSafepay method.
 	 *
 	 * @since unreleased
+	 *
 	 * @param string $payment_method
+	 *
 	 * @return string
 	 */
 	public static function transform( $payment_method ) {

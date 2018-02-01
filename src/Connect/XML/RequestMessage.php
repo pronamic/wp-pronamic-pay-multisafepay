@@ -1,16 +1,43 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML;
+
+use DOMDocument;
+
 /**
  * Title: MultiSafepay Connect XML request message
  * Description:
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
+ * @author  Remco Tolsma
  * @version 1.0.0
- * @since 1.0.0
+ * @since   1.0.0
  */
-abstract class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_RequestMessage extends Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_Message {
+abstract class RequestMessage extends Message {
+	/**
+	 * Merchant.
+	 *
+	 * @var Merchant
+	 */
+	protected $merchant;
+
+	/**
+	 * Customer.
+	 *
+	 * @var Customer
+	 */
+	protected $customer;
+
+	/**
+	 * Transaction.
+	 *
+	 * @var Transaction
+	 */
+	protected $transaction;
+
+	/////////////////////////////////////////////////
+
 	/**
 	 * Get the DOM document
 	 *
@@ -19,7 +46,7 @@ abstract class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_RequestMessage 
 	protected function get_document() {
 		$document = new DOMDocument( parent::XML_VERSION, parent::XML_ENCODING );
 
-		// We can't disable preservere white space and format the output
+		// We can't disable preserve white space and format the output
 		// this is causing 'Invalid electronic signature' errors
 		$document->preserveWhiteSpace = true;
 		$document->formatOutput       = true;

@@ -1,5 +1,9 @@
 <?php
 
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Gateway;
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\MultiSafepay;
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Config;
+
 class Pronamic_Pay_Gateways_MultiSafepay_Connect_GatewayTest extends WP_UnitTestCase {
 	/**
 	 * Pre HTTP request
@@ -25,7 +29,7 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_GatewayTest extends WP_UnitTest
 		add_filter( 'pre_http_request', array( $this, 'pre_http_request' ), 10, 3 );
 
 		// Other
-		$config = new Pronamic_WP_Pay_Gateways_MultiSafepay_Config();
+		$config = new Config();
 
 		$config->mode       = getenv( 'MULTISAFEPAY_MODE' );
 		$config->account_id = getenv( 'MULTISAFEPAY_ACCOUNT_ID' );
@@ -33,12 +37,12 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_GatewayTest extends WP_UnitTest
 		$config->site_code  = getenv( 'MULTISAFEPAY_SECURE_CODE' );
 
 		if ( 'test' === $config->mode ) {
-			$config->api_url = Pronamic_WP_Pay_Gateways_MultiSafepay_MultiSafepay::API_TEST_URL;
+			$config->api_url = MultiSafepay::API_TEST_URL;
 		} else {
-			$config->api_url = Pronamic_WP_Pay_Gateways_MultiSafepay_MultiSafepay::API_PRODUCTION_URL;
+			$config->api_url = MultiSafepay::API_PRODUCTION_URL;
 		}
 
-		$gateway = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Gateway( $config );
+		$gateway = new Gateway( $config );
 
 		$issuers = $gateway->get_issuers();
 

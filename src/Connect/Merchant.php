@@ -1,5 +1,7 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect;
+
 /**
  * Title: MutliSafepay Connect merchant
  * Description:
@@ -7,9 +9,9 @@
  * Company: Pronamic
  *
  * @author Remco Tolsma
- * @since 1.0.0
+ * @since  1.0.0
  */
-class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Merchant {
+class Merchant {
 	public $account;
 
 	public $site_id;
@@ -23,13 +25,4 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Merchant {
 	public $cancel_url;
 
 	public $close_window;
-
-	/////////////////////////////////////////////////
-
-	/**
-	 * Constructs and initialize an MultiSafepay Connect merchant object
-	 */
-	public function __construct() {
-
-	}
 }

@@ -1,5 +1,7 @@
 <?php
 
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Signature;
+
 /**
  * Test signature
  *
@@ -14,7 +16,7 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_TestSignature extends WP_UnitTe
 		$site_id        = '1234';
 		$transaction_id = '1234567890';
 
-		$signature = Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Signature::generate( $amount, $currency, $account, $site_id, $transaction_id );
+		$signature = Signature::generate( $amount, $currency, $account, $site_id, $transaction_id );
 
 		$expected = 'af90311cf82cbf9bb4fcda5a54005b92';
 

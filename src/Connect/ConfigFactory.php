@@ -1,6 +1,10 @@
 <?php
+
+namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect;
+
 use Pronamic\WordPress\Pay\Core\Gateway;
 use Pronamic\WordPress\Pay\Core\GatewayConfigFactory;
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\MultiSafepay;
 
 /**
  * Title: MultiSafepay config factory
@@ -8,13 +12,20 @@ use Pronamic\WordPress\Pay\Core\GatewayConfigFactory;
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
+ * @author  Remco Tolsma
  * @version 1.2.7
- * @since 1.2.6
+ * @since   1.2.6
  */
-class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_ConfigFactory extends GatewayConfigFactory {
+class ConfigFactory extends GatewayConfigFactory {
+	/**
+	 * Get config.
+	 *
+	 * @param $post_id
+	 *
+	 * @return Config
+	 */
 	public function get_config( $post_id ) {
-		$config = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Config();
+		$config = new Config();
 
 		$config->mode       = get_post_meta( $post_id, '_pronamic_gateway_mode', true );
 		$config->account_id = get_post_meta( $post_id, '_pronamic_gateway_multisafepay_account_id', true );
@@ -22,9 +33,9 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_ConfigFactory extends Gatewa
 		$config->site_code  = get_post_meta( $post_id, '_pronamic_gateway_multisafepay_site_code', true );
 
 		if ( Gateway::MODE_TEST === $config->mode ) {
-			$config->api_url = Pronamic_WP_Pay_Gateways_MultiSafepay_MultiSafepay::API_TEST_URL;
+			$config->api_url = MultiSafepay::API_TEST_URL;
 		} else {
-			$config->api_url = Pronamic_WP_Pay_Gateways_MultiSafepay_MultiSafepay::API_PRODUCTION_URL;
+			$config->api_url = MultiSafepay::API_PRODUCTION_URL;
 		}
 
 		return $config;

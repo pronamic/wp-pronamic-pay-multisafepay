@@ -1,5 +1,7 @@
 <?php
 
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML\IDealIssuersResponseMessage;
+
 class Pronamic_Pay_Gateways_MultiSafepay_Connect_IDealIssuersParserTest extends WP_UnitTestCase {
 	/**
 	 * Test init
@@ -20,9 +22,9 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_IDealIssuersParserTest extends 
 	 * @depends test_init
 	 */
 	public function test_parser( $simplexml ) {
-		$message = Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_IDealIssuersResponseMessage::parse( $simplexml );
+		$message = IDealIssuersResponseMessage::parse( $simplexml );
 
-		$this->assertInstanceOf( 'Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_IDealIssuersResponseMessage', $message );
+		$this->assertInstanceOf( 'Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML\IDealIssuersResponseMessage', $message );
 
 		return $message;
 	}
@@ -33,7 +35,7 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_IDealIssuersParserTest extends 
 	 * @depends test_parser
 	 */
 	public function test_values( $message ) {
-		$expected = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_IDealIssuersResponseMessage();
+		$expected = new IDealIssuersResponseMessage();
 
 		$expected->issuers = array(
 			'0031' => 'ABN AMRO',
