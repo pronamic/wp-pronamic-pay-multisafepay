@@ -272,6 +272,11 @@ class Gateway extends Core_Gateway {
 					$transaction->gateway = $gateway;
 				}
 
+				if ( empty( $transaction->gateway ) && ! empty( $payment_method ) ) {
+					// Leap of faith if the WordPress payment method could not transform to a Mollie method?
+					$transaction->gateway = $payment_method;
+				}
+
 				$message = new RedirectTransactionRequestMessage( $merchant, $customer, $transaction );
 		}
 
