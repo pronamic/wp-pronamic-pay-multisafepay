@@ -295,7 +295,7 @@ class Gateway extends Core_Gateway {
 				$payment->set_action_url( $transaction->payment_url );
 			}
 
-			if ( isset( $response->gateway_info, $response->gateway_info->redirect_url ) ) {
+			if ( isset( $response->gateway_info->redirect_url ) ) {
 				$payment->set_action_url( $response->gateway_info->redirect_url );
 			}
 		} else {
