@@ -38,8 +38,6 @@ class Customer {
 
 	public $email;
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initialize an MultiSafepay Connect customer object
 	 */

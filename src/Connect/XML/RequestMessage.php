@@ -36,8 +36,6 @@ abstract class RequestMessage extends Message {
 	 */
 	protected $transaction;
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Get the DOM document
 	 *
@@ -60,8 +58,6 @@ abstract class RequestMessage extends Message {
 
 		return $document;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Create a string representation

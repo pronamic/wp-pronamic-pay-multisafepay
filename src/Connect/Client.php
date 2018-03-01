@@ -34,8 +34,6 @@ class Client {
 	 */
 	private $error;
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * API URL
 	 *
@@ -43,16 +41,12 @@ class Client {
 	 */
 	public $api_url;
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initializes an MultiSafepay Connect client
 	 */
 	public function __construct() {
 		$this->api_url = MultiSafepay::API_PRODUCTION_URL;
 	}
-
-	/////////////////////////////////////////////////
 
 	/**
 	 * Get error
@@ -62,8 +56,6 @@ class Client {
 	public function get_error() {
 		return $this->error;
 	}
-
-	/////////////////////////////////////////////////
 
 	private function parse_xml( $xml ) {
 		switch ( $xml->getName() ) {
@@ -85,8 +77,6 @@ class Client {
 
 		return false;
 	}
-
-	/////////////////////////////////////////////////
 
 	private function request( $message ) {
 		$return = false;
@@ -118,8 +108,6 @@ class Client {
 		return $return;
 	}
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Get iDEAL issuers
 	 *
@@ -138,8 +126,6 @@ class Client {
 
 		return $return;
 	}
-
-	/////////////////////////////////////////////////
 
 	/**
 	 * Get gateways
@@ -160,8 +146,6 @@ class Client {
 		return $return;
 	}
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Start transaction
 	 *
@@ -178,8 +162,6 @@ class Client {
 
 		return $return;
 	}
-
-	/////////////////////////////////////////////////
 
 	/**
 	 * Get status

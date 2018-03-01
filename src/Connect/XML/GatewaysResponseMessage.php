@@ -23,8 +23,6 @@ class GatewaysResponseMessage {
 	 */
 	public $gateways;
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Parse the specified XML element into an iDEAL transaction object
 	 *

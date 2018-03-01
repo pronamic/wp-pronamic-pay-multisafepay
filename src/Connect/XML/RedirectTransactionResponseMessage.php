@@ -30,8 +30,6 @@ class RedirectTransactionResponseMessage {
 	 */
 	public $transaction;
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Parse the specified XML element into an iDEAL transaction object
 	 *

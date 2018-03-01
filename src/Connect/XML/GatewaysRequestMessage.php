@@ -24,8 +24,6 @@ class GatewaysRequestMessage extends RequestMessage {
 	 */
 	const NAME = 'gateways';
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initialize an directory response message
 	 *
@@ -38,8 +36,6 @@ class GatewaysRequestMessage extends RequestMessage {
 		$this->merchant = $merchant;
 		$this->customer = $customer;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get document

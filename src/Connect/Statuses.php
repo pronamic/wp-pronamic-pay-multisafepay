@@ -63,8 +63,6 @@ class Statuses {
 	 */
 	const EXPIRED = 'expired';
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Transform an MultiSafepay state to an more global status
 	 *

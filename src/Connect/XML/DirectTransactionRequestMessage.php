@@ -34,8 +34,6 @@ class DirectTransactionRequestMessage extends RequestMessage {
 	 */
 	private $gateway_info;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initialize an directory response message
 	 *
@@ -52,8 +50,6 @@ class DirectTransactionRequestMessage extends RequestMessage {
 		$this->transaction  = $transaction;
 		$this->gateway_info = $gateway_info;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get document

@@ -35,8 +35,6 @@ class Gateway extends Core_Gateway {
 	 */
 	protected $config;
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initializes an MultiSafepay Connect gateway
 	 *
@@ -58,8 +56,6 @@ class Gateway extends Core_Gateway {
 
 		$this->client->api_url = $config->api_url;
 	}
-
-	/////////////////////////////////////////////////
 
 	/**
 	 * Get iDEAL issuers
@@ -134,8 +130,6 @@ class Gateway extends Core_Gateway {
 		}
 	}
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Get payment methods
 	 *
@@ -189,8 +183,6 @@ class Gateway extends Core_Gateway {
 			PaymentMethods::SOFORT,
 		);
 	}
-
-	/////////////////////////////////////////////////
 
 	/**
 	 * Start payment.

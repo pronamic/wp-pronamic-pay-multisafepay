@@ -28,8 +28,6 @@ class Signature {
 
 	public $close_window;
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initialize an MultiSafepay Connect merchant object
 	 *

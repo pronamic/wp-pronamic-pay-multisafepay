@@ -30,8 +30,6 @@ class StatusRequestMessage extends RequestMessage {
 	 */
 	public $transaction_id;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initialize an status message
 	 *
@@ -44,8 +42,6 @@ class StatusRequestMessage extends RequestMessage {
 		$this->merchant       = $merchant;
 		$this->transaction_id = $transaction_id;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get document

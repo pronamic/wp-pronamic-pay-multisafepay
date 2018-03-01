@@ -23,8 +23,6 @@ class RedirectTransactionRequestMessage extends RequestMessage {
 	 */
 	const NAME = 'redirecttransaction';
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initialize an directory response message
 	 */
@@ -35,8 +33,6 @@ class RedirectTransactionRequestMessage extends RequestMessage {
 		$this->customer    = $customer;
 		$this->transaction = $transaction;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get document

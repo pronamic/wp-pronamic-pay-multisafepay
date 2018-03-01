@@ -38,8 +38,6 @@ class DirectTransactionResponseMessage {
 	 */
 	public $gateway_info;
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Parse the specified XML element into an iDEAL transaction object
 	 *

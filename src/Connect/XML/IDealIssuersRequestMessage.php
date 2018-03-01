@@ -30,8 +30,6 @@ class IDealIssuersRequestMessage extends RequestMessage {
 	 */
 	public $merchant;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initialize an directory response message
 	 *
@@ -42,8 +40,6 @@ class IDealIssuersRequestMessage extends RequestMessage {
 
 		$this->merchant = $merchant;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get document

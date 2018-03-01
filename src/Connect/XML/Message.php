@@ -27,8 +27,6 @@ class Message {
 	 */
 	const XML_ENCODING = 'UTF-8';
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * The name of this message
 	 *
@@ -36,16 +34,12 @@ class Message {
 	 */
 	private $name;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * User agent
 	 *
 	 * @var string
 	 */
 	private $user_agent;
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Constructs and initialize an message
@@ -59,8 +53,6 @@ class Message {
 		$this->set_user_agent( 'Pronamic Pay ' . $pronamic_pay_version );
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get the name of this message
 	 *
@@ -69,8 +61,6 @@ class Message {
 	public function get_name() {
 		return $this->name;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get user agent
