@@ -1,7 +1,9 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect;
+
+use WP_UnitTestCase;
 use Pronamic\WordPress\Pay\Core\Statuses as Core_Statuses;
-use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Statuses;
 
 /**
  * Title: MultiSafepay statuses test
@@ -13,7 +15,7 @@ use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Statuses;
  * @version 1.2.0
  * @since 1.2.0
  */
-class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_StatusesTest extends WP_UnitTestCase {
+class StatusesTest extends WP_UnitTestCase {
 	/**
 	 * Test transform
 	 *

@@ -1,8 +1,11 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect;
+
+use WP_UnitTestCase;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML\IDealIssuersResponseMessage;
 
-class Pronamic_Pay_Gateways_MultiSafepay_Connect_IDealIssuersParserTest extends WP_UnitTestCase {
+class IDealIssuersParserTest extends WP_UnitTestCase {
 	/**
 	 * Test init
 	 */

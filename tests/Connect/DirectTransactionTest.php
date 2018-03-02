@@ -1,19 +1,15 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect;
+
+use stdClass;
+use WP_Http;
+use WP_UnitTestCase;
 use Pronamic\WordPress\Pay\Core\Server;
-use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Client;
-use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Customer;
-use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Merchant;
-use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\GatewayInfo;
-use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Methods;
-use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Signature;
-use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Transaction;
-use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML\DirectTransactionRequestMessage;
-use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML\DirectTransactionResponseMessage;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\MultiSafepay;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Config;
 
-class Pronamic_Pay_Gateways_MultiSafepay_Connect_DirectTransactionTest extends WP_UnitTestCase {
+class DirectTransactionTest extends WP_UnitTestCase {
 	/**
 	 * Pre HTTP request
 	 *
@@ -105,11 +101,11 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_DirectTransactionTest extends W
 		//$transaction->gateway     = Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Gateways::BANK_TRANSFER;
 
 		//$gateway_info = null;
-		$gateway_info = new stdClass();
+		$gateway_info = new GatewayInfo();
 
 		$gateway_info->issuer_id = '3151';
 
-		$message = new DirectTransactionRequestMessage( $merchant, $customer, $transaction, $gateway_info );
+		$message = new XML\DirectTransactionRequestMessage( $merchant, $customer, $transaction, $gateway_info );
 
 		$signature = Signature::generate( $transaction->amount, $transaction->currency, $merchant->account, $merchant->site_id, $transaction->id );
 
@@ -119,7 +115,7 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_DirectTransactionTest extends W
 		$response = $client->start_transaction( $message );
 
 		// Expected
-		$expected = new DirectTransactionResponseMessage();
+		$expected = new XML\DirectTransactionResponseMessage();
 
 		$expected->result = 'ok';
 

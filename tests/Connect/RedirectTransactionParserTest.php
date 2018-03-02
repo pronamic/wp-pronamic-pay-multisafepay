@@ -1,9 +1,10 @@
 <?php
 
-use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Transaction;
-use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML\RedirectTransactionResponseMessage;
+namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect;
 
-class Pronamic_Pay_Gateways_MultiSafepay_Connect_TestRedirectTransactionParser extends WP_UnitTestCase {
+use WP_UnitTestCase;
+
+class TestRedirectTransactionParser extends WP_UnitTestCase {
 	/**
 	 * Test init
 	 */
@@ -23,9 +24,9 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_TestRedirectTransactionParser e
 	 * @depends test_init
 	 */
 	public function test_parser( $simplexml ) {
-		$message = RedirectTransactionResponseMessage::parse( $simplexml );
+		$message = XML\RedirectTransactionResponseMessage::parse( $simplexml );
 
-		$this->assertInstanceOf( 'Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML\RedirectTransactionResponseMessage', $message );
+		$this->assertInstanceOf( __NAMESPACE__ . '\XML\RedirectTransactionResponseMessage', $message );
 
 		return $message;
 	}
@@ -36,7 +37,7 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_TestRedirectTransactionParser e
 	 * @depends test_parser
 	 */
 	public function test_values( $message ) {
-		$expected = new RedirectTransactionResponseMessage();
+		$expected = new XML\RedirectTransactionResponseMessage();
 
 		$expected->result = 'ok';
 

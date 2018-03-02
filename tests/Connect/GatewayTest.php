@@ -1,10 +1,12 @@
 <?php
 
-use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Gateway;
-use Pronamic\WordPress\Pay\Gateways\MultiSafepay\MultiSafepay;
-use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Config;
+namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect;
 
-class Pronamic_Pay_Gateways_MultiSafepay_Connect_GatewayTest extends WP_UnitTestCase {
+use WP_Http;
+use WP_UnitTestCase;
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\MultiSafepay;
+
+class GatewayTest extends WP_UnitTestCase {
 	/**
 	 * Pre HTTP request
 	 *

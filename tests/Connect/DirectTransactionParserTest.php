@@ -1,16 +1,16 @@
 <?php
 
-use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\GatewayInfo;
-use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Transaction;
-use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML\DirectTransactionResponseMessage;
+namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect;
 
-class Pronamic_Pay_Gateways_MultiSafepay_Connect_DirectTransactionParserTest extends WP_UnitTestCase {
+use WP_UnitTestCase;
+
+class DirectTransactionParserTest extends WP_UnitTestCase {
 	public function test_init() {
 		$filename = dirname( __FILE__ ) . '/Mock/direct-transaction-response.xml';
 
 		$simplexml = simplexml_load_file( $filename );
 
-		$this->assertInstanceOf( 'SimpleXMLElement', $simplexml );
+		$this->assertInstanceOf( '\SimpleXMLElement', $simplexml );
 
 		return $simplexml;
 	}
@@ -21,9 +21,9 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_DirectTransactionParserTest ext
 	 * @depends test_init
 	 */
 	public function test_parser( $simplexml ) {
-		$message = DirectTransactionResponseMessage::parse( $simplexml );
+		$message = XML\DirectTransactionResponseMessage::parse( $simplexml );
 
-		$this->assertInstanceOf( 'Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML\DirectTransactionResponseMessage', $message );
+		$this->assertInstanceOf( __NAMESPACE__ . '\XML\DirectTransactionResponseMessage', $message );
 
 		return $message;
 	}
@@ -34,7 +34,7 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_DirectTransactionParserTest ext
 	 * @depends test_parser
 	 */
 	public function test_values( $message ) {
-		$expected = new DirectTransactionResponseMessage();
+		$expected = new XML\DirectTransactionResponseMessage();
 
 		$expected->result = 'ok';
 
