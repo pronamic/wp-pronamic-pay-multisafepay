@@ -147,17 +147,17 @@ class Methods {
 	 * @var array
 	 */
 	private static $map = array(
-		PaymentMethods::ALIPAY        => Methods::ALIPAY,
-		PaymentMethods::BANCONTACT    => Methods::BANCONTACT,
-		PaymentMethods::BANK_TRANSFER => Methods::BANK_TRANSFER,
-		PaymentMethods::BELFIUS       => Methods::BELFIUS,
-		PaymentMethods::DIRECT_DEBIT  => Methods::DIRECT_DEBIT,
-		PaymentMethods::GIROPAY       => Methods::GIROPAY,
-		PaymentMethods::IDEAL         => Methods::IDEAL,
-		PaymentMethods::IDEALQR       => Methods::IDEALQR,
-		PaymentMethods::KBC           => Methods::KBC,
-		PaymentMethods::PAYPAL        => Methods::PAYPAL,
-		PaymentMethods::SOFORT        => Methods::SOFORT,
+		PaymentMethods::ALIPAY        => self::ALIPAY,
+		PaymentMethods::BANCONTACT    => self::BANCONTACT,
+		PaymentMethods::BANK_TRANSFER => self::BANK_TRANSFER,
+		PaymentMethods::BELFIUS       => self::BELFIUS,
+		PaymentMethods::DIRECT_DEBIT  => self::DIRECT_DEBIT,
+		PaymentMethods::GIROPAY       => self::GIROPAY,
+		PaymentMethods::IDEAL         => self::IDEAL,
+		PaymentMethods::IDEALQR       => self::IDEALQR,
+		PaymentMethods::KBC           => self::KBC,
+		PaymentMethods::PAYPAL        => self::PAYPAL,
+		PaymentMethods::SOFORT        => self::SOFORT,
 	);
 
 	/**
@@ -165,11 +165,12 @@ class Methods {
 	 *
 	 * @since unreleased
 	 *
-	 * @param string $payment_method
+	 * @param string $payment_method Payment method.
+	 * @param mixed  $default        Default payment method.
 	 *
 	 * @return string
 	 */
-	public static function transform( $payment_method ) {
+	public static function transform( $payment_method, $default = null ) {
 		if ( ! is_scalar( $payment_method ) ) {
 			return null;
 		}
@@ -178,6 +179,29 @@ class Methods {
 			return self::$map[ $payment_method ];
 		}
 
-		return null;
+		return $default;
+	}
+
+	/**
+	 * Transform MultiSafepay method to WordPress payment method.
+	 *
+	 * @since unreleased
+	 *
+	 * @param string $method Mollie method.
+	 *
+	 * @return string
+	 */
+	public static function transform_gateway_method( $method ) {
+		if ( ! is_scalar( $method ) ) {
+			return null;
+		}
+
+		$payment_method = array_search( $method, self::$map, true );
+
+		if ( ! $payment_method ) {
+			return null;
+		}
+
+		return $payment_method;
 	}
 }

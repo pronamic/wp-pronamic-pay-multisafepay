@@ -135,31 +135,36 @@ class Gateway extends Core_Gateway {
 	 *
 	 * @see Pronamic_WP_Pay_Gateway::get_payment_methods()
 	 */
-	public function get_payment_methods() {
-		$groups = array();
+	public function get_available_payment_methods() {
+		$payment_methods = array();
 
-		// Merchant
+		// Merchant.
 		$merchant                   = new Merchant();
 		$merchant->account          = $this->config->account_id;
 		$merchant->site_id          = $this->config->site_id;
 		$merchant->site_secure_code = $this->config->site_code;
 
-		// Customer
+		// Customer.
 		$customer = new Customer();
 
+		// Get gateways.
 		$result = $this->client->get_gateways( $merchant, $customer );
 
 		if ( ! $result ) {
 			$this->error = $this->client->get_error();
 
-			return $groups;
+			return $payment_methods;
 		}
 
-		$groups[] = array(
-			'options' => $result,
-		);
+		foreach ( $result as $method => $title ) {
+			$payment_method = Methods::transform_gateway_method( $method );
 
-		return $groups;
+			if ( $payment_method ) {
+				$payment_methods[] = $payment_method;
+			}
+		}
+
+		return $payment_methods;
 	}
 
 	/**
