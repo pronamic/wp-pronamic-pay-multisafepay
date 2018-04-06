@@ -48,9 +48,7 @@ class Message {
 		$this->name = $name;
 
 		// User Agent
-		global $pronamic_pay_version;
-
-		$this->set_user_agent( 'Pronamic Pay ' . $pronamic_pay_version );
+		$this->set_user_agent( 'Pronamic Pay ' . pronamic_pay_plugin()->get_version() );
 	}
 
 	/**
