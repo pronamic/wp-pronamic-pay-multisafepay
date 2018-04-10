@@ -52,8 +52,6 @@ abstract class RequestMessage extends Message {
 		// Root
 		$root = $document->createElement( $this->get_name() );
 
-		$root->setAttribute( 'ua', $this->get_user_agent() );
-
 		$document->appendChild( $root );
 
 		return $document;

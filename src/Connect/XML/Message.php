@@ -35,20 +35,10 @@ class Message {
 	private $name;
 
 	/**
-	 * User agent
-	 *
-	 * @var string
-	 */
-	private $user_agent;
-
-	/**
 	 * Constructs and initialize an message
 	 */
 	public function __construct( $name ) {
 		$this->name = $name;
-
-		// User Agent
-		$this->set_user_agent( 'Pronamic Pay ' . pronamic_pay_plugin()->get_version() );
 	}
 
 	/**
@@ -58,23 +48,5 @@ class Message {
 	 */
 	public function get_name() {
 		return $this->name;
-	}
-
-	/**
-	 * Get user agent
-	 *
-	 * @return string
-	 */
-	public function get_user_agent() {
-		return $this->user_agent;
-	}
-
-	/**
-	 * Set user agent
-	 *
-	 * @param string $user_agent
-	 */
-	public function set_user_agent( $user_agent ) {
-		$this->user_agent = $user_agent;
 	}
 }
