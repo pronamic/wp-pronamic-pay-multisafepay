@@ -13,7 +13,7 @@ use Pronamic\WordPress\Pay\Gateways\MultiSafepay\MultiSafepay;
  * Company: Pronamic
  *
  * @author  Remco Tolsma
- * @version 1.2.7
+ * @version 2.0.2
  * @since   1.2.6
  */
 class ConfigFactory extends GatewayConfigFactory {

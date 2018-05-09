@@ -11,7 +11,7 @@ use PHPUnit_Framework_TestCase;
  * Company: Pronamic
  *
  * @author Remco Tolsma
- * @version 1.0.0
+ * @version 2.0.2
  */
 class ConfigTest extends PHPUnit_Framework_TestCase {
 	public function test_config() {

@@ -9,8 +9,8 @@ namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect;
  * Company: Pronamic
  *
  * @author  Remco Tolsma
+ * @version 2.0.2
  * @since   1.2.0
- * @version 1.2.0
  */
 class GatewayInfo {
 	public $issuer_id;

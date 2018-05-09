@@ -12,7 +12,7 @@ use SimpleXMLElement;
  * Company: Pronamic
  *
  * @author  Remco Tolsma
- * @version 1.2.0
+ * @version 2.0.2
  * @since   1.2.0
  */
 class GatewaysResponseMessage {

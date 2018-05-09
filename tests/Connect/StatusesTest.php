@@ -11,9 +11,9 @@ use Pronamic\WordPress\Pay\Core\Statuses as Core_Statuses;
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
- * @version 1.2.0
- * @since 1.2.0
+ * @author  Remco Tolsma
+ * @version 2.0.2
+ * @since   1.2.0
  */
 class StatusesTest extends WP_UnitTestCase {
 	/**

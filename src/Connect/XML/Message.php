@@ -9,7 +9,7 @@ namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML;
  * Company: Pronamic
  *
  * @author  Remco Tolsma
- * @version 1.0.0
+ * @version 2.0.2
  * @since   1.0.0
  */
 class Message {

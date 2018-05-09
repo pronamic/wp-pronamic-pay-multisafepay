@@ -11,8 +11,8 @@ use Pronamic\WordPress\Pay\Core\PaymentMethods;
  * Company: Pronamic
  *
  * @author  Remco Tolsma
+ * @version 2.0.2
  * @since   1.2.0
- * @version 1.2.0
  */
 class Methods {
 	/**
