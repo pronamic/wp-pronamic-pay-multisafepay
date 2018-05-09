@@ -4,7 +4,7 @@ namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect;
 
 use WP_UnitTestCase;
 
-class TestRedirectTransactionParser extends WP_UnitTestCase {
+class RedirectTransactionParserTest extends WP_UnitTestCase {
 	/**
 	 * Test init
 	 */

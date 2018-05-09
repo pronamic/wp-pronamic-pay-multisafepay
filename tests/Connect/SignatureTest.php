@@ -10,7 +10,7 @@ use WP_UnitTestCase;
  * @see http://pronamic.nl/wp-content/uploads/2013/04/BPE-3.0-Gateway-HTML.1.02.pdf
  * @author remco
  */
-class Pronamic_Pay_Gateways_MultiSafepay_Connect_TestSignature extends WP_UnitTestCase {
+class SignatureTest extends WP_UnitTestCase {
 	public function test_signature() {
 		$amount         = 50;
 		$currency       = 'EUR';
