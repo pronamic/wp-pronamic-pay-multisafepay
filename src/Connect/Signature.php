@@ -2,7 +2,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect;
 
-use Pronamic\WordPress\Pay\Core\Util as Core_util;
+use Pronamic\WordPress\Pay\Core\Util;
 
 /**
  * Title: MutliSafepay Connect signature
@@ -42,7 +42,7 @@ class Signature {
 	 */
 	public static function generate( $amount, $currency, $account, $site_id, $transaction_id ) {
 		$values = array(
-			Core_Util::amount_to_cents( $amount ),
+			Util::amount_to_cents( $amount ),
 			$currency,
 			$account,
 			$site_id,
