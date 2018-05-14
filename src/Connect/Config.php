@@ -1,23 +1,19 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect;
+
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Config as MultiSafepay_Config;
+
 /**
  * Title: MultiSafepay connect config
  * Description:
- * Copyright: Copyright (c) 2005 - 2016
+ * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
- * @version 1.2.6
- * @since 1.2.6
+ * @author  Remco Tolsma
+ * @version 2.0.2
+ * @since   1.2.6
  */
-class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Config extends Pronamic_WP_Pay_Gateways_MultiSafepay_Config {
-	public $account_id;
+class Config extends MultiSafepay_Config {
 
-	public $site_id;
-
-	public $site_code;
-
-	public function get_gateway_class() {
-		return 'Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Gateway';
-	}
 }

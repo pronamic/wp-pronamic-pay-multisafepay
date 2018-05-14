@@ -1,15 +1,19 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect;
+
+use Pronamic\WordPress\Pay\Core\Statuses as Core_Statuses;
+
 /**
  * Title: MultiSafepay statuses constants
  * Description:
- * Copyright: Copyright (c) 2005 - 2016
+ * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
- * @version 1.0.0
+ * @author  Remco Tolsma
+ * @version 2.0.2
  */
-class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Statuses {
+class Statuses {
 	/**
 	 * Completed successfully
 	 *
@@ -59,29 +63,36 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Statuses {
 	 */
 	const EXPIRED = 'expired';
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Transform an MultiSafepay state to an more global status
 	 *
 	 * @param string $status
+	 *
+	 * @return null|string
 	 */
 	public static function transform( $status ) {
 		switch ( $status ) {
 			case self::COMPLETED:
-				return Pronamic_WP_Pay_Statuses::SUCCESS;
+				return Core_Statuses::SUCCESS;
+
 			case self::INITIALIZED:
-				return Pronamic_WP_Pay_Statuses::OPEN;
+				return Core_Statuses::OPEN;
+
 			case self::UNCLEARED:
-				return Pronamic_WP_Pay_Statuses::OPEN;
+				return Core_Statuses::OPEN;
+
 			case self::VOID:
-				return Pronamic_WP_Pay_Statuses::CANCELLED;
+				return Core_Statuses::CANCELLED;
+
 			case self::DECLINED:
-				return Pronamic_WP_Pay_Statuses::FAILURE;
+				return Core_Statuses::FAILURE;
+
 			case self::REFUNDED:
-				return Pronamic_WP_Pay_Statuses::CANCELLED;
+				return Core_Statuses::CANCELLED;
+
 			case self::EXPIRED:
-				return Pronamic_WP_Pay_Statuses::EXPIRED;
+				return Core_Statuses::EXPIRED;
+
 			default:
 				return null;
 		}

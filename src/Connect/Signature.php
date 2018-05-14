@@ -1,15 +1,20 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect;
+
+use Pronamic\WordPress\Pay\Core\Util;
+
 /**
  * Title: MutliSafepay Connect signature
  * Description:
- * Copyright: Copyright (c) 2005 - 2016
+ * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
- * @since 1.0.0
+ * @author  Remco Tolsma
+ * @version 2.0.2
+ * @since   1.0.0
  */
-class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Signature {
+class Signature {
 	public $account;
 
 	public $site_id;
@@ -24,14 +29,20 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Signature {
 
 	public $close_window;
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initialize an MultiSafepay Connect merchant object
+	 *
+	 * @param $amount         string
+	 * @param $currency       string
+	 * @param $account        string
+	 * @param $site_id        string
+	 * @param $transaction_id string
+	 *
+	 * @return string
 	 */
 	public static function generate( $amount, $currency, $account, $site_id, $transaction_id ) {
 		$values = array(
-			Pronamic_WP_Pay_Util::amount_to_cents( $amount ),
+			Util::amount_to_cents( $amount ),
 			$currency,
 			$account,
 			$site_id,

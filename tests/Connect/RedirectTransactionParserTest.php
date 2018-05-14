@@ -1,6 +1,10 @@
 <?php
 
-class Pronamic_Pay_Gateways_MultiSafepay_Connect_TestRedirectTransactionParser extends WP_UnitTestCase {
+namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect;
+
+use WP_UnitTestCase;
+
+class RedirectTransactionParserTest extends WP_UnitTestCase {
 	/**
 	 * Test init
 	 */
@@ -20,9 +24,9 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_TestRedirectTransactionParser e
 	 * @depends test_init
 	 */
 	public function test_parser( $simplexml ) {
-		$message = Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_RedirectTransactionResponseMessage::parse( $simplexml );
+		$message = XML\RedirectTransactionResponseMessage::parse( $simplexml );
 
-		$this->assertInstanceOf( 'Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_RedirectTransactionResponseMessage', $message );
+		$this->assertInstanceOf( __NAMESPACE__ . '\XML\RedirectTransactionResponseMessage', $message );
 
 		return $message;
 	}
@@ -33,11 +37,11 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_TestRedirectTransactionParser e
 	 * @depends test_parser
 	 */
 	public function test_values( $message ) {
-		$expected = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_RedirectTransactionResponseMessage();
+		$expected = new XML\RedirectTransactionResponseMessage();
 
 		$expected->result = 'ok';
 
-		$transaction = new Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Transaction();
+		$transaction = new Transaction();
 
 		$transaction->id          = 'ABCD1234';
 		$transaction->payment_url = 'http://www.multisafepay.com/pay/...&lang=en';

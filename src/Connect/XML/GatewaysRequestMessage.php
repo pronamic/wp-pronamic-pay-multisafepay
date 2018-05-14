@@ -1,16 +1,22 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML;
+
+use Pronamic\WordPress\Pay\Core\XML\Util as XML_Util;
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Customer;
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Merchant;
+
 /**
  * Title: MultiSafepay Connect XML gateways request message
  * Description:
- * Copyright: Copyright (c) 2005 - 2016
+ * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
- * @version 1.2.0
- * @since 1.2.0
+ * @author  Remco Tolsma
+ * @version 2.0.2
+ * @since   1.2.0
  */
-class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_GatewaysRequestMessage extends Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_RequestMessage {
+class GatewaysRequestMessage extends RequestMessage {
 	/**
 	 * The document element name
 	 *
@@ -18,19 +24,18 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_GatewaysRequestMessage e
 	 */
 	const NAME = 'gateways';
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initialize an directory response message
+	 *
+	 * @param Merchant $merchant
+	 * @param Customer $customer
 	 */
-	public function __construct( $merchant, $customer ) {
+	public function __construct( Merchant $merchant, Customer $customer ) {
 		parent::__construct( self::NAME );
 
 		$this->merchant = $merchant;
 		$this->customer = $customer;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get document
@@ -40,26 +45,21 @@ class Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_XML_GatewaysRequestMessage e
 	public function get_document() {
 		$document = parent::get_document();
 
-		// Root
-		$root = $document->documentElement;
-
 		// Merchant
-		$merchant = $this->merchant;
+		$merchant = XML_Util::add_element( $document, $document->documentElement, 'merchant' );
 
-		$element = Pronamic_WP_Pay_XML_Util::add_element( $document, $document->documentElement, 'merchant' );
-		Pronamic_WP_Pay_XML_Util::add_elements( $document, $element, array(
-			'account'          => $merchant->account,
-			'site_id'          => $merchant->site_id,
-			'site_secure_code' => $merchant->site_secure_code,
+		XML_Util::add_elements( $document, $merchant, array(
+			'account'          => $this->merchant->account,
+			'site_id'          => $this->merchant->site_id,
+			'site_secure_code' => $this->merchant->site_secure_code,
 		) );
 
 		// Customer
-		$customer = $this->customer;
+		$customer = XML_Util::add_element( $document, $document->documentElement, 'customer' );
 
-		$element = Pronamic_WP_Pay_XML_Util::add_element( $document, $document->documentElement, 'customer' );
-		Pronamic_WP_Pay_XML_Util::add_elements( $document, $element, array(
-			'country' => $customer->country,
-			'locale'  => $customer->locale,
+		XML_Util::add_elements( $document, $customer, array(
+			'country' => $this->customer->country,
+			'locale'  => $this->customer->locale,
 		) );
 
 		return $document;

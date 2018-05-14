@@ -1,12 +1,16 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect;
+
+use WP_UnitTestCase;
+
 /**
  * Test signature
  *
  * @see http://pronamic.nl/wp-content/uploads/2013/04/BPE-3.0-Gateway-HTML.1.02.pdf
  * @author remco
  */
-class Pronamic_Pay_Gateways_MultiSafepay_Connect_TestSignature extends WP_UnitTestCase {
+class SignatureTest extends WP_UnitTestCase {
 	public function test_signature() {
 		$amount         = 50;
 		$currency       = 'EUR';
@@ -14,7 +18,7 @@ class Pronamic_Pay_Gateways_MultiSafepay_Connect_TestSignature extends WP_UnitTe
 		$site_id        = '1234';
 		$transaction_id = '1234567890';
 
-		$signature = Pronamic_WP_Pay_Gateways_MultiSafepay_Connect_Signature::generate( $amount, $currency, $account, $site_id, $transaction_id );
+		$signature = Signature::generate( $amount, $currency, $account, $site_id, $transaction_id );
 
 		$expected = 'af90311cf82cbf9bb4fcda5a54005b92';
 
