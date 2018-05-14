@@ -7,7 +7,7 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
-## [2.0.2] - 2018-05-09
+## [2.0.2] - 2018-05-14
 - Switched to PHP namespaces.
 
 ## [2.0.1] - 2017-12-12
