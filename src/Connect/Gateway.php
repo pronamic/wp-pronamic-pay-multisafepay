@@ -102,35 +102,6 @@ class Gateway extends Core_Gateway {
 	}
 
 	/**
-	 * Get issuer field
-	 *
-	 * @since 1.2.0
-	 */
-	public function get_issuer_field() {
-		switch ( $this->get_payment_method() ) {
-			case PaymentMethods::IDEAL:
-				return array(
-					'id'       => 'pronamic_ideal_issuer_id',
-					'name'     => 'pronamic_ideal_issuer_id',
-					'label'    => __( 'Choose your bank', 'pronamic_ideal' ),
-					'required' => true,
-					'type'     => 'select',
-					'choices'  => $this->get_transient_issuers(),
-				);
-
-			case PaymentMethods::CREDIT_CARD:
-				return array(
-					'id'       => 'pronamic_credit_card_issuer_id',
-					'name'     => 'pronamic_credit_card_issuer_id',
-					'label'    => __( 'Choose your credit card issuer', 'pronamic_ideal' ),
-					'required' => true,
-					'type'     => 'select',
-					'choices'  => $this->get_transient_credit_card_issuers(),
-				);
-		}
-	}
-
-	/**
 	 * Get payment methods
 	 *
 	 * @see Pronamic_WP_Pay_Gateway::get_payment_methods()
