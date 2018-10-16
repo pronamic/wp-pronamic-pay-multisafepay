@@ -3,7 +3,6 @@
 namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML;
 
 use Pronamic\WordPress\Pay\Core\XML\Util as XML_Util;
-use Pronamic\WordPress\Pay\Util as Pay_Util;
 
 /**
  * Title: MultiSafepay Connect XML redirect transaction request message
@@ -80,7 +79,7 @@ class RedirectTransactionRequestMessage extends RequestMessage {
 		XML_Util::add_elements( $document, $transaction, array(
 			'id'          => $this->transaction->id,
 			'currency'    => $this->transaction->currency,
-			'amount'      => Pay_Util::amount_to_cents( $this->transaction->amount ),
+			'amount'      => $this->transaction->amount,
 			'description' => $this->transaction->description,
 			'var1'        => $this->transaction->var1,
 			'var2'        => $this->transaction->var2,
