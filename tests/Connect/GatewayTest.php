@@ -38,7 +38,7 @@ class GatewayTest extends WP_UnitTestCase {
 		$config->site_id    = getenv( 'MULTISAFEPAY_SITE_ID' );
 		$config->site_code  = getenv( 'MULTISAFEPAY_SECURE_CODE' );
 
-		if ( 'test' === $config->mode ) {
+		if ( Gateway::MODE_TEST === $config->mode ) {
 			$config->api_url = MultiSafepay::API_TEST_URL;
 		} else {
 			$config->api_url = MultiSafepay::API_PRODUCTION_URL;

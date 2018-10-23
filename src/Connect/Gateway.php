@@ -47,7 +47,7 @@ class Gateway extends Core_Gateway {
 			'payment_status_request',
 		);
 
-		$this->set_method( Gateway::METHOD_HTTP_REDIRECT );
+		$this->set_method( self::METHOD_HTTP_REDIRECT );
 		$this->set_slug( self::SLUG );
 
 		$this->client = new Client();
