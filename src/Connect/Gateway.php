@@ -29,6 +29,13 @@ class Gateway extends Core_Gateway {
 	const SLUG = 'multisafepay-connect';
 
 	/**
+	 * Client.
+	 *
+	 * @var Client
+	 */
+	protected $client;
+
+	/**
 	 * Config
 	 *
 	 * @var Config
@@ -38,7 +45,7 @@ class Gateway extends Core_Gateway {
 	/**
 	 * Constructs and initializes an MultiSafepay Connect gateway
 	 *
-	 * @param Config $config
+	 * @param Config $config Config.
 	 */
 	public function __construct( Config $config ) {
 		parent::__construct( $config );
@@ -64,7 +71,7 @@ class Gateway extends Core_Gateway {
 	public function get_issuers() {
 		$groups = array();
 
-		// Merchant
+		// Merchant.
 		$merchant                   = new Merchant();
 		$merchant->account          = $this->config->account_id;
 		$merchant->site_id          = $this->config->site_id;
@@ -161,7 +168,7 @@ class Gateway extends Core_Gateway {
 	/**
 	 * Start payment.
 	 *
-	 * @param Payment $payment payment object
+	 * @param Payment $payment Payment object.
 	 */
 	public function start( Payment $payment ) {
 		$payment_method = $payment->get_method();
@@ -172,7 +179,7 @@ class Gateway extends Core_Gateway {
 			$transaction_description = $payment->get_id();
 		}
 
-		// Merchant
+		// Merchant.
 		$merchant                   = new Merchant();
 		$merchant->account          = $this->config->account_id;
 		$merchant->site_id          = $this->config->site_id;
@@ -182,7 +189,7 @@ class Gateway extends Core_Gateway {
 		$merchant->cancel_url       = $payment->get_return_url();
 		$merchant->close_window     = 'false';
 
-		// Customer
+		// Customer.
 		$customer               = new Customer();
 		$customer->locale       = $payment->get_locale();
 		$customer->ip_address   = Server::get( 'REMOTE_ADDR', FILTER_VALIDATE_IP );
@@ -269,6 +276,11 @@ class Gateway extends Core_Gateway {
 		}
 	}
 
+	/**
+	 * Update status.
+	 *
+	 * @param Payment $payment Payment.
+	 */
 	public function update_status( Payment $payment ) {
 		$merchant = new Merchant();
 
