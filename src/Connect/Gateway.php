@@ -191,14 +191,22 @@ class Gateway extends Core_Gateway {
 
 		// Customer.
 		$customer               = new Customer();
-		$customer->locale       = $payment->get_locale();
 		$customer->ip_address   = Server::get( 'REMOTE_ADDR', FILTER_VALIDATE_IP );
 		$customer->forwarded_ip = Server::get( 'HTTP_X_FORWARDED_FOR', FILTER_VALIDATE_IP );
-		$customer->first_name   = $payment->get_first_name();
-		$customer->last_name    = $payment->get_last_name();
-		$customer->email        = $payment->get_email();
 
-		// Transaction
+		if ( null !== $payment->get_customer() ) {
+			$name = $payment->get_customer()->get_name();
+
+			if ( null !== $name ) {
+				$customer->first_name = $name->get_first_name();
+				$customer->last_name  = $name->get_last_name();
+			}
+
+			$customer->locale = $payment->get_customer()->get_locale();
+			$customer->email  = $payment->get_customer()->get_email();
+		}
+
+		// Transaction.
 		$transaction              = new Transaction();
 		$transaction->id          = uniqid();
 		$transaction->currency    = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
