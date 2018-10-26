@@ -11,8 +11,11 @@ use WP_UnitTestCase;
  * @author remco
  */
 class SignatureTest extends WP_UnitTestCase {
+	/**
+	 * Test signature.
+	 */
 	public function test_signature() {
-		$amount         = 50;
+		$amount         = 5000;
 		$currency       = 'EUR';
 		$account        = 'Test';
 		$site_id        = '1234';
