@@ -2,7 +2,6 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML;
 
-use Pronamic\WordPress\Pay\Core\Util as Core_Util;
 use Pronamic\WordPress\Pay\Core\XML\Util as XML_Util;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Customer;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\GatewayInfo;
@@ -97,7 +96,7 @@ class DirectTransactionRequestMessage extends RequestMessage {
 		XML_Util::add_elements( $document, $transaction, array(
 			'id'          => $this->transaction->id,
 			'currency'    => $this->transaction->currency,
-			'amount'      => Core_Util::amount_to_cents( $this->transaction->amount ),
+			'amount'      => $this->transaction->amount,
 			'description' => $this->transaction->description,
 			'var1'        => $this->transaction->var1,
 			'var2'        => $this->transaction->var2,

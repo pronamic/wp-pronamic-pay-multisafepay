@@ -42,7 +42,7 @@ class Signature {
 	 */
 	public static function generate( $amount, $currency, $account, $site_id, $transaction_id ) {
 		$values = array(
-			Util::amount_to_cents( $amount ),
+			$amount,
 			$currency,
 			$account,
 			$site_id,

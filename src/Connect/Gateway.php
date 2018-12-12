@@ -17,7 +17,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
  * Company: Pronamic
  *
  * @author  Remco Tolsma
- * @version 2.0.2
+ * @version 2.0.3
  * @since   1.0.1
  */
 class Gateway extends Core_Gateway {
@@ -29,6 +29,13 @@ class Gateway extends Core_Gateway {
 	const SLUG = 'multisafepay-connect';
 
 	/**
+	 * Client.
+	 *
+	 * @var Client
+	 */
+	protected $client;
+
+	/**
 	 * Config
 	 *
 	 * @var Config
@@ -38,7 +45,7 @@ class Gateway extends Core_Gateway {
 	/**
 	 * Constructs and initializes an MultiSafepay Connect gateway
 	 *
-	 * @param Config $config
+	 * @param Config $config Config.
 	 */
 	public function __construct( Config $config ) {
 		parent::__construct( $config );
@@ -47,9 +54,7 @@ class Gateway extends Core_Gateway {
 			'payment_status_request',
 		);
 
-		$this->set_method( Gateway::METHOD_HTTP_REDIRECT );
-		$this->set_has_feedback( true );
-		$this->set_amount_minimum( 0 );
+		$this->set_method( self::METHOD_HTTP_REDIRECT );
 		$this->set_slug( self::SLUG );
 
 		$this->client = new Client();
@@ -66,7 +71,7 @@ class Gateway extends Core_Gateway {
 	public function get_issuers() {
 		$groups = array();
 
-		// Merchant
+		// Merchant.
 		$merchant                   = new Merchant();
 		$merchant->account          = $this->config->account_id;
 		$merchant->site_id          = $this->config->site_id;
@@ -99,35 +104,6 @@ class Gateway extends Core_Gateway {
 		);
 
 		return $groups;
-	}
-
-	/**
-	 * Get issuer field
-	 *
-	 * @since 1.2.0
-	 */
-	public function get_issuer_field() {
-		switch ( $this->get_payment_method() ) {
-			case PaymentMethods::IDEAL:
-				return array(
-					'id'       => 'pronamic_ideal_issuer_id',
-					'name'     => 'pronamic_ideal_issuer_id',
-					'label'    => __( 'Choose your bank', 'pronamic_ideal' ),
-					'required' => true,
-					'type'     => 'select',
-					'choices'  => $this->get_transient_issuers(),
-				);
-
-			case PaymentMethods::CREDIT_CARD:
-				return array(
-					'id'       => 'pronamic_credit_card_issuer_id',
-					'name'     => 'pronamic_credit_card_issuer_id',
-					'label'    => __( 'Choose your credit card issuer', 'pronamic_ideal' ),
-					'required' => true,
-					'type'     => 'select',
-					'choices'  => $this->get_transient_credit_card_issuers(),
-				);
-		}
 	}
 
 	/**
@@ -192,7 +168,7 @@ class Gateway extends Core_Gateway {
 	/**
 	 * Start payment.
 	 *
-	 * @param Payment $payment payment object
+	 * @param Payment $payment Payment object.
 	 */
 	public function start( Payment $payment ) {
 		$payment_method = $payment->get_method();
@@ -203,7 +179,7 @@ class Gateway extends Core_Gateway {
 			$transaction_description = $payment->get_id();
 		}
 
-		// Merchant
+		// Merchant.
 		$merchant                   = new Merchant();
 		$merchant->account          = $this->config->account_id;
 		$merchant->site_id          = $this->config->site_id;
@@ -213,20 +189,28 @@ class Gateway extends Core_Gateway {
 		$merchant->cancel_url       = $payment->get_return_url();
 		$merchant->close_window     = 'false';
 
-		// Customer
+		// Customer.
 		$customer               = new Customer();
-		$customer->locale       = $payment->get_locale();
 		$customer->ip_address   = Server::get( 'REMOTE_ADDR', FILTER_VALIDATE_IP );
 		$customer->forwarded_ip = Server::get( 'HTTP_X_FORWARDED_FOR', FILTER_VALIDATE_IP );
-		$customer->first_name   = $payment->get_first_name();
-		$customer->last_name    = $payment->get_last_name();
-		$customer->email        = $payment->get_email();
 
-		// Transaction
+		if ( null !== $payment->get_customer() ) {
+			$name = $payment->get_customer()->get_name();
+
+			if ( null !== $name ) {
+				$customer->first_name = $name->get_first_name();
+				$customer->last_name  = $name->get_last_name();
+			}
+
+			$customer->locale = $payment->get_customer()->get_locale();
+			$customer->email  = $payment->get_customer()->get_email();
+		}
+
+		// Transaction.
 		$transaction              = new Transaction();
 		$transaction->id          = uniqid();
-		$transaction->currency    = $payment->get_currency();
-		$transaction->amount      = $payment->get_amount()->get_amount();
+		$transaction->currency    = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
+		$transaction->amount      = $payment->get_total_amount()->get_cents();
 		$transaction->description = $transaction_description;
 
 		switch ( $payment_method ) {
@@ -300,6 +284,11 @@ class Gateway extends Core_Gateway {
 		}
 	}
 
+	/**
+	 * Update status.
+	 *
+	 * @param Payment $payment Payment.
+	 */
 	public function update_status( Payment $payment ) {
 		$merchant = new Merchant();
 

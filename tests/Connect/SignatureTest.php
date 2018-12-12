@@ -7,12 +7,15 @@ use WP_UnitTestCase;
 /**
  * Test signature
  *
- * @see http://pronamic.nl/wp-content/uploads/2013/04/BPE-3.0-Gateway-HTML.1.02.pdf
+ * @link http://pronamic.nl/wp-content/uploads/2013/04/BPE-3.0-Gateway-HTML.1.02.pdf
  * @author remco
  */
 class SignatureTest extends WP_UnitTestCase {
+	/**
+	 * Test signature.
+	 */
 	public function test_signature() {
-		$amount         = 50;
+		$amount         = 5000;
 		$currency       = 'EUR';
 		$account        = 'Test';
 		$site_id        = '1234';
