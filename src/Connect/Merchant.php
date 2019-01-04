@@ -5,7 +5,7 @@ namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect;
 /**
  * Title: MutliSafepay Connect merchant
  * Description:
- * Copyright: Copyright (c) 2005 - 2018
+ * Copyright: 2005-2019 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma

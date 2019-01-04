@@ -19,7 +19,7 @@ use WP_Error;
 /**
  * Title: MultiSafepay Connect client
  * Description:
- * Copyright: Copyright (c) 2005 - 2018
+ * Copyright: 2005-2019 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
