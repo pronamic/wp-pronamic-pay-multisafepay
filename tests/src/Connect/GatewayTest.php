@@ -5,9 +5,8 @@ namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect;
 use WP_Http;
 use WP_UnitTestCase;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\MultiSafepay;
-use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Config;
 
-class GatewaysTest extends WP_UnitTestCase {
+class GatewayTest extends WP_UnitTestCase {
 	/**
 	 * Pre HTTP request
 	 *
@@ -15,7 +14,7 @@ class GatewaysTest extends WP_UnitTestCase {
 	 * @return string
 	 */
 	public function pre_http_request( $preempt, $request, $url ) {
-		$response = file_get_contents( dirname( __FILE__ ) . '/Mock/gateways-response.http' );
+		$response = file_get_contents( dirname( __FILE__ ) . '/../../Mock/ideal-issuers-response.http' );
 
 		$processed_response = WP_Http::processResponse( $response );
 
@@ -26,16 +25,12 @@ class GatewaysTest extends WP_UnitTestCase {
 		return $processed_headers;
 	}
 
-	public function http_api_debug( $response, $context, $class, $args, $url ) {
-
-	}
-
 	public function test_init() {
 		// Mock HTTP request
 		//add_action( 'http_api_debug', array( $this, 'http_api_debug' ), 10, 5 );
 		add_filter( 'pre_http_request', array( $this, 'pre_http_request' ), 10, 3 );
 
-		// Config
+		// Other
 		$config = new Config();
 
 		$config->mode       = getenv( 'MULTISAFEPAY_MODE' );
@@ -49,36 +44,18 @@ class GatewaysTest extends WP_UnitTestCase {
 			$config->api_url = MultiSafepay::API_PRODUCTION_URL;
 		}
 
-		// Client
-		$client = new Client();
+		$gateway = new Gateway( $config );
 
-		$client->api_url = $config->api_url;
-
-		// Merchant
-		$merchant = new Merchant();
-
-		$merchant->account          = $config->account_id;
-		$merchant->site_id          = $config->site_id;
-		$merchant->site_secure_code = $config->site_code;
-
-		// Customer
-		$customer = new Customer();
-
-		$customer->locale = get_locale();
-
-		// Gateways
-		$gateways = $client->get_gateways( $merchant, $customer );
+		$issuers = $gateway->get_issuers();
 
 		$expected = array(
-			'VISA'       => 'Visa',
-			'GIROPAY'    => 'Giropay',
-			'PAYAFTER'   => 'Pay After Delivery',
-			'IDEAL'      => 'iDEAL',
-			'DIRECTBANK' => 'SOFORT Banking',
-			'BANKTRANS'  => 'Wire Transfer',
-			'MASTERCARD' => 'MasterCard',
+			array(
+				'options' => array(
+					'3151' => 'Test bank',
+				),
+			),
 		);
 
-		$this->assertEquals( $expected, $gateways );
+		$this->assertEquals( $expected, $issuers );
 	}
 }

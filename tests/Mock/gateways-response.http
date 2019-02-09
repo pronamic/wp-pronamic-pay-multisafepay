@@ -1,0 +1,11 @@
+HTTP/1.1 200 OK
+Date: Thu, 30 Apr 2015 12:08:56 GMT
+Server: Apache
+Accept-Ranges: bytes
+Content-Length: 629
+Connection: close
+Content-Type: text/xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gateways result="ok"><gateways><gateway><id>VISA</id><description>Visa</description></gateway><gateway><id>GIROPAY</id><description>Giropay</description></gateway><gateway><id>PAYAFTER</id><description>Pay After Delivery</description></gateway><gateway><id>IDEAL</id><description>iDEAL</description></gateway><gateway><id>DIRECTBANK</id><description>SOFORT Banking</description></gateway><gateway><id>BANKTRANS</id><description>Wire Transfer</description></gateway><gateway><id>MASTERCARD</id><description>MasterCard</description></gateway></gateways></gateways>
+<!--msp-kvm-tst-pay-01-->
