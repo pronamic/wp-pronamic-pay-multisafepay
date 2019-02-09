@@ -9,7 +9,7 @@ class RedirectTransactionParserTest extends WP_UnitTestCase {
 	 * Test init
 	 */
 	public function test_init() {
-		$filename = dirname( __FILE__ ) . '/../../Mock/redirect-transaction-response.xml';
+		$filename = dirname( dirname( dirname( __FILE__ ) ) ) . '/Mock/redirect-transaction-response.xml';
 
 		$simplexml = simplexml_load_file( $filename );
 

@@ -14,7 +14,7 @@ class GatewayTest extends WP_UnitTestCase {
 	 * @return string
 	 */
 	public function pre_http_request( $preempt, $request, $url ) {
-		$response = file_get_contents( dirname( __FILE__ ) . '/../../Mock/ideal-issuers-response.http' );
+		$response = file_get_contents( dirname( dirname( dirname( __FILE__ ) ) ) . '/Mock/ideal-issuers-response.http' );
 
 		$processed_response = WP_Http::processResponse( $response );
 

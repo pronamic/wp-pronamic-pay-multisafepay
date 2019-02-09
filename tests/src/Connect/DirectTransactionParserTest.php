@@ -6,7 +6,7 @@ use WP_UnitTestCase;
 
 class DirectTransactionParserTest extends WP_UnitTestCase {
 	public function test_init() {
-		$filename = dirname( __FILE__ ) . '/../../Mock/direct-transaction-response.xml';
+		$filename = dirname( dirname( dirname( __FILE__ ) ) ) . '/Mock/direct-transaction-response.xml';
 
 		$simplexml = simplexml_load_file( $filename );
 
