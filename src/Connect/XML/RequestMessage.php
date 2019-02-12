@@ -3,6 +3,9 @@
 namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML;
 
 use DOMDocument;
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Customer;
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Merchant;
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\Transaction;
 
 /**
  * Title: MultiSafepay Connect XML request message
