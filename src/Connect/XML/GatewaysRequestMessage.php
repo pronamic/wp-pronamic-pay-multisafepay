@@ -27,8 +27,8 @@ class GatewaysRequestMessage extends RequestMessage {
 	/**
 	 * Constructs and initialize an directory response message
 	 *
-	 * @param Merchant $merchant
-	 * @param Customer $customer
+	 * @param Merchant $merchant Merchant.
+	 * @param Customer $customer Customer.
 	 */
 	public function __construct( Merchant $merchant, Customer $customer ) {
 		parent::__construct( self::NAME );
@@ -45,22 +45,30 @@ class GatewaysRequestMessage extends RequestMessage {
 	public function get_document() {
 		$document = parent::get_document();
 
-		// Merchant
+		// Merchant.
 		$merchant = XML_Util::add_element( $document, $document->documentElement, 'merchant' );
 
-		XML_Util::add_elements( $document, $merchant, array(
-			'account'          => $this->merchant->account,
-			'site_id'          => $this->merchant->site_id,
-			'site_secure_code' => $this->merchant->site_secure_code,
-		) );
+		XML_Util::add_elements(
+			$document,
+			$merchant,
+			array(
+				'account'          => $this->merchant->account,
+				'site_id'          => $this->merchant->site_id,
+				'site_secure_code' => $this->merchant->site_secure_code,
+			)
+		);
 
-		// Customer
+		// Customer.
 		$customer = XML_Util::add_element( $document, $document->documentElement, 'customer' );
 
-		XML_Util::add_elements( $document, $customer, array(
-			'country' => $this->customer->country,
-			'locale'  => $this->customer->locale,
-		) );
+		XML_Util::add_elements(
+			$document,
+			$customer,
+			array(
+				'country' => $this->customer->country,
+				'locale'  => $this->customer->locale,
+			)
+		);
 
 		return $document;
 	}

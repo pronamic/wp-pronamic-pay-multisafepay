@@ -45,11 +45,11 @@ abstract class RequestMessage extends Message {
 		$document = new DOMDocument( parent::XML_VERSION, parent::XML_ENCODING );
 
 		// We can't disable preserve white space and format the output
-		// this is causing 'Invalid electronic signature' errors
+		// this is causing 'Invalid electronic signature' errors.
 		$document->preserveWhiteSpace = true;
 		$document->formatOutput       = true;
 
-		// Root
+		// Root.
 		$root = $document->createElement( $this->get_name() );
 
 		$document->appendChild( $root );

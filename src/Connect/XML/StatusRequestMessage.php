@@ -33,8 +33,8 @@ class StatusRequestMessage extends RequestMessage {
 	/**
 	 * Constructs and initialize an status message
 	 *
-	 * @param Merchant $merchant
-	 * @param          $transaction_id
+	 * @param Merchant $merchant       Merchant.
+	 * @param string   $transaction_id Transaction ID.
 	 */
 	public function __construct( Merchant $merchant, $transaction_id ) {
 		parent::__construct( self::NAME );
@@ -51,21 +51,29 @@ class StatusRequestMessage extends RequestMessage {
 	public function get_document() {
 		$document = parent::get_document();
 
-		// Merchant
+		// Merchant.
 		$merchant = XML_Util::add_element( $document, $document->documentElement, 'merchant' );
 
-		XML_Util::add_elements( $document, $merchant, array(
-			'account'          => $this->merchant->account,
-			'site_id'          => $this->merchant->site_id,
-			'site_secure_code' => $this->merchant->site_secure_code,
-		) );
+		XML_Util::add_elements(
+			$document,
+			$merchant,
+			array(
+				'account'          => $this->merchant->account,
+				'site_id'          => $this->merchant->site_id,
+				'site_secure_code' => $this->merchant->site_secure_code,
+			)
+		);
 
-		// Transaction
+		// Transaction.
 		$transaction = XML_Util::add_element( $document, $document->documentElement, 'transaction' );
 
-		XML_Util::add_elements( $document, $transaction, array(
-			'id' => $this->transaction_id,
-		) );
+		XML_Util::add_elements(
+			$document,
+			$transaction,
+			array(
+				'id' => $this->transaction_id,
+			)
+		);
 
 		return $document;
 	}

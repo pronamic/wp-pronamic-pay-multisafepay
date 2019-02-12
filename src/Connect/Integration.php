@@ -15,6 +15,9 @@ use Pronamic\WordPress\Pay\Gateways\MultiSafepay\AbstractIntegration;
  * @since   1.2.6
  */
 class Integration extends AbstractIntegration {
+	/**
+	 * Integration constructor.
+	 */
 	public function __construct() {
 		$this->id            = 'multisafepay-connect';
 		$this->name          = 'MultiSafepay - Connect';
@@ -24,6 +27,11 @@ class Integration extends AbstractIntegration {
 		$this->provider      = 'multisafepay';
 	}
 
+	/**
+	 * Get config factory class.
+	 *
+	 * @return string
+	 */
 	public function get_config_factory_class() {
 		return __NAMESPACE__ . '\ConfigFactory';
 	}

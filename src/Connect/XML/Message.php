@@ -36,6 +36,8 @@ class Message {
 
 	/**
 	 * Constructs and initialize an message
+	 *
+	 * @param string $name Name.
 	 */
 	public function __construct( $name ) {
 		$this->name = $name;

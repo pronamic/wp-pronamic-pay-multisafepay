@@ -14,6 +14,7 @@ use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML\RedirectTransaction
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML\RedirectTransactionResponseMessage;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML\StatusRequestMessage;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Connect\XML\StatusResponseMessage;
+use SimpleXMLElement;
 use WP_Error;
 
 /**
@@ -57,6 +58,13 @@ class Client {
 		return $this->error;
 	}
 
+	/**
+	 * Parse XML.
+	 *
+	 * @param SimpleXMLElement $xml XML to parse.
+	 *
+	 * @return bool|DirectTransactionResponseMessage|RedirectTransactionResponseMessage|StatusResponseMessage
+	 */
 	private function parse_xml( $xml ) {
 		switch ( $xml->getName() ) {
 			case IDealIssuersRequestMessage::NAME:
@@ -78,13 +86,24 @@ class Client {
 		return false;
 	}
 
+	/**
+	 * Request.
+	 *
+	 * @param string $message Message.
+	 *
+	 * @return bool|DirectTransactionResponseMessage|RedirectTransactionResponseMessage|StatusResponseMessage
+	 */
 	private function request( $message ) {
 		$return = false;
 
-		$result = Core_Util::remote_get_body( $this->api_url, 200, array(
-			'method' => 'POST',
-			'body'   => (string) $message,
-		) );
+		$result = Core_Util::remote_get_body(
+			$this->api_url,
+			200,
+			array(
+				'method' => 'POST',
+				'body'   => (string) $message,
+			)
+		);
 
 		if ( is_wp_error( $result ) ) {
 			$this->error = $result;
@@ -111,6 +130,8 @@ class Client {
 	/**
 	 * Get iDEAL issuers
 	 *
+	 * @param Merchant $merchant Merchant.
+	 *
 	 * @since 1.2.0
 	 */
 	public function get_ideal_issuers( $merchant ) {
@@ -128,7 +149,10 @@ class Client {
 	}
 
 	/**
-	 * Get gateways
+	 * Get gateways.
+	 *
+	 * @param Merchant $merchant Merchant.
+	 * @param Customer $customer Customer.
 	 *
 	 * @since 1.2.0
 	 */
@@ -149,7 +173,7 @@ class Client {
 	/**
 	 * Start transaction
 	 *
-	 * @param array $message
+	 * @param array $message Message.
 	 */
 	public function start_transaction( $message ) {
 		$return = false;
@@ -166,7 +190,7 @@ class Client {
 	/**
 	 * Get status
 	 *
-	 * @param array $message
+	 * @param array $message Message.
 	 */
 	public function get_status( $message ) {
 		$return = false;

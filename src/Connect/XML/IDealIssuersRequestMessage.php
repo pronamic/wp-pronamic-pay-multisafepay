@@ -33,7 +33,7 @@ class IDealIssuersRequestMessage extends RequestMessage {
 	/**
 	 * Constructs and initialize an directory response message
 	 *
-	 * @param Merchant $merchant
+	 * @param Merchant $merchant Merchant.
 	 */
 	public function __construct( Merchant $merchant ) {
 		parent::__construct( self::NAME );
@@ -49,14 +49,18 @@ class IDealIssuersRequestMessage extends RequestMessage {
 	public function get_document() {
 		$document = parent::get_document();
 
-		// Merchant
+		// Merchant.
 		$merchant = XML_Util::add_element( $document, $document->documentElement, 'merchant' );
 
-		XML_Util::add_elements( $document, $merchant, array(
-			'account'          => $this->merchant->account,
-			'site_id'          => $this->merchant->site_id,
-			'site_secure_code' => $this->merchant->site_secure_code,
-		) );
+		XML_Util::add_elements(
+			$document,
+			$merchant,
+			array(
+				'account'          => $this->merchant->account,
+				'site_id'          => $this->merchant->site_id,
+				'site_secure_code' => $this->merchant->site_secure_code,
+			)
+		);
 
 		return $document;
 	}
