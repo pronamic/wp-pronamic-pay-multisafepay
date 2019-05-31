@@ -36,18 +36,60 @@ class Integration extends AbstractIntegration {
 		return __NAMESPACE__ . '\ConfigFactory';
 	}
 
-	/**
-	 * Get required settings for this integration.
-	 *
-	 * @see   https://github.com/wp-premium/gravityforms/blob/1.9.16/includes/fields/class-gf-field-multiselect.php#L21-L42
-	 * @since 1.0.4
-	 * @return array
-	 */
-	public function get_settings() {
-		$settings = parent::get_settings();
+	public function get_settings_fields() {
+		$fields = array();
 
-		$settings[] = 'multisafepay_connect';
+		// Account ID
+		$fields[] = array(
+			'section'  => 'general',
+			'filter'   => FILTER_SANITIZE_STRING,
+			'meta_key' => '_pronamic_gateway_multisafepay_account_id',
+			'title'    => __( 'Account ID', 'pronamic_ideal' ),
+			'type'     => 'text',
+			'classes'  => array( 'code' ),
+			'methods'  => array( 'multisafepay_connect' ),
+			'tooltip'  => sprintf(
+				'%s %s.',
+				__( 'Account ID', 'pronamic_ideal' ),
+				/* translators: %s: MultiSafepay */
+				sprintf( __( 'as mentioned in the %s dashboard', 'pronamic_ideal' ), __( 'MultiSafepay', 'pronamic_ideal' ) )
+			),
+		);
 
-		return $settings;
+		// Site ID
+		$fields[] = array(
+			'section'  => 'general',
+			'filter'   => FILTER_SANITIZE_STRING,
+			'meta_key' => '_pronamic_gateway_multisafepay_site_id',
+			'title'    => __( 'Site ID', 'pronamic_ideal' ),
+			'type'     => 'text',
+			'classes'  => array( 'code' ),
+			'methods'  => array( 'multisafepay_connect' ),
+			'tooltip'  => sprintf(
+				'%s %s.',
+				__( 'Site ID', 'pronamic_ideal' ),
+				/* translators: %s: MultiSafepay */
+				sprintf( __( 'as mentioned in the %s dashboard', 'pronamic_ideal' ), __( 'MultiSafepay', 'pronamic_ideal' ) )
+			),
+		);
+
+		// Site Security Code
+		$fields[] = array(
+			'section'  => 'general',
+			'filter'   => FILTER_SANITIZE_STRING,
+			'meta_key' => '_pronamic_gateway_multisafepay_site_code',
+			'title'    => __( 'Site Security Code', 'pronamic_ideal' ),
+			'type'     => 'text',
+			'classes'  => array( 'code' ),
+			'methods'  => array( 'multisafepay_connect' ),
+			'tooltip'  => sprintf(
+				'%s %s.',
+				__( 'Site Security Code', 'pronamic_ideal' ),
+				/* translators: %s: MultiSafepay */
+				sprintf( __( 'as mentioned in the %s dashboard', 'pronamic_ideal' ), __( 'MultiSafepay', 'pronamic_ideal' ) )
+			),
+		);
+
+		return $fields;
 	}
 }
