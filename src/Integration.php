@@ -32,15 +32,6 @@ class Integration extends AbstractIntegration {
 		);
 	}
 
-	/**
-	 * Get config factory class.
-	 *
-	 * @return string
-	 */
-	public function get_config_factory_class() {
-		return __NAMESPACE__ . '\ConfigFactory';
-	}
-
 	public function get_settings_fields() {
 		$fields = array();
 
@@ -93,5 +84,29 @@ class Integration extends AbstractIntegration {
 		);
 
 		return $fields;
+	}
+
+	/**
+	 * Get config.
+	 *
+	 * @param $post_id
+	 *
+	 * @return Config
+	 */
+	public function get_config( $post_id ) {
+		$config = new Config();
+
+		$config->mode       = get_post_meta( $post_id, '_pronamic_gateway_mode', true );
+		$config->account_id = get_post_meta( $post_id, '_pronamic_gateway_multisafepay_account_id', true );
+		$config->site_id    = get_post_meta( $post_id, '_pronamic_gateway_multisafepay_site_id', true );
+		$config->site_code  = get_post_meta( $post_id, '_pronamic_gateway_multisafepay_site_code', true );
+
+		if ( Gateway::MODE_TEST === $config->mode ) {
+			$config->api_url = MultiSafepay::API_TEST_URL;
+		} else {
+			$config->api_url = MultiSafepay::API_PRODUCTION_URL;
+		}
+
+		return $config;
 	}
 }
