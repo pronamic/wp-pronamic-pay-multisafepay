@@ -7,7 +7,7 @@ use WP_UnitTestCase;
 
 class StatusParserTest extends WP_UnitTestCase {
 	public function test_init() {
-		$filename = dirname( dirname( dirname( __FILE__ ) ) ) . '/Mock/status-response.xml';
+		$filename = dirname( dirname( __FILE__ ) ) . '/Mock/status-response.xml';
 
 		$simplexml = simplexml_load_file( $filename );
 

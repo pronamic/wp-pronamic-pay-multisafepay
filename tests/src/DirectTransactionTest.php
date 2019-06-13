@@ -17,7 +17,7 @@ class DirectTransactionTest extends WP_UnitTestCase {
 	 * @return string
 	 */
 	public function pre_http_request( $preempt, $request, $url ) {
-		$response = file_get_contents( dirname( dirname( dirname( __FILE__ ) ) ) . '/Mock/direct-transaction-response.http' );
+		$response = file_get_contents( dirname( dirname( __FILE__ ) ) . '/Mock/direct-transaction-response.http' );
 
 		$processed_response = WP_Http::processResponse( $response );
 
