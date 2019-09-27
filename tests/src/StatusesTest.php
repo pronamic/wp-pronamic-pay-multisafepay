@@ -3,7 +3,7 @@
 namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay;
 
 use WP_UnitTestCase;
-use Pronamic\WordPress\Pay\Core\Statuses as Core_Statuses;
+use Pronamic\WordPress\Pay\Payments\PaymentStatus as Core_Statuses;
 
 /**
  * Title: MultiSafepay statuses test
