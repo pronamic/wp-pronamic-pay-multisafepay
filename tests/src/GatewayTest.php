@@ -46,7 +46,11 @@ class GatewayTest extends WP_UnitTestCase {
 
 		$gateway = new Gateway( $config );
 
-		$issuers = $gateway->get_issuers();
+		try {
+			$issuers = $gateway->get_issuers();
+		} catch ( \Pronamic\WordPress\Pay\GatewayException $e ) {
+			$issuers = null;
+		}
 
 		$expected = array(
 			array(

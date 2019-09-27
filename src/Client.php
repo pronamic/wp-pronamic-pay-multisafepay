@@ -15,7 +15,6 @@ use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\RedirectTransactionResponse
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\StatusRequestMessage;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\StatusResponseMessage;
 use SimpleXMLElement;
-use WP_Error;
 
 /**
  * Title: MultiSafepay Connect client
@@ -29,13 +28,6 @@ use WP_Error;
  */
 class Client {
 	/**
-	 * Error
-	 *
-	 * @var WP_Error
-	 */
-	private $error;
-
-	/**
 	 * API URL
 	 *
 	 * @var string
@@ -47,15 +39,6 @@ class Client {
 	 */
 	public function __construct() {
 		$this->api_url = MultiSafepay::API_PRODUCTION_URL;
-	}
-
-	/**
-	 * Get error
-	 *
-	 * @return WP_Error
-	 */
-	public function get_error() {
-		return $this->error;
 	}
 
 	/**
@@ -94,8 +77,6 @@ class Client {
 	 * @return bool|DirectTransactionResponseMessage|RedirectTransactionResponseMessage|StatusResponseMessage
 	 */
 	private function request( $message ) {
-		$return = false;
-
 		$result = Core_Util::remote_get_body(
 			$this->api_url,
 			200,
@@ -105,23 +86,12 @@ class Client {
 			)
 		);
 
-		if ( is_wp_error( $result ) ) {
-			$this->error = $result;
-
-			return false;
-		}
-
 		$xml = Core_Util::simplexml_load_string( $result );
 
-		if ( is_wp_error( $xml ) ) {
-			$this->error = $xml;
-		} else {
-			$return = $this->parse_xml( $xml );
+		$return = $this->parse_xml( $xml );
 
-			if ( is_object( $return ) && isset( $return->result ) && 'error' === $return->result ) {
-				$this->error = new WP_Error( 'multisafepay_error', $xml->error->description, $xml->error );
-				$return      = false;
-			}
+		if ( is_object( $return ) && isset( $return->result ) && 'error' === $return->result ) {
+			throw new \Pronamic\WordPress\Pay\GatewayException( 'multisafepay', $xml->error->description, $xml->error );
 		}
 
 		return $return;
