@@ -23,7 +23,6 @@ class Integration extends AbstractIntegration {
 		$this->name          = 'MultiSafepay - Connect';
 		$this->url           = 'http://www.multisafepay.com/';
 		$this->product_url   = __( 'http://www.multisafepay.com/', 'pronamic_ideal' );
-		$this->manual_url    = __( 'https://www.pronamic.eu/support/how-to-connect-multisafepay-with-wordpress-via-pronamic-pay/', 'pronamic_ideal' );
 		$this->dashboard_url = 'https://merchant.multisafepay.com/';
 		$this->provider      = 'multisafepay';
 		$this->supports      = array(
@@ -31,6 +30,8 @@ class Integration extends AbstractIntegration {
 			'webhook',
 			'webhook_no_config',
 		);
+
+		$this->set_manual_url( __( 'https://www.pronamic.eu/support/how-to-connect-multisafepay-with-wordpress-via-pronamic-pay/', 'pronamic_ideal' ) );
 	}
 
 	public function get_settings_fields() {
