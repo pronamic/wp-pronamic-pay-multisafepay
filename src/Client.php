@@ -91,7 +91,7 @@ class Client {
 		$return = $this->parse_xml( $xml );
 
 		if ( is_object( $return ) && isset( $return->result ) && 'error' === $return->result ) {
-			throw new \Pronamic\WordPress\Pay\GatewayException( 'multisafepay', $xml->error->description, $xml->error );
+			throw new \Exception( $xml->error->description );
 		}
 
 		return $return;
