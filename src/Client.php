@@ -23,7 +23,7 @@ use SimpleXMLElement;
  * Company: Pronamic
  *
  * @author  Remco Tolsma
- * @version 2.0.2
+ * @version 2.0.5
  * @since   1.0.0
  */
 class Client {
