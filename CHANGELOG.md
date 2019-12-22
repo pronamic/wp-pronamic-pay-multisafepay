@@ -7,6 +7,11 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [2.0.5] - 2019-12-22
+- Added URL to manual in gateway settings.
+- Improved error handling with exceptions.
+- Updated payment status class name.
+
 ## [2.0.4] - 2019-08-27
 - Updated packages.
 
@@ -42,7 +47,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2015-01-19
 - First release.
 
-[unreleased]: https://github.com/wp-pay-gateways/multisafepay/compare/2.0.4...HEAD
+[unreleased]: https://github.com/wp-pay-gateways/multisafepay/compare/2.0.5...HEAD
+[2.0.5]: https://github.com/wp-pay-gateways/multisafepay/compare/2.0.4...2.0.5
 [2.0.4]: https://github.com/wp-pay-gateways/multisafepay/compare/2.0.3...2.0.4
 [2.0.3]: https://github.com/wp-pay-gateways/multisafepay/compare/2.0.2...2.0.3
 [2.0.2]: https://github.com/wp-pay-gateways/multisafepay/compare/2.0.1...2.0.2
