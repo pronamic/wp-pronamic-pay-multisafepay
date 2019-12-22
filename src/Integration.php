@@ -11,7 +11,7 @@ use Pronamic\WordPress\Pay\Gateways\Common\AbstractIntegration;
  * Company: Pronamic
  *
  * @author  Remco Tolsma
- * @version 2.0.2
+ * @version 2.0.5
  * @since   1.2.6
  */
 class Integration extends AbstractIntegration {
@@ -30,6 +30,8 @@ class Integration extends AbstractIntegration {
 			'webhook',
 			'webhook_no_config',
 		);
+
+		$this->set_manual_url( __( 'https://www.pronamic.eu/support/how-to-connect-multisafepay-with-wordpress-via-pronamic-pay/', 'pronamic_ideal' ) );
 	}
 
 	public function get_settings_fields() {

@@ -2,7 +2,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay;
 
-use Pronamic\WordPress\Pay\Core\Statuses as Core_Statuses;
+use Pronamic\WordPress\Pay\Payments\PaymentStatus as Core_Statuses;
 
 /**
  * Title: MultiSafepay statuses constants
@@ -11,7 +11,7 @@ use Pronamic\WordPress\Pay\Core\Statuses as Core_Statuses;
  * Company: Pronamic
  *
  * @author  Remco Tolsma
- * @version 2.0.2
+ * @version 2.0.5
  */
 class Statuses {
 	/**

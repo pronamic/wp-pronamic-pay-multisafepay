@@ -6,6 +6,16 @@ use WP_Http;
 use WP_UnitTestCase;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\MultiSafepay;
 
+/**
+ * Title: MultiSafepay gateway test
+ * Description:
+ * Copyright: 2005-2019 Pronamic
+ * Company: Pronamic
+ *
+ * @author  Remco Tolsma
+ * @version 2.0.5
+ * @since   1.2.0
+ */
 class GatewayTest extends WP_UnitTestCase {
 	/**
 	 * Pre HTTP request
@@ -46,7 +56,11 @@ class GatewayTest extends WP_UnitTestCase {
 
 		$gateway = new Gateway( $config );
 
-		$issuers = $gateway->get_issuers();
+		try {
+			$issuers = $gateway->get_issuers();
+		} catch ( \Exception $e ) {
+			$issuers = null;
+		}
 
 		$expected = array(
 			array(
