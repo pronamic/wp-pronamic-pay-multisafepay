@@ -10,7 +10,7 @@ use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Transaction;
 /**
  * Title: MultiSafepay Connect XML redirect transaction request message
  * Description:
- * Copyright: 2005-2019 Pronamic
+ * Copyright: 2005-2020 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
