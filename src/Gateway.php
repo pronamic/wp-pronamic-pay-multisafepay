@@ -118,11 +118,17 @@ class Gateway extends Core_Gateway {
 		$customer = new Customer();
 
 		// Get gateways.
-		$result = $this->client->get_gateways( $merchant, $customer );
+		try {
+			$result = $this->client->get_gateways( $merchant, $customer );
+		} catch ( \Exception $e ) {
+			$error = new \WP_Error( 'multisafepay_error', $e->getMessage() );
 
-		if ( ! $result ) {
-			$this->error = $this->client->get_error();
+			$this->set_error( $error );
 
+			return $payment_methods;
+		}
+
+		if ( false === $result ) {
 			return $payment_methods;
 		}
 
@@ -259,9 +265,17 @@ class Gateway extends Core_Gateway {
 
 		$message->signature = $signature;
 
-		$response = $this->client->start_transaction( $message );
+		try {
+			$response = $this->client->start_transaction( $message );
+		} catch ( \Exception $e ) {
+			$error = new \WP_Error( 'multisafepay_error', $e->getMessage() );
 
-		if ( $response ) {
+			$this->set_error( $error );
+
+			return;
+		}
+
+		if ( false !== $response ) {
 			$transaction = $response->transaction;
 
 			$payment->set_transaction_id( $transaction->id );
@@ -273,8 +287,6 @@ class Gateway extends Core_Gateway {
 			if ( isset( $response->gateway_info->redirect_url ) ) {
 				$payment->set_action_url( $response->gateway_info->redirect_url );
 			}
-		} else {
-			$this->error = $this->client->get_error();
 		}
 	}
 
@@ -292,9 +304,15 @@ class Gateway extends Core_Gateway {
 
 		$message = new StatusRequestMessage( $merchant, $payment->get_transaction_id() );
 
-		$result = $this->client->get_status( $message );
+		try {
+			$result = $this->client->get_status( $message );
+		} catch ( \Exception $e ) {
+			$this->error = new \WP_Error( 'multisafepay_error', $e->getMessage() );
 
-		if ( $result ) {
+			return;
+		}
+
+		if ( false !== $result ) {
 			$status = Statuses::transform( $result->ewallet->status );
 
 			$payment->set_status( $status );
@@ -302,8 +320,6 @@ class Gateway extends Core_Gateway {
 			$payment->set_consumer_iban( $result->payment_details->account_iban );
 			$payment->set_consumer_bic( $result->payment_details->account_bic );
 			$payment->set_consumer_account_number( $result->payment_details->account_id );
-		} else {
-			$this->error = $this->client->get_error();
 		}
 	}
 }

@@ -86,6 +86,10 @@ class Client {
 			)
 		);
 
+		if ( is_wp_error( $result ) ) {
+			throw new \Exception( $result->get_error_message() );
+		}
+
 		$xml = Core_Util::simplexml_load_string( $result );
 
 		$return = $this->parse_xml( $xml );
