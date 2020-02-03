@@ -19,7 +19,7 @@ use SimpleXMLElement;
 /**
  * Title: MultiSafepay Connect client
  * Description:
- * Copyright: 2005-2019 Pronamic
+ * Copyright: 2005-2020 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
@@ -85,6 +85,10 @@ class Client {
 				'body'   => (string) $message,
 			)
 		);
+
+		if ( is_wp_error( $result ) ) {
+			throw new \Exception( $result->get_error_message() );
+		}
 
 		$xml = Core_Util::simplexml_load_string( $result );
 
