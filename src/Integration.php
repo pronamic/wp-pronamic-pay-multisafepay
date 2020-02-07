@@ -19,6 +19,8 @@ class Integration extends AbstractIntegration {
 	 * Integration constructor.
 	 */
 	public function __construct() {
+		parent::__construct();
+
 		$this->id            = 'multisafepay-connect';
 		$this->name          = 'MultiSafepay - Connect';
 		$this->url           = 'http://www.multisafepay.com/';
