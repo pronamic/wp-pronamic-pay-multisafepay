@@ -2,7 +2,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay;
 
-use Pronamic\WordPress\Pay\Gateways\Common\AbstractIntegration;
+use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
 
 /**
  * Title: MultiSafepay Connect integration
@@ -14,24 +14,32 @@ use Pronamic\WordPress\Pay\Gateways\Common\AbstractIntegration;
  * @version 2.0.5
  * @since   1.2.6
  */
-class Integration extends AbstractIntegration {
+class Integration extends AbstractGatewayIntegration {
 	/**
-	 * Integration constructor.
+	 * Construct Mollie iDEAL integration.
+	 *
+	 * @param array $args Arguments.
 	 */
-	public function __construct() {
-		$this->id            = 'multisafepay-connect';
-		$this->name          = 'MultiSafepay - Connect';
-		$this->url           = 'http://www.multisafepay.com/';
-		$this->product_url   = __( 'http://www.multisafepay.com/', 'pronamic_ideal' );
-		$this->dashboard_url = 'https://merchant.multisafepay.com/';
-		$this->provider      = 'multisafepay';
-		$this->supports      = array(
-			'payment_status_request',
-			'webhook',
-			'webhook_no_config',
+	public function __construct( $args = array() ) {
+		$args = wp_parse_args(
+			$args,
+			array(
+				'id'            => 'multisafepay-connect',
+				'name'          => 'MultiSafepay - Connect',
+				'url'           => 'http://www.multisafepay.com/',
+				'product_url'   => \__( 'http://www.multisafepay.com/', 'pronamic_ideal' ),
+				'dashboard_url' => 'https://merchant.multisafepay.com/',
+				'provider'      => 'multisafepay',
+				'supports'      => array(
+					'payment_status_request',
+					'webhook',
+					'webhook_no_config',
+				),
+				'manual_url'    => \__( 'https://www.pronamic.eu/support/how-to-connect-multisafepay-with-wordpress-via-pronamic-pay/', 'pronamic_ideal' ),
+			)
 		);
 
-		$this->set_manual_url( __( 'https://www.pronamic.eu/support/how-to-connect-multisafepay-with-wordpress-via-pronamic-pay/', 'pronamic_ideal' ) );
+		parent::__construct( $args );
 	}
 
 	public function get_settings_fields() {
