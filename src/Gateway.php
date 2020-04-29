@@ -2,6 +2,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay;
 
+use Pronamic\WordPress\Pay\Banks\BankAccountDetails;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Core\Server;
@@ -312,14 +313,27 @@ class Gateway extends Core_Gateway {
 			return;
 		}
 
-		if ( false !== $result ) {
-			$status = Statuses::transform( $result->ewallet->status );
-
-			$payment->set_status( $status );
-			$payment->set_consumer_name( $result->payment_details->account_holder_name );
-			$payment->set_consumer_iban( $result->payment_details->account_iban );
-			$payment->set_consumer_bic( $result->payment_details->account_bic );
-			$payment->set_consumer_account_number( $result->payment_details->account_id );
+		if ( false === $result ) {
+			return;
 		}
+
+		// Status.
+		$status = Statuses::transform( $result->ewallet->status );
+
+		$payment->set_status( $status );
+
+		// Consumer bank details.
+		$consumer_bank_details = $payment->get_consumer_bank_details();
+
+		if ( null === $consumer_bank_details ) {
+			$consumer_bank_details = new BankAccountDetails();
+
+			$payment->set_consumer_bank_details( $consumer_bank_details );
+		}
+
+		$consumer_bank_details->set_name( $result->payment_details->account_holder_name );
+		$consumer_bank_details->set_iban( $result->payment_details->account_iban );
+		$consumer_bank_details->set_bic( $result->payment_details->account_bic );
+		$consumer_bank_details->set_account_number( $result->payment_details->account_id );
 	}
 }
