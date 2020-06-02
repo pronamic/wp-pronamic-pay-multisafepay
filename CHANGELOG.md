@@ -7,6 +7,9 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [2.1.1] - 2020-06-02
+- Update setting consumer bank details.
+
 ## [2.1.0] - 2020-03-19
 - Extend from AbstractGatewayIntegration class.
 
@@ -53,7 +56,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2015-01-19
 - First release.
 
-[unreleased]: https://github.com/wp-pay-gateways/multisafepay/compare/2.1.0...HEAD
+[unreleased]: https://github.com/wp-pay-gateways/multisafepay/compare/2.1.1...HEAD
+[2.1.1]: https://github.com/wp-pay-gateways/multisafepay/compare/2.1.0...2.1.1
 [2.1.0]: https://github.com/wp-pay-gateways/multisafepay/compare/2.0.6...2.1.0
 [2.0.6]: https://github.com/wp-pay-gateways/multisafepay/compare/2.0.5...2.0.6
 [2.0.5]: https://github.com/wp-pay-gateways/multisafepay/compare/2.0.4...2.0.5
