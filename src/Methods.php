@@ -160,10 +160,11 @@ class Methods {
 		PaymentMethods::BELFIUS       => self::BELFIUS,
 		PaymentMethods::DIRECT_DEBIT  => self::DIRECT_DEBIT,
 		PaymentMethods::GIROPAY       => self::GIROPAY,
-		PaymentMethods::SANTANDER     => self::SANTANDER,
+		PaymentMethods::IDEAL         => self::IDEAL,
 		PaymentMethods::IDEALQR       => self::IDEALQR,
 		PaymentMethods::KBC           => self::KBC,
 		PaymentMethods::PAYPAL        => self::PAYPAL,
+		PaymentMethods::SANTANDER     => self::SANTANDER,
 		PaymentMethods::SOFORT        => self::SOFORT,
 	);
 
