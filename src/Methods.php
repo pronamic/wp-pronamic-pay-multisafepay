@@ -142,6 +142,13 @@ class Methods {
 	const VISA = 'VISA';
 
 	/**
+	 * Gateway Santander
+	 *
+	 * @var string
+	 */
+	const SANTANDER = 'SANTANDER';
+
+	/**
 	 * Payments methods map.
 	 *
 	 * @var array
@@ -153,7 +160,7 @@ class Methods {
 		PaymentMethods::BELFIUS       => self::BELFIUS,
 		PaymentMethods::DIRECT_DEBIT  => self::DIRECT_DEBIT,
 		PaymentMethods::GIROPAY       => self::GIROPAY,
-		PaymentMethods::IDEAL         => self::IDEAL,
+		PaymentMethods::SANTANDER     => self::SANTANDER,
 		PaymentMethods::IDEALQR       => self::IDEALQR,
 		PaymentMethods::KBC           => self::KBC,
 		PaymentMethods::PAYPAL        => self::PAYPAL,

@@ -162,6 +162,7 @@ class Gateway extends Core_Gateway {
 			PaymentMethods::GIROPAY,
 			PaymentMethods::KBC,
 			PaymentMethods::PAYPAL,
+			PaymentMethods::SANTANDER,
 			PaymentMethods::SOFORT,
 		);
 	}
