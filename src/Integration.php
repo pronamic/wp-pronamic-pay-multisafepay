@@ -40,6 +40,14 @@ class Integration extends AbstractGatewayIntegration {
 		);
 
 		parent::__construct( $args );
+
+
+		// Filters.
+		$function = array( WooCommerce::class, 'woocommerce_available_payment_gateways' );
+
+		if ( ! \has_filter( 'woocommerce_available_payment_gateways', $function ) ) {
+			\add_filter( 'woocommerce_available_payment_gateways', $function, 10 );
+		}
 	}
 
 	public function get_settings_fields() {
