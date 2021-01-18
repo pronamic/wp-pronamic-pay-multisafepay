@@ -32,9 +32,7 @@ jobs:
     - php: 7.0
     - php: 5.6
     - php: nightly
-    - php: hhvm
   allow_failures:
-    - php: hhvm
     - php: nightly
     - env: PHPMD=1
     - env: PHPSTAN=1
@@ -54,6 +52,8 @@ before_install:
     if [[ "$COVERAGE" != "1" && -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]]; then
       phpenv config-rm xdebug.ini
     fi
+  # Set Xdebug mode for coverage.
+  - if [ "$COVERAGE" == "1" ]; then export XDEBUG_MODE=coverage; fi
   # Raise PHP memory limit to 2048MB
   - echo 'memory_limit = 2048M' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   # Validate composer.json file.

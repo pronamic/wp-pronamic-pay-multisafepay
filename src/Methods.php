@@ -93,6 +93,13 @@ class Methods {
 	const ING = 'ING';
 
 	/**
+	 * Gateway IN3
+	 *
+	 * @var string
+	 */
+	const IN3 = 'IN3';
+
+	/**
 	 * Gateway KBC
 	 *
 	 * @var string
@@ -142,6 +149,13 @@ class Methods {
 	const VISA = 'VISA';
 
 	/**
+	 * Gateway Santander
+	 *
+	 * @var string
+	 */
+	const SANTANDER = 'SANTANDER';
+
+	/**
 	 * Payments methods map.
 	 *
 	 * @var array
@@ -155,8 +169,10 @@ class Methods {
 		PaymentMethods::GIROPAY       => self::GIROPAY,
 		PaymentMethods::IDEAL         => self::IDEAL,
 		PaymentMethods::IDEALQR       => self::IDEALQR,
+		PaymentMethods::IN3           => self::IN3,
 		PaymentMethods::KBC           => self::KBC,
 		PaymentMethods::PAYPAL        => self::PAYPAL,
+		PaymentMethods::SANTANDER     => self::SANTANDER,
 		PaymentMethods::SOFORT        => self::SOFORT,
 	);
 

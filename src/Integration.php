@@ -40,6 +40,14 @@ class Integration extends AbstractGatewayIntegration {
 		);
 
 		parent::__construct( $args );
+
+
+		// Filters.
+		$function = array( WooCommerce::class, 'woocommerce_available_payment_gateways' );
+
+		if ( ! \has_filter( 'woocommerce_available_payment_gateways', $function ) ) {
+			\add_filter( 'woocommerce_available_payment_gateways', $function, 10 );
+		}
 	}
 
 	public function get_settings_fields() {
@@ -56,7 +64,7 @@ class Integration extends AbstractGatewayIntegration {
 			'tooltip'  => sprintf(
 				'%s %s.',
 				__( 'Account ID', 'pronamic_ideal' ),
-				/* translators: %s: MultiSafepay */
+				/* translators: %s: payment provider name */
 				sprintf( __( 'as mentioned in the %s dashboard', 'pronamic_ideal' ), __( 'MultiSafepay', 'pronamic_ideal' ) )
 			),
 		);
@@ -72,7 +80,7 @@ class Integration extends AbstractGatewayIntegration {
 			'tooltip'  => sprintf(
 				'%s %s.',
 				__( 'Site ID', 'pronamic_ideal' ),
-				/* translators: %s: MultiSafepay */
+				/* translators: %s: payment provider name */
 				sprintf( __( 'as mentioned in the %s dashboard', 'pronamic_ideal' ), __( 'MultiSafepay', 'pronamic_ideal' ) )
 			),
 		);
@@ -88,7 +96,7 @@ class Integration extends AbstractGatewayIntegration {
 			'tooltip'  => sprintf(
 				'%s %s.',
 				__( 'Site Security Code', 'pronamic_ideal' ),
-				/* translators: %s: MultiSafepay */
+				/* translators: %s: payment provider name */
 				sprintf( __( 'as mentioned in the %s dashboard', 'pronamic_ideal' ), __( 'MultiSafepay', 'pronamic_ideal' ) )
 			),
 		);
