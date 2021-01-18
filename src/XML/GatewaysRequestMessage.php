@@ -9,7 +9,7 @@ use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Merchant;
 /**
  * Title: MultiSafepay Connect XML gateways request message
  * Description:
- * Copyright: 2005-2020 Pronamic
+ * Copyright: 2005-2021 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
