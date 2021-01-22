@@ -41,7 +41,6 @@ class Integration extends AbstractGatewayIntegration {
 
 		parent::__construct( $args );
 
-
 		// Filters.
 		$function = array( WooCommerce::class, 'woocommerce_available_payment_gateways' );
 
