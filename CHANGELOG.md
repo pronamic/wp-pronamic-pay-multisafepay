@@ -8,7 +8,7 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 -
 
 ## [2.1.2] - 2021-01-18
-- Added support for In3 pament method.
+- Added support for In3 payment method.
 - Added partial support for Santander 'Betaal per maand' payment method.
 
 ## [2.1.1] - 2020-06-02

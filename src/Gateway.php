@@ -12,7 +12,7 @@ use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\StatusRequestMessage;
 use Pronamic\WordPress\Pay\Payments\Payment;
 
 /**
- * Title: MultiSafepay Connect gateay
+ * Title: MultiSafepay Connect gateway
  * Description:
  * Copyright: 2005-2021 Pronamic
  * Company: Pronamic
