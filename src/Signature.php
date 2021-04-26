@@ -5,9 +5,9 @@ namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay;
 use Pronamic\WordPress\Pay\Core\Util;
 
 /**
- * Title: MutliSafepay Connect signature
+ * Title: MultiSafepay Connect signature
  * Description:
- * Copyright: 2005-2020 Pronamic
+ * Copyright: 2005-2021 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma

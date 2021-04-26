@@ -7,7 +7,7 @@ use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
 /**
  * Title: MultiSafepay Connect integration
  * Description:
- * Copyright: 2005-2020 Pronamic
+ * Copyright: 2005-2021 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
@@ -40,7 +40,6 @@ class Integration extends AbstractGatewayIntegration {
 		);
 
 		parent::__construct( $args );
-
 
 		// Filters.
 		$function = array( WooCommerce::class, 'woocommerce_available_payment_gateways' );

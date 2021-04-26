@@ -9,7 +9,7 @@ use stdClass;
 /**
  * Title: MultiSafepay Connect XML status response message
  * Description:
- * Copyright: 2005-2020 Pronamic
+ * Copyright: 2005-2021 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
