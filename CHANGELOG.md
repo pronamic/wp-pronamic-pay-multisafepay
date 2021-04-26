@@ -7,6 +7,9 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [2.1.3] - 2021-04-26
+- Happy 2021.
+
 ## [2.1.2] - 2021-01-18
 - Added support for In3 payment method.
 - Added partial support for Santander 'Betaal per maand' payment method.
@@ -60,7 +63,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2015-01-19
 - First release.
 
-[unreleased]: https://github.com/wp-pay-gateways/multisafepay/compare/2.1.2...HEAD
+[unreleased]: https://github.com/wp-pay-gateways/multisafepay/compare/2.1.3...HEAD
+[2.1.3]: https://github.com/wp-pay-gateways/multisafepay/compare/2.1.2...2.1.3
 [2.1.2]: https://github.com/wp-pay-gateways/multisafepay/compare/2.1.1...2.1.2
 [2.1.1]: https://github.com/wp-pay-gateways/multisafepay/compare/2.1.0...2.1.1
 [2.1.0]: https://github.com/wp-pay-gateways/multisafepay/compare/2.0.6...2.1.0
