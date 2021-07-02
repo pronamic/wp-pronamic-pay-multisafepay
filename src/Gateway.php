@@ -213,7 +213,7 @@ class Gateway extends Core_Gateway {
 		$transaction              = new Transaction();
 		$transaction->id          = uniqid();
 		$transaction->currency    = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
-		$transaction->amount      = $payment->get_total_amount()->get_cents();
+		$transaction->amount      = $payment->get_total_amount()->get_minor_units()->format( 0, '', '' );
 		$transaction->description = $transaction_description;
 
 		switch ( $payment_method ) {
