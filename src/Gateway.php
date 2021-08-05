@@ -104,7 +104,7 @@ class Gateway extends Core_Gateway {
 	/**
 	 * Get payment methods
 	 *
-	 * @see Pronamic_WP_Pay_Gateway::get_payment_methods()
+	 * @see Core_Gateway::get_payment_methods()
 	 */
 	public function get_available_payment_methods() {
 		$payment_methods = array();
@@ -147,7 +147,7 @@ class Gateway extends Core_Gateway {
 	/**
 	 * Get supported payment methods
 	 *
-	 * @see Pronamic_WP_Pay_Gateway::get_supported_payment_methods()
+	 * @see Core_Gateway::get_supported_payment_methods()
 	 */
 	public function get_supported_payment_methods() {
 		return array(
@@ -213,7 +213,7 @@ class Gateway extends Core_Gateway {
 		$transaction              = new Transaction();
 		$transaction->id          = uniqid();
 		$transaction->currency    = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
-		$transaction->amount      = $payment->get_total_amount()->get_cents();
+		$transaction->amount      = $payment->get_total_amount()->get_minor_units()->format( 0, '', '' );
 		$transaction->description = $transaction_description;
 
 		switch ( $payment_method ) {
