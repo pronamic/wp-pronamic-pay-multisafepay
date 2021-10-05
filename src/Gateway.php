@@ -220,7 +220,7 @@ class Gateway extends Core_Gateway {
 			case PaymentMethods::IDEAL:
 				$transaction->gateway = Methods::IDEAL;
 
-				$issuer = $payment->get_issuer();
+				$issuer = $payment->get_meta( 'issuer' );
 
 				if ( empty( $issuer ) ) {
 					$message = new RedirectTransactionRequestMessage( $merchant, $customer, $transaction );
@@ -236,7 +236,7 @@ class Gateway extends Core_Gateway {
 			case PaymentMethods::CREDIT_CARD:
 				$gateway = Methods::transform( $payment_method );
 
-				$issuer = $payment->get_issuer();
+				$issuer = $payment->get_meta( 'issuer' );
 
 				if ( empty( $issuer ) ) {
 					if ( $gateway ) {
