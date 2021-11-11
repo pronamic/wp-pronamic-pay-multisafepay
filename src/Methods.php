@@ -128,6 +128,13 @@ class Methods {
 	const BANCONTACT = 'MISTERCASH';
 
 	/**
+	 * Gateway Credit card
+	 *
+	 * @var string
+	 */
+	const CREDITCARD = 'CREDITCARD';
+
+	/**
 	 * Gateway Pay after delivery
 	 *
 	 * @var string
@@ -165,6 +172,7 @@ class Methods {
 		PaymentMethods::BANCONTACT    => self::BANCONTACT,
 		PaymentMethods::BANK_TRANSFER => self::BANK_TRANSFER,
 		PaymentMethods::BELFIUS       => self::BELFIUS,
+		PaymentMethods::CREDIT_CARD   => self::CREDITCARD,
 		PaymentMethods::DIRECT_DEBIT  => self::DIRECT_DEBIT,
 		PaymentMethods::GIROPAY       => self::GIROPAY,
 		PaymentMethods::IDEAL         => self::IDEAL,

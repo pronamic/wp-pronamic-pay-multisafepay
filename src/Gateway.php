@@ -133,8 +133,20 @@ class Gateway extends Core_Gateway {
 			return $payment_methods;
 		}
 
+		$card_brands = array(
+			Methods::AMEX,
+			Methods::MAESTRO,
+			Methods::MASTERCARD,
+			Methods::VISA,
+		);
+
 		foreach ( $result as $method => $title ) {
 			$payment_method = Methods::transform_gateway_method( $method );
+
+			// Check credit card brands, as no general method for credit cards is returned.
+			if ( null === $payment_method && \in_array( $method, $card_brands, true ) ) {
+				$payment_method = PaymentMethods::CREDIT_CARD;
+			}
 
 			if ( $payment_method ) {
 				$payment_methods[] = $payment_method;
