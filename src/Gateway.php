@@ -91,10 +91,10 @@ class Gateway extends Core_Gateway {
 	public function get_credit_card_issuers() {
 		$groups[] = array(
 			'options' => array(
-				Methods::AMEX       => _x( 'AMEX', 'Payment method name', 'pronamic_ideal' ),
+				Methods::AMEX       => _x( 'American Express', 'Payment method name', 'pronamic_ideal' ),
 				Methods::MAESTRO    => _x( 'Maestro', 'Payment method name', 'pronamic_ideal' ),
-				Methods::MASTERCARD => _x( 'MASTER', 'Payment method name', 'pronamic_ideal' ),
-				Methods::VISA       => _x( 'VISA', 'Payment method name', 'pronamic_ideal' ),
+				Methods::MASTERCARD => _x( 'Mastercard', 'Payment method name', 'pronamic_ideal' ),
+				Methods::VISA       => _x( 'Visa', 'Payment method name', 'pronamic_ideal' ),
 			),
 		);
 
