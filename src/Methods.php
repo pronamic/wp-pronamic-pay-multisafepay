@@ -158,7 +158,7 @@ class Methods {
 	/**
 	 * Payments methods map.
 	 *
-	 * @var array
+	 * @var array<string, string>
 	 */
 	private static $map = array(
 		PaymentMethods::ALIPAY        => self::ALIPAY,
@@ -179,15 +179,12 @@ class Methods {
 	/**
 	 * Transform WordPress payment method to MultiSafepay method.
 	 *
-	 * @since unreleased
-	 *
-	 * @param string $payment_method Payment method.
-	 * @param mixed  $default        Default payment method.
-	 *
-	 * @return string
+	 * @param string|null $payment_method Payment method.
+	 * @param string|null $default        Default payment method.
+	 * @return string|null
 	 */
 	public static function transform( $payment_method, $default = null ) {
-		if ( ! is_scalar( $payment_method ) ) {
+		if ( ! \is_scalar( $payment_method ) ) {
 			return null;
 		}
 
@@ -201,20 +198,17 @@ class Methods {
 	/**
 	 * Transform MultiSafepay method to WordPress payment method.
 	 *
-	 * @since unreleased
-	 *
-	 * @param string $method Mollie method.
-	 *
-	 * @return string
+	 * @param string $method MultiSafepay method.
+	 * @return string|null
 	 */
 	public static function transform_gateway_method( $method ) {
-		if ( ! is_scalar( $method ) ) {
+		if ( ! \is_scalar( $method ) ) {
 			return null;
 		}
 
-		$payment_method = array_search( $method, self::$map, true );
+		$payment_method = \array_search( $method, self::$map, true );
 
-		if ( ! $payment_method ) {
+		if ( \is_string( $payment_method ) ) {
 			return null;
 		}
 
