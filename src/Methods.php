@@ -216,7 +216,7 @@ class Methods {
 
 		$payment_method = \array_search( $method, self::$map, true );
 
-		if ( \is_string( $payment_method ) ) {
+		if ( ! \is_string( $payment_method ) ) {
 			return null;
 		}
 
