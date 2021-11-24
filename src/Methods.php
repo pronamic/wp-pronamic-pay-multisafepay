@@ -222,4 +222,18 @@ class Methods {
 
 		return $payment_method;
 	}
+
+	/**
+	 * Get cards.
+	 *
+	 * @return array<string, string>
+	 */
+	public static function get_cards() {
+		return array(
+			self::AMEX       => _x( 'American Express', 'Payment method name', 'pronamic_ideal' ),
+			self::MAESTRO    => _x( 'Maestro', 'Payment method name', 'pronamic_ideal' ),
+			self::MASTERCARD => _x( 'Mastercard', 'Payment method name', 'pronamic_ideal' ),
+			self::VISA       => _x( 'Visa', 'Payment method name', 'pronamic_ideal' ),
+		);
+	}
 }

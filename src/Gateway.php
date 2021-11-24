@@ -61,6 +61,7 @@ class Gateway extends Core_Gateway {
 	 * Get iDEAL issuers
 	 *
 	 * @see Core_Gateway::get_issuers()
+	 * @return array<array<string,array>>
 	 * @since 1.2.0
 	 */
 	public function get_issuers() {
@@ -87,14 +88,17 @@ class Gateway extends Core_Gateway {
 	 * Get credit card issuers
 	 *
 	 * @see Core_Gateway::get_credit_card_issuers()
+	 * @return array<array<string,array>>
 	 */
 	public function get_credit_card_issuers() {
-		$groups[] = array(
-			'options' => array(
-				Methods::AMEX       => _x( 'American Express', 'Payment method name', 'pronamic_ideal' ),
-				Methods::MAESTRO    => _x( 'Maestro', 'Payment method name', 'pronamic_ideal' ),
-				Methods::MASTERCARD => _x( 'Mastercard', 'Payment method name', 'pronamic_ideal' ),
-				Methods::VISA       => _x( 'Visa', 'Payment method name', 'pronamic_ideal' ),
+		// Get active card issuers.
+		$issuers = \array_intersect_key( $this->get_gateways(), Methods::get_cards() );
+
+		sort( $issuers );
+
+		$groups = array(
+			array(
+				'options' => $issuers,
 			),
 		);
 
@@ -105,52 +109,28 @@ class Gateway extends Core_Gateway {
 	 * Get payment methods
 	 *
 	 * @see Core_Gateway::get_payment_methods()
+	 * @return array<string>
 	 */
 	public function get_available_payment_methods() {
 		$payment_methods = array();
 
-		// Merchant.
-		$merchant                   = new Merchant();
-		$merchant->account          = $this->config->account_id;
-		$merchant->site_id          = $this->config->site_id;
-		$merchant->site_secure_code = $this->config->site_code;
+		$gateways = $this->get_gateways();
 
-		// Customer.
-		$customer = new Customer();
-
-		// Get gateways.
-		try {
-			$result = $this->client->get_gateways( $merchant, $customer );
-		} catch ( \Exception $e ) {
-			$error = new \WP_Error( 'multisafepay_error', $e->getMessage() );
-
-			$this->set_error( $error );
-
-			return $payment_methods;
-		}
-
-		if ( false === $result ) {
-			return $payment_methods;
-		}
-
-		$card_brands = array(
-			Methods::AMEX,
-			Methods::MAESTRO,
-			Methods::MASTERCARD,
-			Methods::VISA,
-		);
-
-		foreach ( $result as $method => $title ) {
+		foreach ( $gateways as $method => $title ) {
 			$payment_method = Methods::transform_gateway_method( $method );
 
-			// Check credit card brands, as no general method for credit cards is returned.
-			if ( null === $payment_method && \in_array( $method, $card_brands, true ) ) {
+			// Handle cards, as no general method for credit cards is returned by gateway.
+			if ( null === $payment_method && \array_key_exists( $method, Methods::get_cards() ) ) {
 				$payment_method = PaymentMethods::CREDIT_CARD;
 			}
 
-			if ( $payment_method ) {
-				$payment_methods[] = $payment_method;
+			// Check valid payment method.
+			if ( null === $payment_method ) {
+				continue;
 			}
+
+			// Add available payment method.
+			$payment_methods[] = $payment_method;
 		}
 
 		return $payment_methods;
@@ -160,6 +140,7 @@ class Gateway extends Core_Gateway {
 	 * Get supported payment methods
 	 *
 	 * @see Core_Gateway::get_supported_payment_methods()
+	 * @return array<string>
 	 */
 	public function get_supported_payment_methods() {
 		return array(
@@ -349,5 +330,38 @@ class Gateway extends Core_Gateway {
 		$consumer_bank_details->set_iban( $result->payment_details->account_iban );
 		$consumer_bank_details->set_bic( $result->payment_details->account_bic );
 		$consumer_bank_details->set_account_number( $result->payment_details->account_id );
+	}
+
+	/**
+	 * Get gateways.
+	 *
+	 * @return array<string, string>
+	 */
+	private function get_gateways() {
+		// Merchant.
+		$merchant                   = new Merchant();
+		$merchant->account          = $this->config->account_id;
+		$merchant->site_id          = $this->config->site_id;
+		$merchant->site_secure_code = $this->config->site_code;
+
+		// Customer.
+		$customer = new Customer();
+
+		// Get gateways.
+		$gateways = array();
+
+		try {
+			$result = $this->client->get_gateways( $merchant, $customer );
+
+			if ( false !== $result ) {
+				$gateways = $result;
+			}
+		} catch ( \Exception $e ) {
+			$error = new \WP_Error( 'multisafepay_error', $e->getMessage() );
+
+			$this->set_error( $error );
+		}
+
+		return $gateways;
 	}
 }
