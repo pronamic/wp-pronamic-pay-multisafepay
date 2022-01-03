@@ -8,7 +8,7 @@ use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Merchant;
 /**
  * Title: MultiSafepay Connect XML iDEAL issuers request message
  * Description:
- * Copyright: 2005-2021 Pronamic
+ * Copyright: 2005-2022 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma

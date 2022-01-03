@@ -5,7 +5,7 @@ namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML;
 /**
  * Title: MultiSafepay Connect XML message
  * Description:
- * Copyright: 2005-2021 Pronamic
+ * Copyright: 2005-2022 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma

@@ -14,7 +14,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
 /**
  * Title: MultiSafepay Connect gateway
  * Description:
- * Copyright: 2005-2021 Pronamic
+ * Copyright: 2005-2022 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
