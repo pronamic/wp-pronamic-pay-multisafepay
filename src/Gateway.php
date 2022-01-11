@@ -14,7 +14,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
 /**
  * Title: MultiSafepay Connect gateway
  * Description:
- * Copyright: 2005-2021 Pronamic
+ * Copyright: 2005-2022 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
@@ -61,6 +61,7 @@ class Gateway extends Core_Gateway {
 	 * Get iDEAL issuers
 	 *
 	 * @see Core_Gateway::get_issuers()
+	 * @return array<array<string,array>>
 	 * @since 1.2.0
 	 */
 	public function get_issuers() {
@@ -87,14 +88,17 @@ class Gateway extends Core_Gateway {
 	 * Get credit card issuers
 	 *
 	 * @see Core_Gateway::get_credit_card_issuers()
+	 * @return array<array<string,array>>
 	 */
 	public function get_credit_card_issuers() {
-		$groups[] = array(
-			'options' => array(
-				Methods::AMEX       => _x( 'AMEX', 'Payment method name', 'pronamic_ideal' ),
-				Methods::MAESTRO    => _x( 'Maestro', 'Payment method name', 'pronamic_ideal' ),
-				Methods::MASTERCARD => _x( 'MASTER', 'Payment method name', 'pronamic_ideal' ),
-				Methods::VISA       => _x( 'VISA', 'Payment method name', 'pronamic_ideal' ),
+		// Get active card issuers.
+		$issuers = \array_intersect_key( $this->get_gateways(), Methods::get_cards() );
+
+		sort( $issuers );
+
+		$groups = array(
+			array(
+				'options' => $issuers,
 			),
 		);
 
@@ -105,40 +109,28 @@ class Gateway extends Core_Gateway {
 	 * Get payment methods
 	 *
 	 * @see Core_Gateway::get_payment_methods()
+	 * @return array<string>
 	 */
 	public function get_available_payment_methods() {
 		$payment_methods = array();
 
-		// Merchant.
-		$merchant                   = new Merchant();
-		$merchant->account          = $this->config->account_id;
-		$merchant->site_id          = $this->config->site_id;
-		$merchant->site_secure_code = $this->config->site_code;
+		$gateways = $this->get_gateways();
 
-		// Customer.
-		$customer = new Customer();
-
-		// Get gateways.
-		try {
-			$result = $this->client->get_gateways( $merchant, $customer );
-		} catch ( \Exception $e ) {
-			$error = new \WP_Error( 'multisafepay_error', $e->getMessage() );
-
-			$this->set_error( $error );
-
-			return $payment_methods;
-		}
-
-		if ( false === $result ) {
-			return $payment_methods;
-		}
-
-		foreach ( $result as $method => $title ) {
+		foreach ( $gateways as $method => $title ) {
 			$payment_method = Methods::transform_gateway_method( $method );
 
-			if ( $payment_method ) {
-				$payment_methods[] = $payment_method;
+			// Handle cards, as no general method for credit cards is returned by gateway.
+			if ( null === $payment_method && \array_key_exists( $method, Methods::get_cards() ) ) {
+				$payment_method = PaymentMethods::CREDIT_CARD;
 			}
+
+			// Check valid payment method.
+			if ( null === $payment_method ) {
+				continue;
+			}
+
+			// Add available payment method.
+			$payment_methods[] = $payment_method;
 		}
 
 		return $payment_methods;
@@ -148,6 +140,7 @@ class Gateway extends Core_Gateway {
 	 * Get supported payment methods
 	 *
 	 * @see Core_Gateway::get_supported_payment_methods()
+	 * @return array<string>
 	 */
 	public function get_supported_payment_methods() {
 		return array(
@@ -174,7 +167,7 @@ class Gateway extends Core_Gateway {
 	 * @param Payment $payment Payment object.
 	 */
 	public function start( Payment $payment ) {
-		$payment_method = $payment->get_method();
+		$payment_method = $payment->get_payment_method();
 
 		$transaction_description = $payment->get_description();
 
@@ -220,7 +213,7 @@ class Gateway extends Core_Gateway {
 			case PaymentMethods::IDEAL:
 				$transaction->gateway = Methods::IDEAL;
 
-				$issuer = $payment->get_issuer();
+				$issuer = $payment->get_meta( 'issuer' );
 
 				if ( empty( $issuer ) ) {
 					$message = new RedirectTransactionRequestMessage( $merchant, $customer, $transaction );
@@ -236,7 +229,7 @@ class Gateway extends Core_Gateway {
 			case PaymentMethods::CREDIT_CARD:
 				$gateway = Methods::transform( $payment_method );
 
-				$issuer = $payment->get_issuer();
+				$issuer = $payment->get_meta( 'issuer' );
 
 				if ( empty( $issuer ) ) {
 					if ( $gateway ) {
@@ -337,5 +330,38 @@ class Gateway extends Core_Gateway {
 		$consumer_bank_details->set_iban( $result->payment_details->account_iban );
 		$consumer_bank_details->set_bic( $result->payment_details->account_bic );
 		$consumer_bank_details->set_account_number( $result->payment_details->account_id );
+	}
+
+	/**
+	 * Get gateways.
+	 *
+	 * @return array<string, string>
+	 */
+	private function get_gateways() {
+		// Merchant.
+		$merchant                   = new Merchant();
+		$merchant->account          = $this->config->account_id;
+		$merchant->site_id          = $this->config->site_id;
+		$merchant->site_secure_code = $this->config->site_code;
+
+		// Customer.
+		$customer = new Customer();
+
+		// Get gateways.
+		$gateways = array();
+
+		try {
+			$result = $this->client->get_gateways( $merchant, $customer );
+
+			if ( false !== $result ) {
+				$gateways = $result;
+			}
+		} catch ( \Exception $e ) {
+			$error = new \WP_Error( 'multisafepay_error', $e->getMessage() );
+
+			$this->set_error( $error );
+		}
+
+		return $gateways;
 	}
 }

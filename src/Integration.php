@@ -7,7 +7,7 @@ use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
 /**
  * Title: MultiSafepay Connect integration
  * Description:
- * Copyright: 2005-2021 Pronamic
+ * Copyright: 2005-2022 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
@@ -49,10 +49,15 @@ class Integration extends AbstractGatewayIntegration {
 		}
 	}
 
+	/**
+	 * Get settings fields.
+	 *
+	 * @return array
+	 */
 	public function get_settings_fields() {
 		$fields = array();
 
-		// Account ID
+		// Account ID.
 		$fields[] = array(
 			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_STRING,
@@ -68,7 +73,7 @@ class Integration extends AbstractGatewayIntegration {
 			),
 		);
 
-		// Site ID
+		// Site ID.
 		$fields[] = array(
 			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_STRING,
@@ -84,7 +89,7 @@ class Integration extends AbstractGatewayIntegration {
 			),
 		);
 
-		// Site Security Code
+		// Site Security Code.
 		$fields[] = array(
 			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_STRING,
@@ -106,8 +111,7 @@ class Integration extends AbstractGatewayIntegration {
 	/**
 	 * Get config.
 	 *
-	 * @param $post_id
-	 *
+	 * @param int $post_id Gateway configuration post ID.
 	 * @return Config
 	 */
 	public function get_config( $post_id ) {
