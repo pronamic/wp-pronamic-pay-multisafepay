@@ -29,9 +29,16 @@ class DirectTransactionRequestMessage extends RequestMessage {
 	/**
 	 * Gateway info.
 	 *
-	 * @var GatewayInfo
+	 * @var GatewayInfo|null
 	 */
 	private $gateway_info;
+
+	/**
+	 * Signature.
+	 *
+	 * @var string|null
+	 */
+	public $signature;
 
 	/**
 	 * Constructs and initialize an directory response message
@@ -120,7 +127,7 @@ class DirectTransactionRequestMessage extends RequestMessage {
 		);
 
 		// Gateway info.
-		if ( $this->gateway_info ) {
+		if ( null !== $this->gateway_info ) {
 			$gateway_info = XML_Util::add_element( $document, $document->documentElement, 'gatewayinfo' );
 
 			XML_Util::add_elements(

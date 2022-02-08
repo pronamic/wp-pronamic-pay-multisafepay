@@ -19,7 +19,7 @@ class GatewaysResponseMessage {
 	/**
 	 * Gateways.
 	 *
-	 * @var array
+	 * @var array<string, string>
 	 */
 	public $gateways;
 
@@ -27,7 +27,6 @@ class GatewaysResponseMessage {
 	 * Parse the specified XML element into an iDEAL transaction object
 	 *
 	 * @param SimpleXMLElement $xml
-	 *
 	 * @return GatewaysResponseMessage
 	 */
 	public static function parse( SimpleXMLElement $xml ) {

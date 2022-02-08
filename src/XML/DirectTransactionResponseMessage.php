@@ -4,6 +4,7 @@ namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML;
 
 use Pronamic\WordPress\Pay\Core\XML\Security;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\GatewayInfo;
+use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Transaction;
 use SimpleXMLElement;
 
 /**
@@ -27,7 +28,7 @@ class DirectTransactionResponseMessage {
 	/**
 	 * Transaction
 	 *
-	 * @var DirectTransactionResponseMessage
+	 * @var Transaction
 	 */
 	public $transaction;
 
@@ -46,13 +47,15 @@ class DirectTransactionResponseMessage {
 	 * @return DirectTransactionResponseMessage
 	 */
 	public static function parse( SimpleXMLElement $xml ) {
-		// Message
+		// Message.
 		$message = new DirectTransactionResponseMessage();
 
-		// Result
-		$message->result = Security::filter( $xml['result'] );
+		// Result.
+		if ( isset( $xml['result'] ) ) {
+			$message->result = Security::filter( $xml['result'] );
+		}
 
-		// Transaction
+		// Transaction.
 		$message->transaction = TransactionParser::parse( $xml->transaction );
 
 		// Gateway info

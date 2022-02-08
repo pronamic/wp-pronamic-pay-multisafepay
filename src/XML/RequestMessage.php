@@ -68,6 +68,12 @@ abstract class RequestMessage extends Message {
 	public function __toString() {
 		$document = $this->get_document();
 
-		return $document->saveXML();
+		$result = $document->saveXML();
+
+		if ( false === $result ) {
+			return '';
+		}
+
+		return $result;
 	}
 }
