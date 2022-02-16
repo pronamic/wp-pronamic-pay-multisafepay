@@ -62,7 +62,9 @@ class StatusResponseMessage {
 	public static function parse( SimpleXMLElement $xml ) {
 		$message = new StatusResponseMessage();
 
-		$message->result = Security::filter( $xml['result'] );
+		if ( isset( $xml['result'] ) ) {
+			$message->result = Security::filter( $xml['result'] );
+		}
 
 		// E-wallet
 		if ( $xml->ewallet ) {

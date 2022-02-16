@@ -3,7 +3,6 @@
 namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay;
 
 use Pronamic\WordPress\Pay\Core\Util as Core_Util;
-use Pronamic\WordPress\Pay\Gateways\MultiSafepay\MultiSafepay;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\DirectTransactionRequestMessage;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\DirectTransactionResponseMessage;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\GatewaysRequestMessage;
@@ -45,8 +44,7 @@ class Client {
 	 * Parse XML.
 	 *
 	 * @param SimpleXMLElement $xml XML to parse.
-	 *
-	 * @return bool|DirectTransactionResponseMessage|RedirectTransactionResponseMessage|StatusResponseMessage
+	 * @return false|IDealIssuersResponseMessage|GatewaysResponseMessage|DirectTransactionResponseMessage|RedirectTransactionResponseMessage|StatusResponseMessage
 	 */
 	private function parse_xml( $xml ) {
 		switch ( $xml->getName() ) {
@@ -73,8 +71,7 @@ class Client {
 	 * Request.
 	 *
 	 * @param string $message Message.
-	 *
-	 * @return bool|DirectTransactionResponseMessage|RedirectTransactionResponseMessage|StatusResponseMessage
+	 * @return false|DirectTransactionResponseMessage|GatewaysResponseMessage|IDealIssuersResponseMessage|RedirectTransactionResponseMessage|StatusResponseMessage
 	 */
 	private function request( $message ) {
 		$result = Core_Util::remote_get_body(
@@ -105,21 +102,19 @@ class Client {
 	 * Get iDEAL issuers
 	 *
 	 * @param Merchant $merchant Merchant.
-	 *
+	 * @return false|array<string, string>
 	 * @since 1.2.0
 	 */
 	public function get_ideal_issuers( $merchant ) {
-		$return = false;
-
 		$request = new IDealIssuersRequestMessage( $merchant );
 
 		$response = $this->request( $request );
 
-		if ( $response ) {
-			$return = $response->issuers;
+		if ( ! ( $response instanceof IDealIssuersResponseMessage ) ) {
+			return false;
 		}
 
-		return $return;
+		return $response->issuers;
 	}
 
 	/**
@@ -127,54 +122,54 @@ class Client {
 	 *
 	 * @param Merchant $merchant Merchant.
 	 * @param Customer $customer Customer.
-	 *
+	 * @return false|array<string, string>
 	 * @since 1.2.0
 	 */
-	public function get_gateways( $merchant, $customer ) {
-		$return = false;
-
+	public function get_gateways( Merchant $merchant, Customer $customer ) {
 		$request = new GatewaysRequestMessage( $merchant, $customer );
 
 		$response = $this->request( $request );
 
-		if ( $response ) {
-			$return = $response->gateways;
+		if ( ! ( $response instanceof GatewaysResponseMessage ) ) {
+			return false;
 		}
 
-		return $return;
+		return $response->gateways;
 	}
 
 	/**
 	 * Start transaction
 	 *
-	 * @param array $message Message.
+	 * @param DirectTransactionRequestMessage|RedirectTransactionRequestMessage $message Message.
+	 * @return false|DirectTransactionResponseMessage|RedirectTransactionResponseMessage
 	 */
 	public function start_transaction( $message ) {
-		$return = false;
-
 		$response = $this->request( $message );
 
-		if ( $response ) {
-			$return = $response;
+		if (
+			! ( $response instanceof DirectTransactionResponseMessage )
+				&&
+			! ( $response instanceof RedirectTransactionResponseMessage )
+		) {
+			return false;
 		}
 
-		return $return;
+		return $response;
 	}
 
 	/**
 	 * Get status
 	 *
-	 * @param array $message Message.
+	 * @param StatusRequestMessage $message Message.
+	 * @return false|StatusResponseMessage
 	 */
-	public function get_status( $message ) {
-		$return = false;
-
+	public function get_status( StatusRequestMessage $message ) {
 		$response = $this->request( $message );
 
-		if ( $response ) {
-			$return = $response;
+		if ( ! ( $response instanceof StatusResponseMessage ) ) {
+			return false;
 		}
 
-		return $return;
+		return $response;
 	}
 }

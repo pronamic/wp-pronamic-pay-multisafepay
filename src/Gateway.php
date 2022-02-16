@@ -329,7 +329,10 @@ class Gateway extends Core_Gateway {
 		$consumer_bank_details->set_name( $result->payment_details->account_holder_name );
 		$consumer_bank_details->set_iban( $result->payment_details->account_iban );
 		$consumer_bank_details->set_bic( $result->payment_details->account_bic );
-		$consumer_bank_details->set_account_number( $result->payment_details->account_id );
+
+		if ( 'http' !== \substr( $result->payment_details->account_id, 0, 4 ) ) {
+			$consumer_bank_details->set_account_number( $result->payment_details->account_id );
+		}
 	}
 
 	/**

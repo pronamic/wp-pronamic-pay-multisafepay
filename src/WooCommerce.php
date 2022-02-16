@@ -41,10 +41,20 @@ class WooCommerce {
 
 			$gateway_id = \get_post_meta( (int) $gateway->settings['config_id'], '_pronamic_gateway_id', true );
 
-			$total = new Money( \WC()->cart->get_total( 'raw' ) );
+			if ( 'multisafepay-connect' !== $gateway_id ) {
+				return $gateways;
+			}
+
+			$cart = \WC()->cart;
+
+			if ( ! ( $cart instanceof \WC_Cart ) ) {
+				return $gateways;
+			}
+
+			$total = new Money( $cart->get_total( 'raw' ) );
 
 			// Unset gateway if cart amount minimum not met.
-			if ( 'multisafepay-connect' === $gateway_id && $total->get_value() < 250 ) {
+			if ( $total->get_value() < 250 ) {
 				unset( $gateways[ $santander_id ] );
 			}
 		}

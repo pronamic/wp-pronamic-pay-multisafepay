@@ -17,10 +17,16 @@ use SimpleXMLElement;
  */
 class IDealIssuersResponseMessage {
 	/**
+	 * Issuers.
+	 *
+	 * @var array<string, string>
+	 */
+	public $issuers;
+
+	/**
 	 * Parse the specified XML element into an iDEAL transaction object
 	 *
 	 * @param SimpleXMLElement $xml
-	 *
 	 * @return IDealIssuersResponseMessage
 	 */
 	public static function parse( SimpleXMLElement $xml ) {

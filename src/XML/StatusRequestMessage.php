@@ -46,7 +46,7 @@ class StatusRequestMessage extends RequestMessage {
 	/**
 	 * Get document
 	 *
-	 * @see Pronamic_Gateways_IDealAdvancedV3_XML_RequestMessage::get_document()
+	 * @see RequestMessage::get_document()
 	 */
 	public function get_document() {
 		$document = parent::get_document();

@@ -117,10 +117,10 @@ class Integration extends AbstractGatewayIntegration {
 	public function get_config( $post_id ) {
 		$config = new Config();
 
-		$config->mode       = get_post_meta( $post_id, '_pronamic_gateway_mode', true );
-		$config->account_id = get_post_meta( $post_id, '_pronamic_gateway_multisafepay_account_id', true );
-		$config->site_id    = get_post_meta( $post_id, '_pronamic_gateway_multisafepay_site_id', true );
-		$config->site_code  = get_post_meta( $post_id, '_pronamic_gateway_multisafepay_site_code', true );
+		$config->mode       = (string) get_post_meta( $post_id, '_pronamic_gateway_mode', true );
+		$config->account_id = (string) get_post_meta( $post_id, '_pronamic_gateway_multisafepay_account_id', true );
+		$config->site_id    = (string) get_post_meta( $post_id, '_pronamic_gateway_multisafepay_site_id', true );
+		$config->site_code  = (string) get_post_meta( $post_id, '_pronamic_gateway_multisafepay_site_code', true );
 
 		if ( Gateway::MODE_TEST === $config->mode ) {
 			$config->api_url = MultiSafepay::API_TEST_URL;
