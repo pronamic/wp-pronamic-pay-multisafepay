@@ -16,6 +16,13 @@ use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
  */
 class Integration extends AbstractGatewayIntegration {
 	/**
+	 * API URL.
+	 * 
+	 * @var string
+	 */
+	private $api_url;
+
+	/**
 	 * Construct Mollie iDEAL integration.
 	 *
 	 * @param array $args Arguments.
@@ -26,6 +33,7 @@ class Integration extends AbstractGatewayIntegration {
 			array(
 				'id'            => 'multisafepay-connect',
 				'name'          => 'MultiSafepay - Connect',
+				'api_url'       => MultiSafepay::API_PRODUCTION_URL,
 				'url'           => 'http://www.multisafepay.com/',
 				'product_url'   => \__( 'http://www.multisafepay.com/', 'pronamic_ideal' ),
 				'dashboard_url' => 'https://merchant.multisafepay.com/',
@@ -40,6 +48,8 @@ class Integration extends AbstractGatewayIntegration {
 		);
 
 		parent::__construct( $args );
+
+		$this->api_url = $api_url;
 
 		// Filters.
 		$function = array( WooCommerce::class, 'woocommerce_available_payment_gateways' );
@@ -117,16 +127,11 @@ class Integration extends AbstractGatewayIntegration {
 	public function get_config( $post_id ) {
 		$config = new Config();
 
-		$config->mode       = (string) get_post_meta( $post_id, '_pronamic_gateway_mode', true );
+		$config->set_api_url( $this->api_url );
+
 		$config->account_id = (string) get_post_meta( $post_id, '_pronamic_gateway_multisafepay_account_id', true );
 		$config->site_id    = (string) get_post_meta( $post_id, '_pronamic_gateway_multisafepay_site_id', true );
 		$config->site_code  = (string) get_post_meta( $post_id, '_pronamic_gateway_multisafepay_site_code', true );
-
-		if ( Gateway::MODE_TEST === $config->mode ) {
-			$config->api_url = MultiSafepay::API_TEST_URL;
-		} else {
-			$config->api_url = MultiSafepay::API_PRODUCTION_URL;
-		}
 
 		return $config;
 	}

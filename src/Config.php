@@ -15,6 +15,13 @@ use Pronamic\WordPress\Pay\Core\GatewayConfig;
  */
 class Config extends GatewayConfig {
 	/**
+	 * API URL.
+	 * 
+	 * @var string
+	 */
+	private $api_url;
+
+	/**
 	 * Account ID.
 	 *
 	 * @var string|null
@@ -36,9 +43,28 @@ class Config extends GatewayConfig {
 	public $site_code;
 
 	/**
-	 * API URL.
-	 *
-	 * @var string|null
+	 * Construct config.
 	 */
-	public $api_url;
+	public function __construct() {
+		$this->api_url = MultiSafepay::API_PRODUCTION_URL;
+	}
+
+	/**
+	 * Get API URL.
+	 * 
+	 * @return string
+	 */
+	public function get_api_url() {
+		return $this->api_url;
+	}
+
+	/**
+	 * Set API URL.
+	 * 
+	 * @param string $api_url API URL.
+	 * @return void
+	 */
+	public function set_api_url( $api_url ) {
+		$this->api_url = $api_url;
+	}
 }

@@ -54,7 +54,7 @@ class Gateway extends Core_Gateway {
 		// Client.
 		$this->client = new Client();
 
-		$this->client->api_url = $config->api_url;
+		$this->client->api_url = $config->get_api_url();
 	}
 
 	/**
