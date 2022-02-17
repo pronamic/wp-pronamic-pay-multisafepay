@@ -49,7 +49,7 @@ class Integration extends AbstractGatewayIntegration {
 
 		parent::__construct( $args );
 
-		$this->api_url = $api_url;
+		$this->api_url = $args['api_url'];
 
 		// Filters.
 		$function = array( WooCommerce::class, 'woocommerce_available_payment_gateways' );
