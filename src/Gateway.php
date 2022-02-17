@@ -261,15 +261,7 @@ class Gateway extends Core_Gateway {
 
 		$message->signature = $signature;
 
-		try {
-			$response = $this->client->start_transaction( $message );
-		} catch ( \Exception $e ) {
-			$error = new \WP_Error( 'multisafepay_error', $e->getMessage() );
-
-			$this->set_error( $error );
-
-			return;
-		}
+		$response = $this->client->start_transaction( $message );
 
 		if ( false !== $response ) {
 			$transaction = $response->transaction;
@@ -353,16 +345,10 @@ class Gateway extends Core_Gateway {
 		// Get gateways.
 		$gateways = array();
 
-		try {
-			$result = $this->client->get_gateways( $merchant, $customer );
+		$result = $this->client->get_gateways( $merchant, $customer );
 
-			if ( false !== $result ) {
-				$gateways = $result;
-			}
-		} catch ( \Exception $e ) {
-			$error = new \WP_Error( 'multisafepay_error', $e->getMessage() );
-
-			$this->set_error( $error );
+		if ( false !== $result ) {
+			$gateways = $result;
 		}
 
 		return $gateways;
