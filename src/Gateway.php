@@ -292,13 +292,7 @@ class Gateway extends Core_Gateway {
 
 		$message = new StatusRequestMessage( $merchant, $payment->get_transaction_id() );
 
-		try {
-			$result = $this->client->get_status( $message );
-		} catch ( \Exception $e ) {
-			$this->error = new \WP_Error( 'multisafepay_error', $e->getMessage() );
-
-			return;
-		}
+		$result = $this->client->get_status( $message );
 
 		if ( false === $result ) {
 			return;
