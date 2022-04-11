@@ -46,6 +46,8 @@ class Gateway extends Core_Gateway {
 
 		$this->set_method( self::METHOD_HTTP_REDIRECT );
 
+		$this->config = $config;
+
 		// Supported features.
 		$this->supports = array(
 			'payment_status_request',
@@ -54,7 +56,7 @@ class Gateway extends Core_Gateway {
 		// Client.
 		$this->client = new Client();
 
-		$this->client->api_url = $config->api_url;
+		$this->client->api_url = $config->get_api_url();
 	}
 
 	/**
@@ -261,15 +263,7 @@ class Gateway extends Core_Gateway {
 
 		$message->signature = $signature;
 
-		try {
-			$response = $this->client->start_transaction( $message );
-		} catch ( \Exception $e ) {
-			$error = new \WP_Error( 'multisafepay_error', $e->getMessage() );
-
-			$this->set_error( $error );
-
-			return;
-		}
+		$response = $this->client->start_transaction( $message );
 
 		if ( false !== $response ) {
 			$transaction = $response->transaction;
@@ -300,13 +294,7 @@ class Gateway extends Core_Gateway {
 
 		$message = new StatusRequestMessage( $merchant, $payment->get_transaction_id() );
 
-		try {
-			$result = $this->client->get_status( $message );
-		} catch ( \Exception $e ) {
-			$this->error = new \WP_Error( 'multisafepay_error', $e->getMessage() );
-
-			return;
-		}
+		$result = $this->client->get_status( $message );
 
 		if ( false === $result ) {
 			return;
@@ -353,16 +341,10 @@ class Gateway extends Core_Gateway {
 		// Get gateways.
 		$gateways = array();
 
-		try {
-			$result = $this->client->get_gateways( $merchant, $customer );
+		$result = $this->client->get_gateways( $merchant, $customer );
 
-			if ( false !== $result ) {
-				$gateways = $result;
-			}
-		} catch ( \Exception $e ) {
-			$error = new \WP_Error( 'multisafepay_error', $e->getMessage() );
-
-			$this->set_error( $error );
+		if ( false !== $result ) {
+			$gateways = $result;
 		}
 
 		return $gateways;
