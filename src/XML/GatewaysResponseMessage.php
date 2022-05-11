@@ -34,11 +34,13 @@ class GatewaysResponseMessage {
 
 		$message->gateways = array();
 
-		foreach ( $xml->gateways->gateway as $gateway ) {
-			$id          = Security::filter( $gateway->id );
-			$description = Security::filter( $gateway->description );
+		if ( \is_array( $xml->gateways->gateway ) ) {
+			foreach ( $xml->gateways->gateway as $gateway ) {
+				$id          = Security::filter( $gateway->id );
+				$description = Security::filter( $gateway->description );
 
-			$message->gateways[ $id ] = $description;
+				$message->gateways[ $id ] = $description;
+			}
 		}
 
 		return $message;
