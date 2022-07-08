@@ -66,11 +66,21 @@ class Gateway extends Core_Gateway {
 
 		$ideal_payment_method->add_field( $ideal_issuer_field );
 
+		$credit_card_payment_method = new PaymentMethod( PaymentMethods::CREDIT_CARD );
+
+		$credit_card_issuer_field = new SelectField( 'credit-card-issuer' );
+
+		$credit_card_issuer_field->set_options_callback( function() {
+			return $this->get_credit_card_issuers();
+		} );
+
+		$credit_card_payment_method->add_field( $credit_card_issuer_field );
+
 		$this->register_payment_method( new PaymentMethod(PaymentMethods::ALIPAY ) );
 		$this->register_payment_method( new PaymentMethod(PaymentMethods::BANCONTACT ) );
 		$this->register_payment_method( new PaymentMethod(PaymentMethods::BANK_TRANSFER ) );
 		$this->register_payment_method( new PaymentMethod(PaymentMethods::BELFIUS ) );
-		$this->register_payment_method( new PaymentMethod(PaymentMethods::CREDIT_CARD ) );
+		$this->register_payment_method( $credit_card_payment_method );
 		$this->register_payment_method( new PaymentMethod(PaymentMethods::DIRECT_DEBIT ) );
 		$this->register_payment_method( $ideal_payment_method );
 		$this->register_payment_method( new PaymentMethod(PaymentMethods::IDEALQR ) );
