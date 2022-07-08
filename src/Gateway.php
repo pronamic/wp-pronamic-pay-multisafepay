@@ -55,7 +55,7 @@ class Gateway extends Core_Gateway {
 			'payment_status_request',
 		);
 
-		// Payment methods.
+		// Payment method iDEAL.
 		$ideal_payment_method = new PaymentMethod( PaymentMethods::IDEAL );
 
 		$ideal_issuer_field = new SelectField( 'ideal-issuer' );
@@ -66,6 +66,7 @@ class Gateway extends Core_Gateway {
 
 		$ideal_payment_method->add_field( $ideal_issuer_field );
 
+		// Payment method credit card.
 		$credit_card_payment_method = new PaymentMethod( PaymentMethods::CREDIT_CARD );
 
 		$credit_card_issuer_field = new SelectField( 'credit-card-issuer' );
@@ -76,6 +77,7 @@ class Gateway extends Core_Gateway {
 
 		$credit_card_payment_method->add_field( $credit_card_issuer_field );
 
+		// Payment methods.
 		$this->register_payment_method( new PaymentMethod(PaymentMethods::ALIPAY ) );
 		$this->register_payment_method( new PaymentMethod(PaymentMethods::BANCONTACT ) );
 		$this->register_payment_method( new PaymentMethod(PaymentMethods::BANK_TRANSFER ) );
