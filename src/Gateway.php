@@ -4,6 +4,7 @@ namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay;
 
 use Pronamic\WordPress\Pay\Banks\BankAccountDetails;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
+use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Core\Server;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\DirectTransactionRequestMessage;
@@ -52,6 +53,22 @@ class Gateway extends Core_Gateway {
 		$this->supports = array(
 			'payment_status_request',
 		);
+
+		// Payment methods.
+		$this->register_payment_method( new PaymentMethod(PaymentMethods::ALIPAY ) );
+		$this->register_payment_method( new PaymentMethod(PaymentMethods::BANCONTACT ) );
+		$this->register_payment_method( new PaymentMethod(PaymentMethods::BANK_TRANSFER ) );
+		$this->register_payment_method( new PaymentMethod(PaymentMethods::BELFIUS ) );
+		$this->register_payment_method( new PaymentMethod(PaymentMethods::CREDIT_CARD ) );
+		$this->register_payment_method( new PaymentMethod(PaymentMethods::DIRECT_DEBIT ) );
+		$this->register_payment_method( new PaymentMethod(PaymentMethods::IDEAL ) );
+		$this->register_payment_method( new PaymentMethod(PaymentMethods::IDEALQR ) );
+		$this->register_payment_method( new PaymentMethod(PaymentMethods::IN3 ) );
+		$this->register_payment_method( new PaymentMethod(PaymentMethods::GIROPAY ) );
+		$this->register_payment_method( new PaymentMethod(PaymentMethods::KBC ) );
+		$this->register_payment_method( new PaymentMethod(PaymentMethods::PAYPAL ) );
+		$this->register_payment_method( new PaymentMethod(PaymentMethods::SANTANDER ) );
+		$this->register_payment_method( new PaymentMethod(PaymentMethods::SOFORT ) );
 
 		// Client.
 		$this->client = new Client();
@@ -136,31 +153,6 @@ class Gateway extends Core_Gateway {
 		}
 
 		return $payment_methods;
-	}
-
-	/**
-	 * Get supported payment methods
-	 *
-	 * @see Core_Gateway::get_supported_payment_methods()
-	 * @return array<string>
-	 */
-	public function get_supported_payment_methods() {
-		return array(
-			PaymentMethods::ALIPAY,
-			PaymentMethods::BANCONTACT,
-			PaymentMethods::BANK_TRANSFER,
-			PaymentMethods::BELFIUS,
-			PaymentMethods::CREDIT_CARD,
-			PaymentMethods::DIRECT_DEBIT,
-			PaymentMethods::IDEAL,
-			PaymentMethods::IDEALQR,
-			PaymentMethods::IN3,
-			PaymentMethods::GIROPAY,
-			PaymentMethods::KBC,
-			PaymentMethods::PAYPAL,
-			PaymentMethods::SANTANDER,
-			PaymentMethods::SOFORT,
-		);
 	}
 
 	/**
