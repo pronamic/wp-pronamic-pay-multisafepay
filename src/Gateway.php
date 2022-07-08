@@ -6,6 +6,7 @@ use Pronamic\WordPress\Pay\Banks\BankAccountDetails;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
+use Pronamic\WordPress\Pay\Core\SelectField;
 use Pronamic\WordPress\Pay\Core\Server;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\DirectTransactionRequestMessage;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\RedirectTransactionRequestMessage;
@@ -55,13 +56,23 @@ class Gateway extends Core_Gateway {
 		);
 
 		// Payment methods.
+		$ideal_payment_method = new PaymentMethod( PaymentMethods::IDEAL );
+
+		$ideal_issuer_field = new SelectField( 'ideal-issuer' );
+
+		$ideal_issuer_field->set_options_callback( function() {
+			return $this->get_issuers();
+		} );
+
+		$ideal_payment_method->add_field( $ideal_issuer_field );
+
 		$this->register_payment_method( new PaymentMethod(PaymentMethods::ALIPAY ) );
 		$this->register_payment_method( new PaymentMethod(PaymentMethods::BANCONTACT ) );
 		$this->register_payment_method( new PaymentMethod(PaymentMethods::BANK_TRANSFER ) );
 		$this->register_payment_method( new PaymentMethod(PaymentMethods::BELFIUS ) );
 		$this->register_payment_method( new PaymentMethod(PaymentMethods::CREDIT_CARD ) );
 		$this->register_payment_method( new PaymentMethod(PaymentMethods::DIRECT_DEBIT ) );
-		$this->register_payment_method( new PaymentMethod(PaymentMethods::IDEAL ) );
+		$this->register_payment_method( $ideal_payment_method );
 		$this->register_payment_method( new PaymentMethod(PaymentMethods::IDEALQR ) );
 		$this->register_payment_method( new PaymentMethod(PaymentMethods::IN3 ) );
 		$this->register_payment_method( new PaymentMethod(PaymentMethods::GIROPAY ) );
