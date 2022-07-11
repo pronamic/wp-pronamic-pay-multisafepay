@@ -100,13 +100,12 @@ class Gateway extends Core_Gateway {
 	}
 
 	/**
-	 * Get iDEAL issuers
+	 * Get iDEAL issuers.
 	 *
-	 * @see Core_Gateway::get_issuers()
 	 * @return array<array<string,array>>
 	 * @since 1.2.0
 	 */
-	public function get_issuers() {
+	private function get_issuers() {
 		$groups = array();
 
 		// Merchant.
