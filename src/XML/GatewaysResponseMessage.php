@@ -34,7 +34,7 @@ class GatewaysResponseMessage {
 
 		$message->gateways = array();
 
-		if ( \is_array( $xml->gateways->gateway ) ) {
+		if ( \is_object( $xml->gateways->gateway ) ) {
 			foreach ( $xml->gateways->gateway as $gateway ) {
 				$id          = Security::filter( $gateway->id );
 				$description = Security::filter( $gateway->description );
