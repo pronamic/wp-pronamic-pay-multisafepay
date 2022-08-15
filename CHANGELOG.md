@@ -7,6 +7,9 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.1.2] - 2022-08-15
+- Fixed parsing gateways response message ([pronamic/wp-pronamic-pay-multisafepay#3](https://github.com/pronamic/wp-pronamic-pay-multisafepay/issues/3)).
+
 ## [4.1.1] - 2022-05-30
 ### Fixed
 - Fix possible "Warning: Invalid argument supplied for foreach()" with incomplete config.
@@ -86,7 +89,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2015-01-19
 - First release.
 
-[unreleased]: https://github.com/pronamic/wp-pronamic-pay-multisafepay/compare/4.1.1...HEAD
+[unreleased]: https://github.com/pronamic/wp-pronamic-pay-multisafepay/compare/4.1.2...HEAD
+[4.1.2]: https://github.com/pronamic/wp-pronamic-pay-multisafepay/compare/4.1.1...4.1.2
 [4.1.1]: https://github.com/pronamic/wp-pronamic-pay-multisafepay/compare/4.1.0...4.1.1
 [4.1.0]: https://github.com/pronamic/wp-pronamic-pay-multisafepay/compare/4.0.1...4.1.0
 [4.0.1]: https://github.com/pronamic/wp-pronamic-pay-multisafepay/compare/4.0.0...4.0.1
