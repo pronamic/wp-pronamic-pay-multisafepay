@@ -6,8 +6,11 @@ use Pronamic\WordPress\Pay\Banks\BankAccountDetails;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
-use Pronamic\WordPress\Pay\Core\SelectField;
+use Pronamic\WordPress\Pay\Fields\CachedCallbackOptions;
+use Pronamic\WordPress\Pay\Fields\IDealIssuerSelectField;
+use Pronamic\WordPress\Pay\Fields\SelectField;
 use Pronamic\WordPress\Pay\Core\Server;
+use Pronamic\WordPress\Pay\Fields\SelectFieldOption;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\DirectTransactionRequestMessage;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\RedirectTransactionRequestMessage;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\StatusRequestMessage;
@@ -58,11 +61,14 @@ class Gateway extends Core_Gateway {
 		// Payment method iDEAL.
 		$ideal_payment_method = new PaymentMethod( PaymentMethods::IDEAL );
 
-		$ideal_issuer_field = new SelectField( 'ideal-issuer' );
+		$ideal_issuer_field = new IDealIssuerSelectField( 'ideal-issuer' );
 
-		$ideal_issuer_field->set_options_callback( function() {
-			return $this->get_ideal_issuers();
-		} );
+		$ideal_issuer_field->set_options( new CachedCallbackOptions(
+			function() {
+				return $this->get_ideal_issuers();
+			},
+			'pronamic_pay_ideal_issuers_' . \md5( \wp_json_encode( $config ) )
+		) );
 
 		$ideal_payment_method->add_field( $ideal_issuer_field );
 
@@ -71,9 +77,12 @@ class Gateway extends Core_Gateway {
 
 		$credit_card_issuer_field = new SelectField( 'credit-card-issuer' );
 
-		$credit_card_issuer_field->set_options_callback( function() {
-			return $this->get_credit_card_issuers();
-		} );
+		$credit_card_issuer_field->set_options( new CachedCallbackOptions(
+			function() {
+				return $this->get_credit_card_issuers();
+			},
+			'pronamic_pay_credit_card_issuers_' . \md5( \wp_json_encode( $config ) )
+		) );
 
 		$credit_card_payment_method->add_field( $credit_card_issuer_field );
 
@@ -106,23 +115,25 @@ class Gateway extends Core_Gateway {
 	 * @since 1.2.0
 	 */
 	private function get_ideal_issuers() {
-		$groups = array();
+		$merchant = new Merchant();
 
-		// Merchant.
-		$merchant                   = new Merchant();
 		$merchant->account          = $this->config->account_id;
 		$merchant->site_id          = $this->config->site_id;
 		$merchant->site_secure_code = $this->config->site_code;
 
 		$result = $this->client->get_ideal_issuers( $merchant );
 
-		if ( $result ) {
-			$groups[] = array(
-				'options' => $result,
-			);
+		if ( false === $result ) {
+			return [];
 		}
 
-		return $groups;
+		$options = [];
+
+		foreach ( $result as $key => $value ) {
+			$options[] = new SelectFieldOption( $key, $value );
+		}
+
+		return $options;
 	}
 
 	/**
@@ -131,19 +142,19 @@ class Gateway extends Core_Gateway {
 	 * @see Core_Gateway::get_credit_card_issuers()
 	 * @return array<array<string,array>>
 	 */
-	public function get_credit_card_issuers() {
+	private function get_credit_card_issuers() {
 		// Get active card issuers.
 		$issuers = \array_intersect_key( $this->get_gateways(), Methods::get_cards() );
 
 		sort( $issuers );
 
-		$groups = array(
-			array(
-				'options' => $issuers,
-			),
-		);
+		$options = [];
 
-		return $groups;
+		foreach ( $issuers as $key => $value ) {
+			$options[] = new SelectFieldOption( $key, $value );
+		}
+
+		return $options;
 	}
 
 	/**
