@@ -101,7 +101,11 @@ class Gateway extends Core_Gateway {
 		$this->register_payment_method( new PaymentMethod(PaymentMethods::PAYPAL ) );
 		$this->register_payment_method( new PaymentMethod(PaymentMethods::SANTANDER ) );
 		$this->register_payment_method( new PaymentMethod(PaymentMethods::SOFORT ) );
-		$this->register_payment_method( new PaymentMethod(PaymentMethods::VOID ) );
+
+		$payment_method_void =  new PaymentMethod(PaymentMethods::VOID );
+		$payment_method_void->set_status( 'active' );
+
+		$this->register_payment_method( $payment_method_void );
 
 		// Client.
 		$this->client = new Client();
@@ -159,34 +163,53 @@ class Gateway extends Core_Gateway {
 	}
 
 	/**
-	 * Get payment methods
+	 * Get payment methods.
 	 *
-	 * @see Core_Gateway::get_payment_methods()
-	 * @return array<string>
+	 * @param array $args Query arguments.
+	 * @return PaymentMethod[]
 	 */
-	public function get_available_payment_methods() {
-		$payment_methods = array();
+	public function get_payment_methods( $args = [] ) {
+		$this->maybe_enrich_payment_methods();
 
-		$gateways = $this->get_gateways();
+		return parent::get_payment_methods( $args );
+	}
 
-		foreach ( $gateways as $method => $title ) {
-			$payment_method = Methods::transform_gateway_method( $method );
+	/**
+	 * Maybe enrich payment methods.
+	 *
+	 * @return void
+	 */
+	private function maybe_enrich_payment_methods() {
+		$cache_key = 'pronamic_pay_multisafepay_payment_methods_' . \md5( \wp_json_encode( $this->config ) );
 
-			// Handle cards, as no general method for credit cards is returned by gateway.
-			if ( null === $payment_method && \array_key_exists( $method, Methods::get_cards() ) ) {
-				$payment_method = PaymentMethods::CREDIT_CARD;
-			}
+		$multisafepay_payment_methods = \get_transient( $cache_key );
 
-			// Check valid payment method.
-			if ( null === $payment_method ) {
-				continue;
-			}
+		if ( false === $multisafepay_payment_methods ) {
+			$multisafepay_payment_methods = $this->get_gateways();
 
-			// Add available payment method.
-			$payment_methods[] = $payment_method;
+			\set_transient( $cache_key, $multisafepay_payment_methods, \DAY_IN_SECONDS );
 		}
 
-		return $payment_methods;
+		foreach ( $multisafepay_payment_methods as $method => $title ) {
+			$core_payment_method_id = Methods::transform_gateway_method( $method );
+
+			// Handle cards, as no general method for credit cards is returned by gateway.
+			if ( null === $core_payment_method_id && \array_key_exists( $method, Methods::get_cards() ) ) {
+				$core_payment_method_id = PaymentMethods::CREDIT_CARD;
+			}
+
+			$core_payment_method = $this->get_payment_method( $core_payment_method_id );
+
+			if ( null !== $core_payment_method ) {
+				$core_payment_method->set_status( 'active' );
+			}
+		}
+
+		foreach ( $this->payment_methods as $payment_method ) {
+			if ( '' === $payment_method->get_status() ) {
+				$payment_method->set_status( 'inactive' );
+			}
+		}
 	}
 
 	/**
