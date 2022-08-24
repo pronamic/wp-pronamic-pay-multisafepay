@@ -4,8 +4,13 @@ namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay;
 
 use Pronamic\WordPress\Pay\Banks\BankAccountDetails;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
+use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
+use Pronamic\WordPress\Pay\Fields\CachedCallbackOptions;
+use Pronamic\WordPress\Pay\Fields\IDealIssuerSelectField;
+use Pronamic\WordPress\Pay\Fields\SelectField;
 use Pronamic\WordPress\Pay\Core\Server;
+use Pronamic\WordPress\Pay\Fields\SelectFieldOption;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\DirectTransactionRequestMessage;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\RedirectTransactionRequestMessage;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\StatusRequestMessage;
@@ -53,6 +58,57 @@ class Gateway extends Core_Gateway {
 			'payment_status_request',
 		);
 
+		// Payment method iDEAL.
+		$ideal_payment_method = new PaymentMethod( PaymentMethods::IDEAL );
+
+		$ideal_issuer_field = new IDealIssuerSelectField( 'pronamic_pay_multisafepay_ideal_issuer' );
+
+		$ideal_issuer_field->set_options( new CachedCallbackOptions(
+			function() {
+				return $this->get_ideal_issuers();
+			},
+			'pronamic_pay_ideal_issuers_' . \md5( \wp_json_encode( $config ) )
+		) );
+
+		$ideal_payment_method->add_field( $ideal_issuer_field );
+
+		// Payment method credit card.
+		$credit_card_payment_method = new PaymentMethod( PaymentMethods::CREDIT_CARD );
+
+		$credit_card_issuer_field = new SelectField( 'pronamic_pay_multisafepay_credit_card_issuer' );
+
+		$credit_card_issuer_field->meta_key = 'issuer';
+
+		$credit_card_issuer_field->set_options( new CachedCallbackOptions(
+			function() {
+				return $this->get_credit_card_issuers();
+			},
+			'pronamic_pay_credit_card_issuers_' . \md5( \wp_json_encode( $config ) )
+		) );
+
+		$credit_card_payment_method->add_field( $credit_card_issuer_field );
+
+		// Payment methods.
+		$this->register_payment_method( new PaymentMethod(PaymentMethods::ALIPAY ) );
+		$this->register_payment_method( new PaymentMethod(PaymentMethods::BANCONTACT ) );
+		$this->register_payment_method( new PaymentMethod(PaymentMethods::BANK_TRANSFER ) );
+		$this->register_payment_method( new PaymentMethod(PaymentMethods::BELFIUS ) );
+		$this->register_payment_method( $credit_card_payment_method );
+		$this->register_payment_method( new PaymentMethod(PaymentMethods::DIRECT_DEBIT ) );
+		$this->register_payment_method( $ideal_payment_method );
+		$this->register_payment_method( new PaymentMethod(PaymentMethods::IDEALQR ) );
+		$this->register_payment_method( new PaymentMethod(PaymentMethods::IN3 ) );
+		$this->register_payment_method( new PaymentMethod(PaymentMethods::GIROPAY ) );
+		$this->register_payment_method( new PaymentMethod(PaymentMethods::KBC ) );
+		$this->register_payment_method( new PaymentMethod(PaymentMethods::PAYPAL ) );
+		$this->register_payment_method( new PaymentMethod(PaymentMethods::SANTANDER ) );
+		$this->register_payment_method( new PaymentMethod(PaymentMethods::SOFORT ) );
+
+		$payment_method_void =  new PaymentMethod(PaymentMethods::VOID );
+		$payment_method_void->set_status( 'active' );
+
+		$this->register_payment_method( $payment_method_void );
+
 		// Client.
 		$this->client = new Client();
 
@@ -60,30 +116,31 @@ class Gateway extends Core_Gateway {
 	}
 
 	/**
-	 * Get iDEAL issuers
+	 * Get iDEAL issuers.
 	 *
-	 * @see Core_Gateway::get_issuers()
 	 * @return array<array<string,array>>
 	 * @since 1.2.0
 	 */
-	public function get_issuers() {
-		$groups = array();
+	private function get_ideal_issuers() {
+		$merchant = new Merchant();
 
-		// Merchant.
-		$merchant                   = new Merchant();
 		$merchant->account          = $this->config->account_id;
 		$merchant->site_id          = $this->config->site_id;
 		$merchant->site_secure_code = $this->config->site_code;
 
 		$result = $this->client->get_ideal_issuers( $merchant );
 
-		if ( $result ) {
-			$groups[] = array(
-				'options' => $result,
-			);
+		if ( false === $result ) {
+			return [];
 		}
 
-		return $groups;
+		$options = [];
+
+		foreach ( $result as $key => $value ) {
+			$options[] = new SelectFieldOption( $key, $value );
+		}
+
+		return $options;
 	}
 
 	/**
@@ -92,75 +149,69 @@ class Gateway extends Core_Gateway {
 	 * @see Core_Gateway::get_credit_card_issuers()
 	 * @return array<array<string,array>>
 	 */
-	public function get_credit_card_issuers() {
+	private function get_credit_card_issuers() {
 		// Get active card issuers.
 		$issuers = \array_intersect_key( $this->get_gateways(), Methods::get_cards() );
 
 		sort( $issuers );
 
-		$groups = array(
-			array(
-				'options' => $issuers,
-			),
-		);
+		$options = [];
 
-		return $groups;
-	}
-
-	/**
-	 * Get payment methods
-	 *
-	 * @see Core_Gateway::get_payment_methods()
-	 * @return array<string>
-	 */
-	public function get_available_payment_methods() {
-		$payment_methods = array();
-
-		$gateways = $this->get_gateways();
-
-		foreach ( $gateways as $method => $title ) {
-			$payment_method = Methods::transform_gateway_method( $method );
-
-			// Handle cards, as no general method for credit cards is returned by gateway.
-			if ( null === $payment_method && \array_key_exists( $method, Methods::get_cards() ) ) {
-				$payment_method = PaymentMethods::CREDIT_CARD;
-			}
-
-			// Check valid payment method.
-			if ( null === $payment_method ) {
-				continue;
-			}
-
-			// Add available payment method.
-			$payment_methods[] = $payment_method;
+		foreach ( $issuers as $key => $value ) {
+			$options[] = new SelectFieldOption( $key, $value );
 		}
 
-		return $payment_methods;
+		return $options;
 	}
 
 	/**
-	 * Get supported payment methods
+	 * Get payment methods.
 	 *
-	 * @see Core_Gateway::get_supported_payment_methods()
-	 * @return array<string>
+	 * @param array $args Query arguments.
+	 * @return PaymentMethod[]
 	 */
-	public function get_supported_payment_methods() {
-		return array(
-			PaymentMethods::ALIPAY,
-			PaymentMethods::BANCONTACT,
-			PaymentMethods::BANK_TRANSFER,
-			PaymentMethods::BELFIUS,
-			PaymentMethods::CREDIT_CARD,
-			PaymentMethods::DIRECT_DEBIT,
-			PaymentMethods::IDEAL,
-			PaymentMethods::IDEALQR,
-			PaymentMethods::IN3,
-			PaymentMethods::GIROPAY,
-			PaymentMethods::KBC,
-			PaymentMethods::PAYPAL,
-			PaymentMethods::SANTANDER,
-			PaymentMethods::SOFORT,
-		);
+	public function get_payment_methods( $args = [] ) {
+		$this->maybe_enrich_payment_methods();
+
+		return parent::get_payment_methods( $args );
+	}
+
+	/**
+	 * Maybe enrich payment methods.
+	 *
+	 * @return void
+	 */
+	private function maybe_enrich_payment_methods() {
+		$cache_key = 'pronamic_pay_multisafepay_payment_methods_' . \md5( \wp_json_encode( $this->config ) );
+
+		$multisafepay_payment_methods = \get_transient( $cache_key );
+
+		if ( false === $multisafepay_payment_methods ) {
+			$multisafepay_payment_methods = $this->get_gateways();
+
+			\set_transient( $cache_key, $multisafepay_payment_methods, \DAY_IN_SECONDS );
+		}
+
+		foreach ( $multisafepay_payment_methods as $method => $title ) {
+			$core_payment_method_id = Methods::transform_gateway_method( $method );
+
+			// Handle cards, as no general method for credit cards is returned by gateway.
+			if ( null === $core_payment_method_id && \array_key_exists( $method, Methods::get_cards() ) ) {
+				$core_payment_method_id = PaymentMethods::CREDIT_CARD;
+			}
+
+			$core_payment_method = $this->get_payment_method( $core_payment_method_id );
+
+			if ( null !== $core_payment_method ) {
+				$core_payment_method->set_status( 'active' );
+			}
+		}
+
+		foreach ( $this->payment_methods as $payment_method ) {
+			if ( '' === $payment_method->get_status() ) {
+				$payment_method->set_status( 'inactive' );
+			}
+		}
 	}
 
 	/**
