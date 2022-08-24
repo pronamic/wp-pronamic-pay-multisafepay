@@ -61,7 +61,7 @@ class Gateway extends Core_Gateway {
 		// Payment method iDEAL.
 		$ideal_payment_method = new PaymentMethod( PaymentMethods::IDEAL );
 
-		$ideal_issuer_field = new IDealIssuerSelectField( 'ideal-issuer' );
+		$ideal_issuer_field = new IDealIssuerSelectField( 'pronamic_pay_multisafepay_ideal_issuer' );
 
 		$ideal_issuer_field->set_options( new CachedCallbackOptions(
 			function() {
@@ -75,7 +75,7 @@ class Gateway extends Core_Gateway {
 		// Payment method credit card.
 		$credit_card_payment_method = new PaymentMethod( PaymentMethods::CREDIT_CARD );
 
-		$credit_card_issuer_field = new SelectField( 'credit-card-issuer' );
+		$credit_card_issuer_field = new SelectField( 'pronamic_pay_multisafepay_credit_card_issuer' );
 
 		$credit_card_issuer_field->meta_key = 'issuer';
 
