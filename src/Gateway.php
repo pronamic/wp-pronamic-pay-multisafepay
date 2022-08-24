@@ -77,6 +77,8 @@ class Gateway extends Core_Gateway {
 
 		$credit_card_issuer_field = new SelectField( 'credit-card-issuer' );
 
+		$credit_card_issuer_field->meta_key = 'issuer';
+
 		$credit_card_issuer_field->set_options( new CachedCallbackOptions(
 			function() {
 				return $this->get_credit_card_issuers();
