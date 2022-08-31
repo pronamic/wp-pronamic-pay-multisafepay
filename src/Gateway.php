@@ -80,6 +80,8 @@ class Gateway extends Core_Gateway {
 
 		$credit_card_issuer_field = new SelectField( 'pronamic_pay_multisafepay_credit_card_issuer' );
 
+		$credit_card_issuer_field->set_label( __( 'Card Brand', 'pronamic_ideal' ) );
+
 		$credit_card_issuer_field->meta_key = 'issuer';
 
 		$credit_card_issuer_field->set_options(
