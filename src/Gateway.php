@@ -271,11 +271,10 @@ class Gateway extends Core_Gateway {
 		$transaction->currency    = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
 		$transaction->amount      = $payment->get_total_amount()->get_minor_units()->format( 0, '', '' );
 		$transaction->description = $transaction_description;
+		$transaction->gateway     = Methods::transform( $payment_method );
 
 		switch ( $payment_method ) {
 			case PaymentMethods::IDEAL:
-				$transaction->gateway = Methods::IDEAL;
-
 				$issuer = $payment->get_meta( 'issuer' );
 
 				if ( empty( $issuer ) ) {
@@ -290,15 +289,9 @@ class Gateway extends Core_Gateway {
 
 				break;
 			case PaymentMethods::CREDIT_CARD:
-				$gateway = Methods::transform( $payment_method );
-
 				$issuer = $payment->get_meta( 'issuer' );
 
-				if ( empty( $issuer ) ) {
-					if ( $gateway ) {
-						$transaction->gateway = $gateway;
-					}
-				} else {
+				if ( ! empty( $issuer ) ) {
 					$transaction->gateway = $issuer;
 				}
 
@@ -306,12 +299,6 @@ class Gateway extends Core_Gateway {
 
 				break;
 			default:
-				$gateway = Methods::transform( $payment_method );
-
-				if ( $gateway ) {
-					$transaction->gateway = $gateway;
-				}
-
 				if ( ! isset( $transaction->gateway ) && ! empty( $payment_method ) ) {
 					// Leap of faith if the WordPress payment method could not transform to a Mollie method?
 					$transaction->gateway = $payment_method;
