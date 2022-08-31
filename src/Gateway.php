@@ -6,10 +6,11 @@ use Pronamic\WordPress\Pay\Banks\BankAccountDetails;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
+use Pronamic\WordPress\Pay\Core\PaymentMethodsCollection;
+use Pronamic\WordPress\Pay\Core\Server;
 use Pronamic\WordPress\Pay\Fields\CachedCallbackOptions;
 use Pronamic\WordPress\Pay\Fields\IDealIssuerSelectField;
 use Pronamic\WordPress\Pay\Fields\SelectField;
-use Pronamic\WordPress\Pay\Core\Server;
 use Pronamic\WordPress\Pay\Fields\SelectFieldOption;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\DirectTransactionRequestMessage;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\RedirectTransactionRequestMessage;
@@ -32,14 +33,14 @@ class Gateway extends Core_Gateway {
 	 *
 	 * @var Client
 	 */
-	protected $client;
+	protected Client $client;
 
 	/**
 	 * Config
 	 *
 	 * @var Config
 	 */
-	protected $config;
+	protected Config $config;
 
 	/**
 	 * Constructs and initializes an MultiSafepay Connect gateway
@@ -54,21 +55,23 @@ class Gateway extends Core_Gateway {
 		$this->config = $config;
 
 		// Supported features.
-		$this->supports = array(
+		$this->supports = [
 			'payment_status_request',
-		);
+		];
 
 		// Payment method iDEAL.
 		$ideal_payment_method = new PaymentMethod( PaymentMethods::IDEAL );
 
 		$ideal_issuer_field = new IDealIssuerSelectField( 'pronamic_pay_multisafepay_ideal_issuer' );
 
-		$ideal_issuer_field->set_options( new CachedCallbackOptions(
-			function() {
-				return $this->get_ideal_issuers();
-			},
-			'pronamic_pay_ideal_issuers_' . \md5( \wp_json_encode( $config ) )
-		) );
+		$ideal_issuer_field->set_options(
+			new CachedCallbackOptions(
+				function() {
+					return $this->get_ideal_issuers();
+				},
+				'pronamic_pay_ideal_issuers_' . \md5( \wp_json_encode( $config ) )
+			)
+		);
 
 		$ideal_payment_method->add_field( $ideal_issuer_field );
 
@@ -79,32 +82,34 @@ class Gateway extends Core_Gateway {
 
 		$credit_card_issuer_field->meta_key = 'issuer';
 
-		$credit_card_issuer_field->set_options( new CachedCallbackOptions(
-			function() {
-				return $this->get_credit_card_issuers();
-			},
-			'pronamic_pay_credit_card_issuers_' . \md5( \wp_json_encode( $config ) )
-		) );
+		$credit_card_issuer_field->set_options(
+			new CachedCallbackOptions(
+				function() {
+					return $this->get_credit_card_issuers();
+				},
+				'pronamic_pay_credit_card_issuers_' . \md5( \wp_json_encode( $config ) )
+			)
+		);
 
 		$credit_card_payment_method->add_field( $credit_card_issuer_field );
 
 		// Payment methods.
-		$this->register_payment_method( new PaymentMethod(PaymentMethods::ALIPAY ) );
-		$this->register_payment_method( new PaymentMethod(PaymentMethods::BANCONTACT ) );
-		$this->register_payment_method( new PaymentMethod(PaymentMethods::BANK_TRANSFER ) );
-		$this->register_payment_method( new PaymentMethod(PaymentMethods::BELFIUS ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::ALIPAY ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::BANCONTACT ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::BANK_TRANSFER ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::BELFIUS ) );
 		$this->register_payment_method( $credit_card_payment_method );
-		$this->register_payment_method( new PaymentMethod(PaymentMethods::DIRECT_DEBIT ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::DIRECT_DEBIT ) );
 		$this->register_payment_method( $ideal_payment_method );
-		$this->register_payment_method( new PaymentMethod(PaymentMethods::IDEALQR ) );
-		$this->register_payment_method( new PaymentMethod(PaymentMethods::IN3 ) );
-		$this->register_payment_method( new PaymentMethod(PaymentMethods::GIROPAY ) );
-		$this->register_payment_method( new PaymentMethod(PaymentMethods::KBC ) );
-		$this->register_payment_method( new PaymentMethod(PaymentMethods::PAYPAL ) );
-		$this->register_payment_method( new PaymentMethod(PaymentMethods::SANTANDER ) );
-		$this->register_payment_method( new PaymentMethod(PaymentMethods::SOFORT ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::IDEALQR ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::IN3 ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::GIROPAY ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::KBC ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::PAYPAL ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::SANTANDER ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::SOFORT ) );
 
-		$payment_method_void =  new PaymentMethod(PaymentMethods::VOID );
+		$payment_method_void = new PaymentMethod( PaymentMethods::VOID );
 		$payment_method_void->set_status( 'active' );
 
 		$this->register_payment_method( $payment_method_void );
@@ -121,7 +126,7 @@ class Gateway extends Core_Gateway {
 	 * @return array<array<string,array>>
 	 * @since 1.2.0
 	 */
-	private function get_ideal_issuers() {
+	private function get_ideal_issuers() : array {
 		$merchant = new Merchant();
 
 		$merchant->account          = $this->config->account_id;
@@ -146,10 +151,9 @@ class Gateway extends Core_Gateway {
 	/**
 	 * Get credit card issuers
 	 *
-	 * @see Core_Gateway::get_credit_card_issuers()
 	 * @return array<array<string,array>>
 	 */
-	private function get_credit_card_issuers() {
+	private function get_credit_card_issuers() : array {
 		// Get active card issuers.
 		$issuers = \array_intersect_key( $this->get_gateways(), Methods::get_cards() );
 
@@ -168,9 +172,9 @@ class Gateway extends Core_Gateway {
 	 * Get payment methods.
 	 *
 	 * @param array $args Query arguments.
-	 * @return PaymentMethod[]
+	 * @return PaymentMethodsCollection
 	 */
-	public function get_payment_methods( $args = [] ) {
+	public function get_payment_methods( array $args = [] ) : PaymentMethodsCollection {
 		try {
 			$this->maybe_enrich_payment_methods();
 		} catch ( \Exception $e ) {
@@ -383,7 +387,7 @@ class Gateway extends Core_Gateway {
 	 *
 	 * @return array<string, string>
 	 */
-	private function get_gateways() {
+	private function get_gateways() : array {
 		// Merchant.
 		$merchant                   = new Merchant();
 		$merchant->account          = $this->config->account_id;
@@ -394,7 +398,7 @@ class Gateway extends Core_Gateway {
 		$customer = new Customer();
 
 		// Get gateways.
-		$gateways = array();
+		$gateways = [];
 
 		$result = $this->client->get_gateways( $merchant, $customer );
 
