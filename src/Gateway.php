@@ -159,7 +159,7 @@ class Gateway extends Core_Gateway {
 		// Get active card issuers.
 		$issuers = \array_intersect_key( $this->get_gateways(), Methods::get_cards() );
 
-		sort( $issuers );
+		asort( $issuers );
 
 		$options = [];
 
