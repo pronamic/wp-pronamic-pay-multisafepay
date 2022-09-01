@@ -33,7 +33,7 @@ class GatewaysTest extends WP_UnitTestCase {
 	public function test_init() {
 		// Mock HTTP request
 		//add_action( 'http_api_debug', array( $this, 'http_api_debug' ), 10, 5 );
-		add_filter( 'pre_http_request', array( $this, 'pre_http_request' ), 10, 3 );
+		add_filter( 'pre_http_request', [ $this, 'pre_http_request' ], 10, 3 );
 
 		// Config
 		$config = new Config();
@@ -69,7 +69,7 @@ class GatewaysTest extends WP_UnitTestCase {
 		// Gateways
 		$gateways = $client->get_gateways( $merchant, $customer );
 
-		$expected = array(
+		$expected = [
 			'VISA'       => 'Visa',
 			'GIROPAY'    => 'Giropay',
 			'PAYAFTER'   => 'Pay After Delivery',
@@ -77,7 +77,7 @@ class GatewaysTest extends WP_UnitTestCase {
 			'DIRECTBANK' => 'SOFORT Banking',
 			'BANKTRANS'  => 'Wire Transfer',
 			'MASTERCARD' => 'MasterCard',
-		);
+		];
 
 		$this->assertEquals( $expected, $gateways );
 	}

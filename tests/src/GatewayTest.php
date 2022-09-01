@@ -38,7 +38,7 @@ class GatewayTest extends WP_UnitTestCase {
 	public function test_init() {
 		// Mock HTTP request
 		//add_action( 'http_api_debug', array( $this, 'http_api_debug' ), 10, 5 );
-		add_filter( 'pre_http_request', array( $this, 'pre_http_request' ), 10, 3 );
+		add_filter( 'pre_http_request', [ $this, 'pre_http_request' ], 10, 3 );
 
 		// Other
 		$config = new Config();
@@ -62,13 +62,13 @@ class GatewayTest extends WP_UnitTestCase {
 			$issuers = null;
 		}
 
-		$expected = array(
-			array(
-				'options' => array(
+		$expected = [
+			[
+				'options' => [
 					'3151' => 'Test bank',
-				),
-			),
-		);
+				],
+			],
+		];
 
 		$this->assertEquals( $expected, $issuers );
 	}

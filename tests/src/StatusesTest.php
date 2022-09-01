@@ -28,15 +28,15 @@ class StatusesTest extends WP_UnitTestCase {
 	}
 
 	public function status_matrix_provider() {
-		return array(
-			array( Statuses::COMPLETED, Core_Statuses::SUCCESS ),
-			array( Statuses::INITIALIZED, Core_Statuses::OPEN ),
-			array( Statuses::UNCLEARED, Core_Statuses::OPEN ),
-			array( Statuses::VOID, Core_Statuses::CANCELLED ),
-			array( Statuses::DECLINED, Core_Statuses::FAILURE ),
-			array( Statuses::REFUNDED, Core_Statuses::CANCELLED ),
-			array( Statuses::EXPIRED, Core_Statuses::EXPIRED ),
-			array( 'not existing response code', null ),
-		);
+		return [
+			[ Statuses::COMPLETED, Core_Statuses::SUCCESS ],
+			[ Statuses::INITIALIZED, Core_Statuses::OPEN ],
+			[ Statuses::UNCLEARED, Core_Statuses::OPEN ],
+			[ Statuses::VOID, Core_Statuses::CANCELLED ],
+			[ Statuses::DECLINED, Core_Statuses::FAILURE ],
+			[ Statuses::REFUNDED, Core_Statuses::CANCELLED ],
+			[ Statuses::EXPIRED, Core_Statuses::EXPIRED ],
+			[ 'not existing response code', null ],
+		];
 	}
 }

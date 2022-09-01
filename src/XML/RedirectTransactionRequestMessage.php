@@ -54,7 +54,7 @@ class RedirectTransactionRequestMessage extends RequestMessage {
 		XML_Util::add_elements(
 			$document,
 			$merchant,
-			array(
+			[
 				'account'          => $this->merchant->account,
 				'site_id'          => $this->merchant->site_id,
 				'site_secure_code' => $this->merchant->site_secure_code,
@@ -62,7 +62,7 @@ class RedirectTransactionRequestMessage extends RequestMessage {
 				'redirect_url'     => $this->merchant->redirect_url,
 				'cancel_url'       => $this->merchant->cancel_url,
 				'close_window'     => $this->merchant->close_window,
-			)
+			]
 		);
 
 		// Customer.
@@ -71,7 +71,7 @@ class RedirectTransactionRequestMessage extends RequestMessage {
 		XML_Util::add_elements(
 			$document,
 			$customer,
-			array(
+			[
 				'locale'      => $this->customer->locale,
 				'ipaddress'   => $this->customer->ip_address,
 				'forwardedip' => $this->customer->forwarded_ip,
@@ -85,7 +85,7 @@ class RedirectTransactionRequestMessage extends RequestMessage {
 				'country'     => $this->customer->country,
 				'phone'       => $this->customer->phone,
 				'email'       => $this->customer->email,
-			)
+			]
 		);
 
 		// Transaction.
@@ -94,7 +94,7 @@ class RedirectTransactionRequestMessage extends RequestMessage {
 		XML_Util::add_elements(
 			$document,
 			$transaction,
-			array(
+			[
 				'id'          => $this->transaction->id,
 				'currency'    => $this->transaction->currency,
 				'amount'      => $this->transaction->amount,
@@ -106,7 +106,7 @@ class RedirectTransactionRequestMessage extends RequestMessage {
 				'manual'      => $this->transaction->manual,
 				'gateway'     => $this->transaction->gateway,
 				'daysactive'  => $this->transaction->days_active,
-			)
+			]
 		);
 
 		// Signature.

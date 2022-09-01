@@ -27,10 +27,10 @@ class Integration extends AbstractGatewayIntegration {
 	 *
 	 * @param array $args Arguments.
 	 */
-	public function __construct( $args = array() ) {
+	public function __construct( $args = [] ) {
 		$args = wp_parse_args(
 			$args,
-			array(
+			[
 				'id'            => 'multisafepay-connect',
 				'name'          => 'MultiSafepay - Connect',
 				'api_url'       => MultiSafepay::API_PRODUCTION_URL,
@@ -38,13 +38,13 @@ class Integration extends AbstractGatewayIntegration {
 				'product_url'   => \__( 'http://www.multisafepay.com/', 'pronamic_ideal' ),
 				'dashboard_url' => 'https://merchant.multisafepay.com/',
 				'provider'      => 'multisafepay',
-				'supports'      => array(
+				'supports'      => [
 					'payment_status_request',
 					'webhook',
 					'webhook_no_config',
-				),
+				],
 				'manual_url'    => \__( 'https://www.pronamic.eu/support/how-to-connect-multisafepay-with-wordpress-via-pronamic-pay/', 'pronamic_ideal' ),
-			)
+			]
 		);
 
 		parent::__construct( $args );
@@ -52,7 +52,7 @@ class Integration extends AbstractGatewayIntegration {
 		$this->api_url = $args['api_url'];
 
 		// Filters.
-		$function = array( WooCommerce::class, 'woocommerce_available_payment_gateways' );
+		$function = [ WooCommerce::class, 'woocommerce_available_payment_gateways' ];
 
 		if ( ! \has_filter( 'woocommerce_available_payment_gateways', $function ) ) {
 			\add_filter( 'woocommerce_available_payment_gateways', $function, 10 );
@@ -65,55 +65,55 @@ class Integration extends AbstractGatewayIntegration {
 	 * @return array
 	 */
 	public function get_settings_fields() {
-		$fields = array();
+		$fields = [];
 
 		// Account ID.
-		$fields[] = array(
+		$fields[] = [
 			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_STRING,
 			'meta_key' => '_pronamic_gateway_multisafepay_account_id',
 			'title'    => __( 'Account ID', 'pronamic_ideal' ),
 			'type'     => 'text',
-			'classes'  => array( 'code' ),
+			'classes'  => [ 'code' ],
 			'tooltip'  => sprintf(
 				'%s %s.',
 				__( 'Account ID', 'pronamic_ideal' ),
 				/* translators: %s: payment provider name */
 				sprintf( __( 'as mentioned in the %s dashboard', 'pronamic_ideal' ), __( 'MultiSafepay', 'pronamic_ideal' ) )
 			),
-		);
+		];
 
 		// Site ID.
-		$fields[] = array(
+		$fields[] = [
 			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_STRING,
 			'meta_key' => '_pronamic_gateway_multisafepay_site_id',
 			'title'    => __( 'Site ID', 'pronamic_ideal' ),
 			'type'     => 'text',
-			'classes'  => array( 'code' ),
+			'classes'  => [ 'code' ],
 			'tooltip'  => sprintf(
 				'%s %s.',
 				__( 'Site ID', 'pronamic_ideal' ),
 				/* translators: %s: payment provider name */
 				sprintf( __( 'as mentioned in the %s dashboard', 'pronamic_ideal' ), __( 'MultiSafepay', 'pronamic_ideal' ) )
 			),
-		);
+		];
 
 		// Site Security Code.
-		$fields[] = array(
+		$fields[] = [
 			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_STRING,
 			'meta_key' => '_pronamic_gateway_multisafepay_site_code',
 			'title'    => __( 'Site Security Code', 'pronamic_ideal' ),
 			'type'     => 'text',
-			'classes'  => array( 'code' ),
+			'classes'  => [ 'code' ],
 			'tooltip'  => sprintf(
 				'%s %s.',
 				__( 'Site Security Code', 'pronamic_ideal' ),
 				/* translators: %s: payment provider name */
 				sprintf( __( 'as mentioned in the %s dashboard', 'pronamic_ideal' ), __( 'MultiSafepay', 'pronamic_ideal' ) )
 			),
-		);
+		];
 
 		return $fields;
 	}

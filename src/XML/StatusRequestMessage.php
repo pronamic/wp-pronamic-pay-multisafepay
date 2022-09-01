@@ -57,11 +57,11 @@ class StatusRequestMessage extends RequestMessage {
 		XML_Util::add_elements(
 			$document,
 			$merchant,
-			array(
+			[
 				'account'          => $this->merchant->account,
 				'site_id'          => $this->merchant->site_id,
 				'site_secure_code' => $this->merchant->site_secure_code,
-			)
+			]
 		);
 
 		// Transaction.
@@ -70,9 +70,9 @@ class StatusRequestMessage extends RequestMessage {
 		XML_Util::add_elements(
 			$document,
 			$transaction,
-			array(
+			[
 				'id' => $this->transaction_id,
-			)
+			]
 		);
 
 		return $document;

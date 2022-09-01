@@ -41,13 +41,13 @@ class Signature {
 	 * @return string
 	 */
 	public static function generate( $amount, $currency, $account, $site_id, $transaction_id ) {
-		$values = array(
+		$values = [
 			$amount,
 			$currency,
 			$account,
 			$site_id,
 			$transaction_id,
-		);
+		];
 
 		$string = implode( '', $values );
 
