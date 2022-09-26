@@ -7,6 +7,9 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.2.0] - 2022-09-26
+- Updated payment methods registration.
+
 ## [4.1.2] - 2022-08-15
 - Fixed parsing gateways response message ([pronamic/wp-pronamic-pay-multisafepay#3](https://github.com/pronamic/wp-pronamic-pay-multisafepay/issues/3)).
 
@@ -89,7 +92,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2015-01-19
 - First release.
 
-[unreleased]: https://github.com/pronamic/wp-pronamic-pay-multisafepay/compare/4.1.2...HEAD
+[unreleased]: https://github.com/pronamic/wp-pronamic-pay-multisafepay/compare/4.2.0...HEAD
+[4.2.0]: https://github.com/pronamic/wp-pronamic-pay-multisafepay/compare/4.1.2...4.2.0
 [4.1.2]: https://github.com/pronamic/wp-pronamic-pay-multisafepay/compare/4.1.1...4.1.2
 [4.1.1]: https://github.com/pronamic/wp-pronamic-pay-multisafepay/compare/4.1.0...4.1.1
 [4.1.0]: https://github.com/pronamic/wp-pronamic-pay-multisafepay/compare/4.0.1...4.1.0
