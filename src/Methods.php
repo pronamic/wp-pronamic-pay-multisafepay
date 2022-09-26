@@ -167,7 +167,7 @@ class Methods {
 	 *
 	 * @var array<string, string>
 	 */
-	private static $map = array(
+	private static $map = [
 		PaymentMethods::ALIPAY        => self::ALIPAY,
 		PaymentMethods::BANCONTACT    => self::BANCONTACT,
 		PaymentMethods::BANK_TRANSFER => self::BANK_TRANSFER,
@@ -182,7 +182,7 @@ class Methods {
 		PaymentMethods::PAYPAL        => self::PAYPAL,
 		PaymentMethods::SANTANDER     => self::SANTANDER,
 		PaymentMethods::SOFORT        => self::SOFORT,
-	);
+	];
 
 	/**
 	 * Transform WordPress payment method to MultiSafepay method.
@@ -229,11 +229,11 @@ class Methods {
 	 * @return array<string, string>
 	 */
 	public static function get_cards() {
-		return array(
+		return [
 			self::AMEX       => _x( 'American Express', 'Payment method name', 'pronamic_ideal' ),
 			self::MAESTRO    => _x( 'Maestro', 'Payment method name', 'pronamic_ideal' ),
 			self::MASTERCARD => _x( 'Mastercard', 'Payment method name', 'pronamic_ideal' ),
 			self::VISA       => _x( 'Visa', 'Payment method name', 'pronamic_ideal' ),
-		);
+		];
 	}
 }

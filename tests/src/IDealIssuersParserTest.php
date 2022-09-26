@@ -40,7 +40,7 @@ class IDealIssuersParserTest extends WP_UnitTestCase {
 	public function test_values( $message ) {
 		$expected = new IDealIssuersResponseMessage();
 
-		$expected->issuers = array(
+		$expected->issuers = [
 			'0031' => 'ABN AMRO',
 			'0751' => 'SNS Bank',
 			'0721' => 'ING',
@@ -50,7 +50,7 @@ class IDealIssuersParserTest extends WP_UnitTestCase {
 			'0771' => 'SNS Regio Bank',
 			'0511' => 'Triodos Bank',
 			'0161' => 'Van Lanschot Bankiers',
-		);
+		];
 
 		$this->assertEquals( $expected, $message );
 	}

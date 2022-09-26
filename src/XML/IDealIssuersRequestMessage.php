@@ -55,11 +55,11 @@ class IDealIssuersRequestMessage extends RequestMessage {
 		XML_Util::add_elements(
 			$document,
 			$merchant,
-			array(
+			[
 				'account'          => $this->merchant->account,
 				'site_id'          => $this->merchant->site_id,
 				'site_secure_code' => $this->merchant->site_secure_code,
-			)
+			]
 		);
 
 		return $document;

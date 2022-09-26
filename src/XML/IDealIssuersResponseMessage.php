@@ -32,7 +32,7 @@ class IDealIssuersResponseMessage {
 	public static function parse( SimpleXMLElement $xml ) {
 		$message = new IDealIssuersResponseMessage();
 
-		$message->issuers = array();
+		$message->issuers = [];
 
 		foreach ( $xml->issuers->issuer as $issuer ) {
 			$code        = Security::filter( $issuer->code );

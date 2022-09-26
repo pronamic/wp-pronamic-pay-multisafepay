@@ -32,15 +32,13 @@ class GatewaysResponseMessage {
 	public static function parse( SimpleXMLElement $xml ) {
 		$message = new GatewaysResponseMessage();
 
-		$message->gateways = array();
+		$message->gateways = [];
 
-		if ( \is_object( $xml->gateways->gateway ) ) {
-			foreach ( $xml->gateways->gateway as $gateway ) {
-				$id          = Security::filter( $gateway->id );
-				$description = Security::filter( $gateway->description );
+		foreach ( $xml->gateways->gateway as $gateway ) {
+			$id          = Security::filter( $gateway->id );
+			$description = Security::filter( $gateway->description );
 
-				$message->gateways[ $id ] = $description;
-			}
+			$message->gateways[ $id ] = $description;
 		}
 
 		return $message;

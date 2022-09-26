@@ -51,11 +51,11 @@ class GatewaysRequestMessage extends RequestMessage {
 		XML_Util::add_elements(
 			$document,
 			$merchant,
-			array(
+			[
 				'account'          => $this->merchant->account,
 				'site_id'          => $this->merchant->site_id,
 				'site_secure_code' => $this->merchant->site_secure_code,
-			)
+			]
 		);
 
 		// Customer.
@@ -64,10 +64,10 @@ class GatewaysRequestMessage extends RequestMessage {
 		XML_Util::add_elements(
 			$document,
 			$customer,
-			array(
+			[
 				'country' => $this->customer->country,
 				'locale'  => $this->customer->locale,
-			)
+			]
 		);
 
 		return $document;

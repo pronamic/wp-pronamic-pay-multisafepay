@@ -77,10 +77,10 @@ class Client {
 		$result = Core_Util::remote_get_body(
 			$this->api_url,
 			200,
-			array(
+			[
 				'method' => 'POST',
 				'body'   => (string) $message,
-			)
+			]
 		);
 
 		if ( is_wp_error( $result ) ) {

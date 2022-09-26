@@ -35,7 +35,7 @@ class DirectTransactionTest extends WP_UnitTestCase {
 	public function test_init() {
 		// Actions
 		//add_action( 'http_api_debug', array( $this, 'http_api_debug' ), 10, 5 );
-		add_filter( 'pre_http_request', array( $this, 'pre_http_request' ), 10, 3 );
+		add_filter( 'pre_http_request', [ $this, 'pre_http_request' ], 10, 3 );
 
 		// Config
 		$config = new Config();
