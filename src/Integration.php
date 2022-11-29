@@ -43,7 +43,7 @@ class Integration extends AbstractGatewayIntegration {
 					'webhook',
 					'webhook_no_config',
 				],
-				'manual_url'    => \__( 'https://www.pronamic.eu/support/how-to-connect-multisafepay-with-wordpress-via-pronamic-pay/', 'pronamic_ideal' ),
+				'manual_url'    => \__( 'https://www.pronamicpay.com/en/manuals/how-to-connect-multisafepay-to-wordpress-with-pronamic-pay/', 'pronamic_ideal' ),
 			]
 		);
 
