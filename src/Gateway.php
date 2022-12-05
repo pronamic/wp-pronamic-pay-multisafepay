@@ -123,7 +123,7 @@ class Gateway extends Core_Gateway {
 	 * @return array<array<string,array>>
 	 * @since 1.2.0
 	 */
-	private function get_ideal_issuers() : array {
+	private function get_ideal_issuers(): array {
 		$merchant = new Merchant();
 
 		$merchant->account          = $this->config->account_id;
@@ -150,7 +150,7 @@ class Gateway extends Core_Gateway {
 	 *
 	 * @return array<array<string,array>>
 	 */
-	private function get_credit_card_issuers() : array {
+	private function get_credit_card_issuers(): array {
 		// Get active card issuers.
 		$issuers = \array_intersect_key( $this->get_gateways(), Methods::get_cards() );
 
@@ -171,7 +171,7 @@ class Gateway extends Core_Gateway {
 	 * @param array $args Query arguments.
 	 * @return PaymentMethodsCollection
 	 */
-	public function get_payment_methods( array $args = [] ) : PaymentMethodsCollection {
+	public function get_payment_methods( array $args = [] ): PaymentMethodsCollection {
 		try {
 			$this->maybe_enrich_payment_methods();
 		} catch ( \Exception $e ) {
@@ -371,7 +371,7 @@ class Gateway extends Core_Gateway {
 	 *
 	 * @return array<string, string>
 	 */
-	private function get_gateways() : array {
+	private function get_gateways(): array {
 		// Merchant.
 		$merchant                   = new Merchant();
 		$merchant->account          = $this->config->account_id;
