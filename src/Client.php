@@ -2,6 +2,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay;
 
+use Pronamic\WordPress\Http\Facades\Http;
 use Pronamic\WordPress\Pay\Core\Util as Core_Util;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\DirectTransactionRequestMessage;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\DirectTransactionResponseMessage;
@@ -74,20 +75,15 @@ class Client {
 	 * @return false|DirectTransactionResponseMessage|GatewaysResponseMessage|IDealIssuersResponseMessage|RedirectTransactionResponseMessage|StatusResponseMessage
 	 */
 	private function request( $message ) {
-		$result = Core_Util::remote_get_body(
+		$response = Http::request(
 			$this->api_url,
-			200,
 			[
 				'method' => 'POST',
 				'body'   => (string) $message,
 			]
 		);
 
-		if ( is_wp_error( $result ) ) {
-			throw new \Exception( $result->get_error_message() );
-		}
-
-		$xml = Core_Util::simplexml_load_string( $result );
+		$xml = $response->simplexml();
 
 		$return = $this->parse_xml( $xml );
 
