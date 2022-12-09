@@ -2,7 +2,6 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML;
 
-use Pronamic\WordPress\Pay\Core\XML\Security;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\Transaction;
 use SimpleXMLElement;
 
