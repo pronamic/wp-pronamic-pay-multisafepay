@@ -35,8 +35,8 @@ class GatewaysResponseMessage {
 		$message->gateways = [];
 
 		foreach ( $xml->gateways->gateway as $gateway ) {
-			$id          = Security::filter( $gateway->id );
-			$description = Security::filter( $gateway->description );
+			$id          = (string) $gateway->id;
+			$description = (string) $gateway->description;
 
 			$message->gateways[ $id ] = $description;
 		}

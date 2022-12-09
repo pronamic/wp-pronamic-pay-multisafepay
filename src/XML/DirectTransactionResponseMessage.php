@@ -52,7 +52,7 @@ class DirectTransactionResponseMessage {
 
 		// Result.
 		if ( isset( $xml['result'] ) ) {
-			$message->result = Security::filter( $xml['result'] );
+			$message->result = (string) $xml['result'];
 		}
 
 		// Transaction.
@@ -61,9 +61,9 @@ class DirectTransactionResponseMessage {
 		// Gateway info
 		if ( $xml->gatewayinfo ) {
 			$message->gateway_info               = new GatewayInfo();
-			$message->gateway_info->redirect_url = Security::filter( $xml->gatewayinfo->redirecturl );
-			$message->gateway_info->ext_var      = Security::filter( $xml->gatewayinfo->extvar );
-			$message->gateway_info->issuer_id    = Security::filter( $xml->gatewayinfo->issuerid );
+			$message->gateway_info->redirect_url = (string) $xml->gatewayinfo->redirecturl;
+			$message->gateway_info->ext_var      = (string) $xml->gatewayinfo->extvar;
+			$message->gateway_info->issuer_id    = (string) $xml->gatewayinfo->issuerid;
 		}
 
 		return $message;

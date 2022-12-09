@@ -40,7 +40,7 @@ class RedirectTransactionResponseMessage {
 	public static function parse( SimpleXMLElement $xml ) {
 		$message = new RedirectTransactionResponseMessage();
 
-		$message->result      = Security::filter( $xml['result'] );
+		$message->result      = (string) $xml['result'];
 		$message->transaction = TransactionParser::parse( $xml->transaction );
 
 		return $message;

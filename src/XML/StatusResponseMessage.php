@@ -63,19 +63,19 @@ class StatusResponseMessage {
 		$message = new StatusResponseMessage();
 
 		if ( isset( $xml['result'] ) ) {
-			$message->result = Security::filter( $xml['result'] );
+			$message->result = (string) $xml['result'];
 		}
 
 		// E-wallet
 		if ( $xml->ewallet ) {
 			$ewallet = new stdClass();
 
-			$ewallet->id          = Security::filter( $xml->ewallet->id );
-			$ewallet->status      = Security::filter( $xml->ewallet->status );
-			$ewallet->created     = Security::filter( $xml->ewallet->created );
-			$ewallet->modified    = Security::filter( $xml->ewallet->modified );
-			$ewallet->reason_code = Security::filter( $xml->ewallet->reasoncode );
-			$ewallet->reason      = Security::filter( $xml->ewallet->reason );
+			$ewallet->id          = (string) $xml->ewallet->id;
+			$ewallet->status      = (string) $xml->ewallet->status;
+			$ewallet->created     = (string) $xml->ewallet->created;
+			$ewallet->modified    = (string) $xml->ewallet->modified;
+			$ewallet->reason_code = (string) $xml->ewallet->reasoncode;
+			$ewallet->reason      = (string) $xml->ewallet->reason;
 
 			$message->ewallet = $ewallet;
 		}
@@ -84,15 +84,15 @@ class StatusResponseMessage {
 		if ( $xml->customer ) {
 			$customer = new stdClass();
 
-			$customer->currency      = Security::filter( $xml->customer->currency );
-			$customer->amount        = Security::filter( $xml->customer->amount );
-			$customer->exchange_rate = Security::filter( $xml->customer->exchange_rate );
-			$customer->first_name    = Security::filter( $xml->customer->firstname );
-			$customer->last_name     = Security::filter( $xml->customer->lastname );
-			$customer->last_name     = Security::filter( $xml->customer->lastname );
-			$customer->city          = Security::filter( $xml->customer->city );
-			$customer->state         = Security::filter( $xml->customer->state );
-			$customer->country       = Security::filter( $xml->customer->country );
+			$customer->currency      = (string) $xml->customer->currency;
+			$customer->amount        = (string) $xml->customer->amount;
+			$customer->exchange_rate = (string) $xml->customer->exchange_rate;
+			$customer->first_name    = (string) $xml->customer->firstname;
+			$customer->last_name     = (string) $xml->customer->lastname;
+			$customer->last_name     = (string) $xml->customer->lastname;
+			$customer->city          = (string) $xml->customer->city;
+			$customer->state         = (string) $xml->customer->state;
+			$customer->country       = (string) $xml->customer->country;
 
 			$message->customer = $customer;
 		}
@@ -101,14 +101,14 @@ class StatusResponseMessage {
 		if ( $xml->transaction ) {
 			$transaction = new stdClass();
 
-			$transaction->id          = Security::filter( $xml->transaction->id );
-			$transaction->currency    = Security::filter( $xml->transaction->currency );
-			$transaction->amount      = Security::filter( $xml->transaction->amount );
-			$transaction->description = Security::filter( $xml->transaction->description );
-			$transaction->var1        = Security::filter( $xml->transaction->var1 );
-			$transaction->var2        = Security::filter( $xml->transaction->var2 );
-			$transaction->var3        = Security::filter( $xml->transaction->var3 );
-			$transaction->items       = Security::filter( $xml->transaction->items );
+			$transaction->id          = (string) $xml->transaction->id;
+			$transaction->currency    = (string) $xml->transaction->currency;
+			$transaction->amount      = (string) $xml->transaction->amount;
+			$transaction->description = (string) $xml->transaction->description;
+			$transaction->var1        = (string) $xml->transaction->var1;
+			$transaction->var2        = (string) $xml->transaction->var2;
+			$transaction->var3        = (string) $xml->transaction->var3;
+			$transaction->items       = (string) $xml->transaction->items;
 
 			$message->transaction = $transaction;
 		}
@@ -117,12 +117,12 @@ class StatusResponseMessage {
 		if ( $xml->paymentdetails ) {
 			$payment_details = new stdClass();
 
-			$payment_details->type                    = Security::filter( $xml->paymentdetails->type );
-			$payment_details->account_iban            = Security::filter( $xml->paymentdetails->accountiban );
-			$payment_details->account_bic             = Security::filter( $xml->paymentdetails->accountbic );
-			$payment_details->account_id              = Security::filter( $xml->paymentdetails->accountid );
-			$payment_details->account_holder_name     = Security::filter( $xml->paymentdetails->accountholdername );
-			$payment_details->external_transaction_id = Security::filter( $xml->paymentdetails->externaltransactionid );
+			$payment_details->type                    = (string) $xml->paymentdetails->type;
+			$payment_details->account_iban            = (string) $xml->paymentdetails->accountiban;
+			$payment_details->account_bic             = (string) $xml->paymentdetails->accountbic;
+			$payment_details->account_id              = (string) $xml->paymentdetails->accountid;
+			$payment_details->account_holder_name     = (string) $xml->paymentdetails->accountholdername;
+			$payment_details->external_transaction_id = (string) $xml->paymentdetails->externaltransactionid;
 
 			$message->payment_details = $payment_details;
 		}

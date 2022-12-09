@@ -27,8 +27,8 @@ class TransactionParser {
 	public static function parse( SimpleXMLElement $xml ) {
 		$transaction = new Transaction();
 
-		$transaction->id          = Security::filter( $xml->id );
-		$transaction->payment_url = Security::filter( $xml->payment_url );
+		$transaction->id          = (string) $xml->id;
+		$transaction->payment_url = (string) $xml->payment_url;
 
 		return $transaction;
 	}

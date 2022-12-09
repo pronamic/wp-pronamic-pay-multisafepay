@@ -35,8 +35,8 @@ class IDealIssuersResponseMessage {
 		$message->issuers = [];
 
 		foreach ( $xml->issuers->issuer as $issuer ) {
-			$code        = Security::filter( $issuer->code );
-			$description = Security::filter( $issuer->description );
+			$code        = (string) $issuer->code;
+			$description = (string) $issuer->description;
 
 			$message->issuers[ $code ] = $description;
 		}
