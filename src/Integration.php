@@ -70,7 +70,6 @@ class Integration extends AbstractGatewayIntegration {
 		// Account ID.
 		$fields[] = [
 			'section'  => 'general',
-			'filter'   => FILTER_SANITIZE_STRING,
 			'meta_key' => '_pronamic_gateway_multisafepay_account_id',
 			'title'    => __( 'Account ID', 'pronamic_ideal' ),
 			'type'     => 'text',
@@ -86,7 +85,6 @@ class Integration extends AbstractGatewayIntegration {
 		// Site ID.
 		$fields[] = [
 			'section'  => 'general',
-			'filter'   => FILTER_SANITIZE_STRING,
 			'meta_key' => '_pronamic_gateway_multisafepay_site_id',
 			'title'    => __( 'Site ID', 'pronamic_ideal' ),
 			'type'     => 'text',
@@ -102,7 +100,6 @@ class Integration extends AbstractGatewayIntegration {
 		// Site Security Code.
 		$fields[] = [
 			'section'  => 'general',
-			'filter'   => FILTER_SANITIZE_STRING,
 			'meta_key' => '_pronamic_gateway_multisafepay_site_code',
 			'title'    => __( 'Site Security Code', 'pronamic_ideal' ),
 			'type'     => 'text',
