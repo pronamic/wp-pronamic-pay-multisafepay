@@ -16,7 +16,7 @@ use Pronamic\WordPress\Pay\Core\GatewayConfig;
 class Config extends GatewayConfig {
 	/**
 	 * API URL.
-	 * 
+	 *
 	 * @var string
 	 */
 	private $api_url;
@@ -51,7 +51,7 @@ class Config extends GatewayConfig {
 
 	/**
 	 * Get API URL.
-	 * 
+	 *
 	 * @return string
 	 */
 	public function get_api_url() {
@@ -60,7 +60,7 @@ class Config extends GatewayConfig {
 
 	/**
 	 * Set API URL.
-	 * 
+	 *
 	 * @param string $api_url API URL.
 	 * @return void
 	 */

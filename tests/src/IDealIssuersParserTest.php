@@ -10,7 +10,7 @@ class IDealIssuersParserTest extends WP_UnitTestCase {
 	 * Test init
 	 */
 	public function test_init() {
-		$filename = dirname( dirname( __FILE__ ) ) . '/Mock/ideal-issuers-response.xml';
+		$filename = dirname( __DIR__ ) . '/Mock/ideal-issuers-response.xml';
 
 		$simplexml = simplexml_load_file( $filename );
 

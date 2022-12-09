@@ -17,7 +17,7 @@ use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
 class Integration extends AbstractGatewayIntegration {
 	/**
 	 * API URL.
-	 * 
+	 *
 	 * @var string
 	 */
 	private $api_url;

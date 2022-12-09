@@ -43,6 +43,5 @@ class Customer {
 	 * Constructs and initialize an MultiSafepay Connect customer object
 	 */
 	public function __construct() {
-
 	}
 }

@@ -17,7 +17,7 @@ class DirectTransactionTest extends WP_UnitTestCase {
 	 * @return string
 	 */
 	public function pre_http_request( $preempt, $request, $url ) {
-		$response = file_get_contents( dirname( dirname( __FILE__ ) ) . '/Mock/direct-transaction-response.http' );
+		$response = file_get_contents( dirname( __DIR__ ) . '/Mock/direct-transaction-response.http' );
 
 		$processed_response = WP_Http::processResponse( $response );
 
@@ -29,12 +29,11 @@ class DirectTransactionTest extends WP_UnitTestCase {
 	}
 
 	public function http_api_debug( $response, $context, $class, $args, $url ) {
-
 	}
 
 	public function test_init() {
 		// Actions
-		//add_action( 'http_api_debug', array( $this, 'http_api_debug' ), 10, 5 );
+		// add_action( 'http_api_debug', array( $this, 'http_api_debug' ), 10, 5 );
 		add_filter( 'pre_http_request', [ $this, 'pre_http_request' ], 10, 3 );
 
 		// Config
@@ -97,10 +96,10 @@ class DirectTransactionTest extends WP_UnitTestCase {
 		$transaction->gateway     = '';
 		$transaction->days_active = '';
 		$transaction->gateway     = Methods::IDEAL;
-		//$transaction->gateway     = Pronamic\WordPress\Pay\Gateways\MultiSafepay\Gateways::MASTERCARD;
-		//$transaction->gateway     = Pronamic\WordPress\Pay\Gateways\MultiSafepay\Gateways::BANK_TRANSFER;
+		// $transaction->gateway     = Pronamic\WordPress\Pay\Gateways\MultiSafepay\Gateways::MASTERCARD;
+		// $transaction->gateway     = Pronamic\WordPress\Pay\Gateways\MultiSafepay\Gateways::BANK_TRANSFER;
 
-		//$gateway_info = null;
+		// $gateway_info = null;
 		$gateway_info = new GatewayInfo();
 
 		$gateway_info->issuer_id = '3151';

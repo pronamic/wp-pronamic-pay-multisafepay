@@ -24,7 +24,7 @@ class GatewayTest extends WP_UnitTestCase {
 	 * @return string
 	 */
 	public function pre_http_request( $preempt, $request, $url ) {
-		$response = file_get_contents( dirname( dirname( __FILE__ ) ) . '/Mock/ideal-issuers-response.http' );
+		$response = file_get_contents( dirname( __DIR__ ) . '/Mock/ideal-issuers-response.http' );
 
 		$processed_response = WP_Http::processResponse( $response );
 
@@ -37,7 +37,7 @@ class GatewayTest extends WP_UnitTestCase {
 
 	public function test_init() {
 		// Mock HTTP request
-		//add_action( 'http_api_debug', array( $this, 'http_api_debug' ), 10, 5 );
+		// add_action( 'http_api_debug', array( $this, 'http_api_debug' ), 10, 5 );
 		add_filter( 'pre_http_request', [ $this, 'pre_http_request' ], 10, 3 );
 
 		// Other
