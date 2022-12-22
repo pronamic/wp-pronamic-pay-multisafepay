@@ -7,6 +7,23 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.3.0] - 2022-12-22
+
+### Commits
+
+- Use `pronamic/wp-http` for remote request and SimleXML. ([59882c9](https://github.com/pronamic/wp-pronamic-pay-multisafepay/commit/59882c92776d66b244f67d00d8a719739f9f5e9b))
+- Improving PHP 8.0 support. ([2f6be14](https://github.com/pronamic/wp-pronamic-pay-multisafepay/commit/2f6be1429c411b532aa907992329b6b172e4468f))
+
+### Composer
+
+- Added `pronamic/wp-http` `^1.1`.
+- Changed `php` from `>=5.6.20` to `>=8.0`.
+- Changed `wp-pay/core` from `^4.0` to `v4.6.0`.
+	Release notes: https://github.com/pronamic/wp-pay-core/releases/tag/v4.2.0
+Full set of changes: [`4.2.0...4.3.0`][4.3.0]
+
+[4.3.0]: https://github.com/pronamic/wp-pronamic-pay-multisafepay/compare/v4.2.0...v4.3.0
+
 ## [4.2.0] - 2022-09-26
 - Updated payment methods registration.
 
