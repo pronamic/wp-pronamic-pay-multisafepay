@@ -7,7 +7,7 @@ use SimpleXMLElement;
 /**
  * Title: MultiSafepay Connect XML redirect transaction response message
  * Description:
- * Copyright: 2005-2022 Pronamic
+ * Copyright: 2005-2023 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
