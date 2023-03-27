@@ -7,6 +7,17 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.3.2] - 2023-03-27
+
+### Commits
+
+- Updated composer.json ([1537660](https://github.com/pronamic/wp-pronamic-pay-multisafepay/commit/1537660926de50d10fb9e07fab1d10b361ae1380))
+- Updated .gitattributes ([e352e45](https://github.com/pronamic/wp-pronamic-pay-multisafepay/commit/e352e45da7a176ebe5ce55820a99ef6b68c7a5ce))
+
+Full set of changes: [`4.3.1...4.3.2`][4.3.2]
+
+[4.3.2]: https://github.com/pronamic/wp-pronamic-pay-multisafepay/compare/v4.3.1...v4.3.2
+
 ## [4.3.1] - 2023-01-31
 ### Composer
 
