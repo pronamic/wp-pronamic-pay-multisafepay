@@ -7,6 +7,17 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.3.3] - 2023-06-01
+
+### Commits
+
+- Switch from `pronamic/wp-deployer` to `pronamic/pronamic-cli`. ([4a66e2d](https://github.com/pronamic/wp-pronamic-pay-multisafepay/commit/4a66e2d2f6fb56281390aba5e4706b0a55a54cc0))
+- Updated .gitattributes ([a144daa](https://github.com/pronamic/wp-pronamic-pay-multisafepay/commit/a144daa78c06226046f633b45eae5f83811b8410))
+
+Full set of changes: [`4.3.2...4.3.3`][4.3.3]
+
+[4.3.3]: https://github.com/pronamic/wp-pronamic-pay-multisafepay/compare/v4.3.2...v4.3.3
+
 ## [4.3.2] - 2023-03-27
 
 ### Commits
