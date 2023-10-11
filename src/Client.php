@@ -88,7 +88,9 @@ class Client {
 		$return = $this->parse_xml( $xml );
 
 		if ( is_object( $return ) && isset( $return->result ) && 'error' === $return->result ) {
-			throw new \Exception( $xml->error->description );
+			throw new \Exception(
+				\esc_html( $xml->error->description )
+			);
 		}
 
 		return $return;
