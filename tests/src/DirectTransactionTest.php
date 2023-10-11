@@ -28,7 +28,7 @@ class DirectTransactionTest extends WP_UnitTestCase {
 		return $processed_headers;
 	}
 
-	public function http_api_debug( $response, $context, $class, $args, $url ) {
+	public function http_api_debug( $response, $context, $c, $args, $url ) {
 	}
 
 	public function test_init() {
