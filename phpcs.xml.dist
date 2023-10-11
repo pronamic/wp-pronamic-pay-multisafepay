@@ -37,7 +37,11 @@
 
 	<rule ref="WordPress.NamingConventions.ValidVariableName">
 		<properties>
-			<property name="customPropertiesWhitelist" type="array" value="documentElement,preserveWhiteSpace,formatOutput" />
+			<property name="allowed_custom_properties" type="array">
+				<element value="documentElement" />
+				<element value="preserveWhiteSpace" />
+				<element value="formatOutput" />
+			</property>
 		</properties>
 	</rule>
 </ruleset>
