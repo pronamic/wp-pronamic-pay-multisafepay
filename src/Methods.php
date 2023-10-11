@@ -188,10 +188,10 @@ class Methods {
 	 * Transform WordPress payment method to MultiSafepay method.
 	 *
 	 * @param string|null $payment_method Payment method.
-	 * @param string|null $default        Default payment method.
+	 * @param string|null $fallback       Default payment method.
 	 * @return string|null
 	 */
-	public static function transform( $payment_method, $default = null ) {
+	public static function transform( $payment_method, $fallback = null ) {
 		if ( ! \is_scalar( $payment_method ) ) {
 			return null;
 		}
@@ -200,7 +200,7 @@ class Methods {
 			return self::$map[ $payment_method ];
 		}
 
-		return $default;
+		return $fallback;
 	}
 
 	/**
