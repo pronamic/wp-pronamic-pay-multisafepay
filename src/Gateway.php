@@ -244,9 +244,20 @@ class Gateway extends Core_Gateway {
 		$merchant->close_window     = 'false';
 
 		// Customer.
-		$customer               = new Customer();
-		$customer->ip_address   = Server::get( 'REMOTE_ADDR', FILTER_VALIDATE_IP );
-		$customer->forwarded_ip = Server::get( 'HTTP_X_FORWARDED_FOR', FILTER_VALIDATE_IP );
+		$customer = new Customer();
+
+		// phpcs:disable WordPressVIPMinimum.Variables.ServerVariables.UserControlledHeaders -- No problem, this is up to MultiSafepay.
+
+		if ( \array_key_exists( 'REMOTE_ADDR', $_SERVER ) ) {
+			// phpcs:ignore WordPressVIPMinimum.Variables.RestrictedVariables.cache_constraints___SERVER__REMOTE_ADDR__
+			$customer->ip_address = \sanitize_text_field( $_SERVER['REMOTE_ADDR'] );
+		}
+
+		if ( \array_key_exists( 'HTTP_X_FORWARDED_FOR', $_SERVER ) ) {
+			$customer->forwarded_ip = \sanitize_text_field( $_SERVER['HTTP_X_FORWARDED_FOR'] );
+		}
+
+		// phpcs:enable WordPressVIPMinimum.Variables.ServerVariables.UserControlledHeaders
 
 		if ( null !== $payment->get_customer() ) {
 			$name = $payment->get_customer()->get_name();
