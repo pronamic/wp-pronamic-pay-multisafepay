@@ -7,6 +7,20 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.3.4] - 2023-10-13
+
+### Commits
+
+- Removed unused `use Pronamic\WordPress\Pay\Core\Server`. ([068672d](https://github.com/pronamic/wp-pronamic-pay-multisafepay/commit/068672d12603a0a93f93486d2b11adde25886d5e))
+- No longer user `Server::get` method, will be removed. ([55879af](https://github.com/pronamic/wp-pronamic-pay-multisafepay/commit/55879af793cb18e0763caa54376f42832806a379))
+- It is recommended not to use reserved keyword "default". ([e2543fa](https://github.com/pronamic/wp-pronamic-pay-multisafepay/commit/e2543fa1810e5d18e0fa7b54a87fde08a098476f))
+- All output should be run through an escaping function. ([73632a1](https://github.com/pronamic/wp-pronamic-pay-multisafepay/commit/73632a1c1b31bfa53465b9ff65bda12d04c6fd18))
+- It is recommended not to use reserved keyword "class". ([e14f177](https://github.com/pronamic/wp-pronamic-pay-multisafepay/commit/e14f1770b34d9806edeb497b5727e916f5163b16))
+
+Full set of changes: [`4.3.3...4.3.4`][4.3.4]
+
+[4.3.4]: https://github.com/pronamic/wp-pronamic-pay-multisafepay/compare/v4.3.3...v4.3.4
+
 ## [4.3.3] - 2023-06-01
 
 ### Commits
