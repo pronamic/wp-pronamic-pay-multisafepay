@@ -73,7 +73,7 @@ class DirectTransactionRequestMessage extends RequestMessage {
 			$plugin,
 			[
 				// The name of your ecommerce application.
-				'shop'           => \get_bloginfo( 'name' ),
+				'shop'           => 'WordPress - Pronamic Pay'
 				// The version of your ecommerce application.
 				'shop_version'   => \get_bloginfo( 'version' ),
 				// The version of your integration.
