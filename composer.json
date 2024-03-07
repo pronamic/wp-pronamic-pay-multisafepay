@@ -52,6 +52,7 @@
 		"ext-simplexml": "*",
 		"automattic/jetpack-autoloader": "^3.0",
 		"pronamic/wp-http": "^1.1",
+		"woocommerce/action-scheduler": "^3.7",
 		"wp-pay/core": "^4.6"
 	},
 	"require-dev": {
