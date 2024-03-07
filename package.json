@@ -1,43 +1,43 @@
 {
-  "name": "multisafepay",
-  "version": "4.3.4",
-  "description": "MultiSafepay driver for the WordPress payment processing library.",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/wp-pay-gateways/multisafepay"
-  },
-  "keywords": [
-    "wordpress",
-    "wp",
-    "pay",
-    "multisafepay",
-    "ideal",
-    "gateway",
-    "pronamic"
-  ],
-  "author": {
-    "name": "Pronamic",
-    "email": "info@pronamic.nl",
-    "url": "http://www.pronamic.nl/"
-  },
-  "contributors": [
-    {
-      "name": "Remco Tolsma",
-      "email": "info@remcotolsma.nl",
-      "url": "http://www.remcotolsma.nl/"
-    }
-  ],
-  "license": "GPL-3.0",
-  "bugs": {
-    "url": "https://github.com/wp-pay-gateways/multisafepay/issues"
-  },
-  "homepage": "http://www.wp-pay.org/gateways/multisafepay/",
-  "devDependencies": {
-    "@wordpress/env": "^9.5.0",
-    "@wordpress/scripts": "^27.4.0"
-  },
-  "scripts": {
-        "lint:md:docs": "wp-scripts lint-md-docs",
-        "lint:pkg-json": "wp-scripts lint-pkg-json"
-    }
+	"name": "multisafepay",
+	"version": "4.3.4",
+	"description": "MultiSafepay driver for the WordPress payment processing library.",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/wp-pay-gateways/multisafepay"
+	},
+	"keywords": [
+		"wordpress",
+		"wp",
+		"pay",
+		"multisafepay",
+		"ideal",
+		"gateway",
+		"pronamic"
+	],
+	"author": {
+		"name": "Pronamic",
+		"email": "info@pronamic.nl",
+		"url": "http://www.pronamic.nl/"
+	},
+	"contributors": [
+		{
+			"name": "Remco Tolsma",
+			"email": "info@remcotolsma.nl",
+			"url": "http://www.remcotolsma.nl/"
+		}
+	],
+	"license": "GPL-3.0",
+	"bugs": {
+		"url": "https://github.com/wp-pay-gateways/multisafepay/issues"
+	},
+	"homepage": "http://www.wp-pay.org/gateways/multisafepay/",
+	"devDependencies": {
+		"@wordpress/env": "^9.5.0",
+		"@wordpress/scripts": "^27.4.0"
+	},
+	"scripts": {
+		"lint:md:docs": "wp-scripts lint-md-docs",
+		"lint:pkg-json": "wp-scripts lint-pkg-json"
+	}
 }
