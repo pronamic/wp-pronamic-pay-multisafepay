@@ -32,5 +32,12 @@
     "url": "https://github.com/wp-pay-gateways/multisafepay/issues"
   },
   "homepage": "http://www.wp-pay.org/gateways/multisafepay/",
-  "devDependencies": {}
+  "devDependencies": {
+    "@wordpress/env": "^9.5.0",
+    "@wordpress/scripts": "^27.4.0"
+  },
+  "scripts": {
+        "lint:md:docs": "wp-scripts lint-md-docs",
+        "lint:pkg-json": "wp-scripts lint-pkg-json"
+    }
 }
