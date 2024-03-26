@@ -51,9 +51,9 @@
 		"php": ">=7.4",
 		"ext-simplexml": "*",
 		"automattic/jetpack-autoloader": "^3.0",
-		"pronamic/wp-http": "^1.1",
+		"pronamic/wp-http": "^1.2",
 		"woocommerce/action-scheduler": "^3.7",
-		"wp-pay/core": "^4.6"
+		"wp-pay/core": "^4.16"
 	},
 	"require-dev": {
 		"bamarni/composer-bin-plugin": "^1.8",
