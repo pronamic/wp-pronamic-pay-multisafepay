@@ -7,6 +7,25 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.4.0] - 2024-03-26
+
+### Added
+
+- Added `<plugin>` information to direct transaction request message. ([880676c](https://github.com/pronamic/wp-pronamic-pay-multisafepay/commit/880676cd13e0f85229c70a133e75ecab539d8e96))
+
+### Composer
+
+- Added `automattic/jetpack-autoloader` `^3.0`.
+- Added `woocommerce/action-scheduler` `^3.7`.
+- Changed `pronamic/wp-http` from `^1.1` to `v1.2.2`.
+	Release notes: https://github.com/pronamic/wp-http/releases/tag/v1.2.2
+- Changed `wp-pay/core` from `^4.6` to `v4.16.0`.
+	Release notes: https://github.com/pronamic/wp-pay-core/releases/tag/v4.16.0
+
+Full set of changes: [`4.3.4...4.4.0`][4.4.0]
+
+[4.4.0]: https://github.com/pronamic/wp-pronamic-pay-multisafepay/compare/v4.3.4...v4.4.0
+
 ## [4.3.4] - 2023-10-13
 
 ### Commits
