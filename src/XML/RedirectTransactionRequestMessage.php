@@ -48,6 +48,26 @@ class RedirectTransactionRequestMessage extends RequestMessage {
 	public function get_document() {
 		$document = parent::get_document();
 
+		// Plugin - Information about your integration (useful for debugging).
+		$plugin = XML_Util::add_element( $document, $document->documentElement, 'plugin' );
+
+		XML_Util::add_elements(
+			$document,
+			$plugin,
+			[
+				// The name of your ecommerce application.
+				'shop'           => 'WordPress - Pronamic Pay',
+				// The version of your ecommerce application.
+				'shop_version'   => \get_bloginfo( 'version' ),
+				// The version of your integration.
+				'plugin_version' => \pronamic_pay_plugin()->get_version(),
+				// The name of the third party that developed the ecommerce application (if relevant).
+				'partner'        => 'Pronamic',
+				// The root/base URL of the ecommerce application.
+				'shop_root_url'  => \get_bloginfo( 'url' ),
+			]
+		);
+
 		// Merchant.
 		$merchant = XML_Util::add_element( $document, $document->documentElement, 'merchant' );
 
