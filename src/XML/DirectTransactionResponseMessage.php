@@ -9,7 +9,7 @@ use SimpleXMLElement;
 /**
  * Title: MultiSafepay Connect XML direct transaction response message
  * Description:
- * Copyright: 2005-2023 Pronamic
+ * Copyright: 2005-2024 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
