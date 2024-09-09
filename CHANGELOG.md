@@ -7,6 +7,16 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.5.0] - 2024-09-09
+
+### Changed
+
+- Added plugin information to redirect transaction request. ([#5](https://github.com/pronamic/wp-pronamic-pay-multisafepay/issues/5))
+
+Full set of changes: [`4.4.0...4.5.0`][4.5.0]
+
+[4.5.0]: https://github.com/pronamic/wp-pronamic-pay-multisafepay/compare/v4.4.0...v4.5.0
+
 ## [4.4.0] - 2024-03-26
 
 ### Added
