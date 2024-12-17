@@ -7,6 +7,16 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.5.1] - 2024-12-17
+
+### Commits
+
+- Added `wp-slug`. ([3a15ab6](https://github.com/pronamic/wp-pronamic-pay-multisafepay/commit/3a15ab63f3e8c1b80d1d193ccba34873e9b258df))
+
+Full set of changes: [`4.5.0...4.5.1`][4.5.1]
+
+[4.5.1]: https://github.com/pronamic/wp-pronamic-pay-multisafepay/compare/v4.5.0...v4.5.1
+
 ## [4.5.0] - 2024-09-09
 
 ### Changed
