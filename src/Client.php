@@ -8,8 +8,6 @@ use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\DirectTransactionRequestMes
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\DirectTransactionResponseMessage;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\GatewaysRequestMessage;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\GatewaysResponseMessage;
-use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\IDealIssuersRequestMessage;
-use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\IDealIssuersResponseMessage;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\RedirectTransactionRequestMessage;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\RedirectTransactionResponseMessage;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\StatusRequestMessage;
@@ -45,13 +43,10 @@ class Client {
 	 * Parse XML.
 	 *
 	 * @param SimpleXMLElement $xml XML to parse.
-	 * @return false|IDealIssuersResponseMessage|GatewaysResponseMessage|DirectTransactionResponseMessage|RedirectTransactionResponseMessage|StatusResponseMessage
+	 * @return false|GatewaysResponseMessage|DirectTransactionResponseMessage|RedirectTransactionResponseMessage|StatusResponseMessage
 	 */
 	private function parse_xml( $xml ) {
 		switch ( $xml->getName() ) {
-			case IDealIssuersRequestMessage::NAME:
-				return IDealIssuersResponseMessage::parse( $xml );
-
 			case GatewaysRequestMessage::NAME:
 				return GatewaysResponseMessage::parse( $xml );
 
@@ -72,7 +67,7 @@ class Client {
 	 * Request.
 	 *
 	 * @param string $message Message.
-	 * @return false|DirectTransactionResponseMessage|GatewaysResponseMessage|IDealIssuersResponseMessage|RedirectTransactionResponseMessage|StatusResponseMessage
+	 * @return false|DirectTransactionResponseMessage|GatewaysResponseMessage|RedirectTransactionResponseMessage|StatusResponseMessage
 	 */
 	private function request( $message ) {
 		$response = Http::request(
@@ -94,25 +89,6 @@ class Client {
 		}
 
 		return $return;
-	}
-
-	/**
-	 * Get iDEAL issuers
-	 *
-	 * @param Merchant $merchant Merchant.
-	 * @return false|array<string, string>
-	 * @since 1.2.0
-	 */
-	public function get_ideal_issuers( $merchant ) {
-		$request = new IDealIssuersRequestMessage( $merchant );
-
-		$response = $this->request( $request );
-
-		if ( ! ( $response instanceof IDealIssuersResponseMessage ) ) {
-			return false;
-		}
-
-		return $response->issuers;
 	}
 
 	/**
