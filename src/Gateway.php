@@ -8,10 +8,8 @@ use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Core\PaymentMethodsCollection;
 use Pronamic\WordPress\Pay\Fields\CachedCallbackOptions;
-use Pronamic\WordPress\Pay\Fields\IDealIssuerSelectField;
 use Pronamic\WordPress\Pay\Fields\SelectField;
 use Pronamic\WordPress\Pay\Fields\SelectFieldOption;
-use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\DirectTransactionRequestMessage;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\RedirectTransactionRequestMessage;
 use Pronamic\WordPress\Pay\Gateways\MultiSafepay\XML\StatusRequestMessage;
 use Pronamic\WordPress\Pay\Payments\Payment;
@@ -58,22 +56,6 @@ class Gateway extends Core_Gateway {
 			'payment_status_request',
 		];
 
-		// Payment method iDEAL.
-		$ideal_payment_method = new PaymentMethod( PaymentMethods::IDEAL );
-
-		$ideal_issuer_field = new IDealIssuerSelectField( 'pronamic_pay_multisafepay_ideal_issuer' );
-
-		$ideal_issuer_field->set_options(
-			new CachedCallbackOptions(
-				function () {
-					return $this->get_ideal_issuers();
-				},
-				'pronamic_pay_ideal_issuers_' . \md5( \wp_json_encode( $config ) )
-			)
-		);
-
-		$ideal_payment_method->add_field( $ideal_issuer_field );
-
 		// Payment method credit card.
 		$credit_card_payment_method = new PaymentMethod( PaymentMethods::CREDIT_CARD );
 
@@ -101,7 +83,7 @@ class Gateway extends Core_Gateway {
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::BELFIUS ) );
 		$this->register_payment_method( $credit_card_payment_method );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::DIRECT_DEBIT ) );
-		$this->register_payment_method( $ideal_payment_method );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::IDEAL ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::IDEALQR ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::IN3 ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::GIROPAY ) );
@@ -114,34 +96,6 @@ class Gateway extends Core_Gateway {
 		$this->client = new Client();
 
 		$this->client->api_url = $config->get_api_url();
-	}
-
-	/**
-	 * Get iDEAL issuers.
-	 *
-	 * @return array<array<string,array>>
-	 * @since 1.2.0
-	 */
-	private function get_ideal_issuers(): array {
-		$merchant = new Merchant();
-
-		$merchant->account          = $this->config->account_id;
-		$merchant->site_id          = $this->config->site_id;
-		$merchant->site_secure_code = $this->config->site_code;
-
-		$result = $this->client->get_ideal_issuers( $merchant );
-
-		if ( false === $result ) {
-			return [];
-		}
-
-		$options = [];
-
-		foreach ( $result as $key => $value ) {
-			$options[] = new SelectFieldOption( $key, $value );
-		}
-
-		return $options;
 	}
 
 	/**
@@ -279,20 +233,6 @@ class Gateway extends Core_Gateway {
 		$transaction->gateway     = Methods::transform( $payment_method );
 
 		switch ( $payment_method ) {
-			case PaymentMethods::IDEAL:
-				$issuer = $payment->get_meta( 'issuer' );
-
-				if ( empty( $issuer ) ) {
-					$message = new RedirectTransactionRequestMessage( $merchant, $customer, $transaction );
-				} else {
-					$gateway_info = new GatewayInfo();
-
-					$gateway_info->issuer_id = $issuer;
-
-					$message = new DirectTransactionRequestMessage( $merchant, $customer, $transaction, $gateway_info );
-				}
-
-				break;
 			case PaymentMethods::CREDIT_CARD:
 				$issuer = $payment->get_meta( 'issuer' );
 
