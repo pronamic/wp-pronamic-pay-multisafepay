@@ -7,6 +7,16 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.6.0] - 2025-06-19
+
+### Removed
+
+- Removed iDEAL issuers field. ([f7dbff0](https://github.com/pronamic/wp-pronamic-pay-multisafepay/commit/f7dbff0e4f2f95c47ea21da166434f9b483e8642))
+
+Full set of changes: [`4.5.1...4.6.0`][4.6.0]
+
+[4.6.0]: https://github.com/pronamic/wp-pronamic-pay-multisafepay/compare/v4.5.1...v4.6.0
+
 ## [4.5.1] - 2024-12-17
 
 ### Commits
