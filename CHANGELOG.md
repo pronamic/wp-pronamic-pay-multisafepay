@@ -7,6 +7,21 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.6.1] - 2025-06-19
+
+### Commits
+
+- Allow Jetpack autolader 3, 4 and 5. ([a5fe65a](https://github.com/pronamic/wp-pronamic-pay-multisafepay/commit/a5fe65a11badbc6eacb44c64c7216545a302390c))
+
+### Composer
+
+- Changed `automattic/jetpack-autoloader` from `^3.0` to `v5.0.7`.
+	Release notes: https://github.com/Automattic/jetpack-autoloader/releases/tag/v5.0.7
+
+Full set of changes: [`4.6.0...4.6.1`][4.6.1]
+
+[4.6.1]: https://github.com/pronamic/wp-pronamic-pay-multisafepay/compare/v4.6.0...v4.6.1
+
 ## [4.6.0] - 2025-06-19
 
 ### Removed
