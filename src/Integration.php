@@ -35,7 +35,7 @@ class Integration extends AbstractGatewayIntegration {
 				'name'          => 'MultiSafepay - Connect',
 				'api_url'       => MultiSafepay::API_PRODUCTION_URL,
 				'url'           => 'http://www.multisafepay.com/',
-				'product_url'   => \__( 'http://www.multisafepay.com/', 'pronamic_ideal' ),
+				'product_url'   => 'https://www.multisafepay.com/',
 				'dashboard_url' => 'https://merchant.multisafepay.com/',
 				'provider'      => 'multisafepay',
 				'supports'      => [
@@ -43,7 +43,7 @@ class Integration extends AbstractGatewayIntegration {
 					'webhook',
 					'webhook_no_config',
 				],
-				'manual_url'    => \__( 'https://www.pronamicpay.com/en/manuals/how-to-connect-multisafepay-to-wordpress-with-pronamic-pay/', 'pronamic_ideal' ),
+				'manual_url'    => 'https://www.pronamicpay.com/en/manuals/how-to-connect-multisafepay-to-wordpress-with-pronamic-pay/',
 			]
 		);
 
