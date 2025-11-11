@@ -7,6 +7,16 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.6.2] - 2025-11-11
+
+### Commits
+
+- Added this point we shoud not use translation functions. ([27f079b](https://github.com/pronamic/wp-pronamic-pay-multisafepay/commit/27f079b0343983f41ab43bf2fbcac4f4f1fa81e3))
+
+Full set of changes: [`4.6.1...4.6.2`][4.6.2]
+
+[4.6.2]: https://github.com/pronamic/wp-pronamic-pay-multisafepay/compare/v4.6.1...v4.6.2
+
 ## [4.6.1] - 2025-06-19
 
 ### Commits
