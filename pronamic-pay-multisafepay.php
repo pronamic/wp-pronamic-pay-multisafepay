@@ -5,7 +5,7 @@
  * Description: Extend the Pronamic Pay plugin with the MultiSafepay gateway to receive payments through a variety of WordPress plugins.
  *
  * Version: 4.6.2
- * Requires at least: 5.9
+ * Requires at least: 6.8
  * Requires PHP: 7.4
  *
  * Author: Pronamic
