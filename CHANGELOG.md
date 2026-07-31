@@ -7,6 +7,23 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.6.3] - 2026-07-31
+
+### Changed
+
+- Allow `woocommerce/action-scheduler` version `^4.0`. ([#8](https://github.com/pronamic/wp-pronamic-pay-multisafepay/pull/8))
+- Raised the minimum required WordPress version to 6.8.
+
+### Composer
+
+- Changed `woocommerce/action-scheduler` from `^3.7` to `^3.7 || ^4.0`.
+	Action Scheduler 4.0.0 adds automatic purging of failed actions after 3 months (filterable), takes action arguments into account when scheduling unique actions, moves cleanup to a dedicated daily task, and raises the minimum WordPress version to 6.8. Both breaking changes are opt-out via filters.
+	Release notes: https://github.com/woocommerce/action-scheduler/releases/tag/4.0.0
+
+Full set of changes: [`4.6.2...4.6.3`][4.6.3]
+
+[4.6.3]: https://github.com/pronamic/wp-pronamic-pay-multisafepay/compare/v4.6.2...v4.6.3
+
 ## [4.6.2] - 2025-11-11
 
 ### Commits
